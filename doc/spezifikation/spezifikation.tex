@@ -1,0 +1,165 @@
+%%% File-Information {{{
+%%% Filename: Mars_Latex_Vorlage.tex
+%%% Purpose:  Die Vorlage für die Dokuemente des Mar-S StuPros
+%%% Time-stamp: <2004-12-23 17:18:02 mp>
+%%% Authors: RDE
+%%% History:
+%%% 2004-12-23 dokument erstellt
+%%%
+%%% Notes:
+%%% - Bei Änderungen der Vorlage, müssen alle erstellten Dokumente entsprechend angepasst werden.
+%%% - Es können die typischen deutschen Sonderzeichen dirket benutzt werden.
+%%% - Anführungszeichen bitte mit "` beginnen und mit "' abschließen.
+%%% - chapters in eigene Dateien, nicht tiefer als subsubsection schachteln.
+%%% - Texte unter chapter und section ist ok.
+%%% - Kein Content in diese Datei
+%%% - Erstellungsdatum, Dateiname, pdf-Name und Autor-Liste in dieser Datei füllen.
+%%% - Änderungshistorie ergänzen 
+%%%
+%%%
+%%% }}}
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[	a4paper,%		% Papiergröße A4
+				12pt, %			
+				BCOR10mm, %	
+				DIV12, %		
+				automark, %		% lebende Kolumnentitel
+				normalheadings,%
+				pagesize%			% Seitengröße wird bei dvi und pdf richtig gesetzt
+				]{scrreprt}		% entspricht article
+%				]{scrartcl}		% entspricht article
+
+\usepackage{ngerman, graphicx, color,verbatim}
+
+%----------------  Schriften  ------------------------------------------------
+%\usepackage[sc]{mathpazo} % Palatino mit echten small caps.
+\usepackage[sc]{mathpazo} % Palatino mit echten small caps.
+						  % Option osf für sc und old-style-figures
+
+\usepackage[scaled=0.95]{helvet} % Sansserif-Schrift: Helvetica
+\usepackage{courier}								% TeleType-Schrift Courier
+\usepackage{lscape}
+\usepackage{setspace}								% 1.05-facher Zeilenabstand wegen Palatino
+\linespread{1.05}
+
+\usepackage[T1]{fontenc}						% T1-Schriften verwenden
+\usepackage[latin1]{inputenc}				% Zeichenkodierung latin 1
+%-----------------------------------------------------------------------------
+
+%---------------------------Titelseite--------------------------------------------
+\titlehead{}
+\subject{StuPro Mar-S}			% Typisierung: Unmittelbar über Titel
+\title{\pdftitle} %\\ \vspace{0.3cm}\large v. \version}
+\author{Mar-S Projektteam}
+\date{\today}
+
+%----------------------------Variablen füllen---------------------------------------------------
+
+\newcommand{\docname}{Spezifikation}					% Dateiname
+\newcommand{\docdate}{\today}		% Erstellungsdatum
+\newcommand{\pdftitle}{Spezifikation} 		%Name des Dokuments
+\newcommand{\authorlist}{RD}  %Autorenliste
+\newcommand{\version}{0.1}
+
+
+%----------------  Hyperref  -------------------------------------------------
+% Hyperref für navigierbare links und das setzen der Dokumenteigenschaften
+\usepackage{hyperref}
+\hypersetup{%
+  pdftitle = { \pdftitle},
+  pdfauthor = {\authorlist}
+}
+
+\setlength{\topmargin}{-0.7cm}
+\setlength{\marginparwidth}{2.0 cm}
+\setlength{\topskip}{0.7cm}
+%\setlength{\footsep}{0.0cm}
+
+%----------------  Kopf- und Fußzeilen  --------------------------------------
+\usepackage{scrpage2}
+\pagestyle{scrheadings}
+\renewcommand{\chapterpagestyle}{scrheadings}
+%\ihead{\doctitle}\ohead{\docdate}
+\ifoot{\docname}\ofoot{\docdate}
+\setheadsepline{1pt}
+\setfootsepline{1pt}
+%-----------------------------------------------------------------------------
+
+%\typearea[current]{calc} % Neuberechnung des Satzspiegels
+%\reversemarginpar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------Umgebungen / Commands----------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Ein Use-Case-Environment hat 6 Parameter
+%%% 1. Der Titel
+%%% 2. Die Vorbedingungen
+%%% 3. Der Normalablauf
+%%% 4. Alternativabläufe
+%%% 5. Nachbedingungen
+%%%
+\newenvironment{UseCase}[5]{ %Use-Case environment
+	\subsection{#1}
+	\label{#1}
+	\minisec{Vorbedingung}
+	#2
+	\minisec{Normalablauf}
+	#3
+	\minisec{Alternativablauf}
+	#4
+	\minisec{Nachbedingung}
+	#5
+}
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Die Änderungshistorie ist immer in der Datei Änderungshistorie
+%%% im gleichen Verzeichnis. Bitte dort die änderungen pflegen.
+%%%
+\newcommand{\makehistorie}{
+\input{Änderungshistorie}
+\vspace{1cm}
+\Large{\minisec{Kürzel}}
+\large
+\begin{tabbing}
+XXXXXXXXXXXXXXXXXX\=XXXX\= \kill
+Daniel Gerlach \> DG\\
+Daniel Schleicher \>DS\\
+Dominik Rössler \>DR\\
+Friedrich Münsch \>FM\\
+Oliver Markovic \>OM\\
+Rajkumar Deshpande\>RD\\
+Tim Rathgeber \> TR\\
+Tobias Walter \>TW\\
+Tomislav Jerkovic \>TJ\\
+\end{tabbing}
+}
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+%----------------------------Einzelne Dateien zusammenbinden---------------------------------------------
+\begin{document}
+
+\maketitle
+\makehistorie
+\tableofcontents
+\input{Überblick}
+\input{UseCases}
+\input{Rechtesystem}
+\input{PDA}
+\input{datenbank}
+\input{Begriffslexikon}
+
+%Hier die einzelnen Dateien angeben. Nur Name, ohne Endung. BSP:
+%\input{Chapter1}
+
+
+\end{document}
+
+%--------------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="server.domain">
+  <class name="Identification" table="Identification" lazy="false">
+
+    <id name="id" type="long" unsaved-value="null" >
+      <generator class="increment"/>
+    </id>
+  
+    <natural-id mutable="true">   
+        <property name="tagID" length="32"/>
+        <many-to-one name="logInSystem"
+			class="server.domain.LogInSystem"
+			not-null="true"
+			column="LogInSytem_Id"/>
+	</natural-id>
+    
+    <many-to-one name="User" lazy="proxy"
+        column="User_Id"/>
+  </class>
+
+   <query name="get.identification.by.id">
+    <![CDATA[ select identification
+    	from server.domain.Identification as identification
+    	where identification.id = ?]]>
+  </query> 
+ 
+  
+    <query name="get.identification.by.systemname.tag">
+    <![CDATA[ select identification
+    	from server.domain.Identification as identification, server.domain.LogInSystem as system
+    	where system.name = ?
+    	and identification.tagID = ?]]>
+  </query> 
+ 
+  <query name="get.all.identifications">
+   		<![CDATA[from server.domain.Identification ]]>
+   </query>
+  
+</hibernate-mapping>

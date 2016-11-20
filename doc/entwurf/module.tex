@@ -1,0 +1,137 @@
+%%% -*- Mode: LaTeX; indent-tabs-mode: nil -*-
+%%%
+%%% Copyright (c) 2004, Oliver Markovic <entrox@entrox.org> 
+%%%   All rights reserved. 
+%%%
+%%% Redistribution and use in source and binary forms, with or without
+%%% modification, are permitted provided that the following conditions are met:
+%%%
+%%%  o Redistributions of source code must retain the above copyright notice,
+%%%    this list of conditions and the following disclaimer. 
+%%%  o Redistributions in binary form must reproduce the above copyright
+%%%    notice, this list of conditions and the following disclaimer in the
+%%%    documentation and/or other materials provided with the distribution. 
+%%%  o Neither the name of the author nor the names of the contributors may be
+%%%    used to endorse or promote products derived from this software without
+%%%    specific prior written permission. 
+%%%
+%%% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+%%% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+%%% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+%%% ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+%%% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+%%% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+%%% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+%%% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+%%% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+%%% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+%%% POSSIBILITY OF SUCH DAMAGE.
+
+\chapter{Externe Module}
+
+\section{Übersicht}
+
+Es soll die Möglichkeit bestehen, externe Module an das laufende Mar-S
+System ohne Änderungen an der zentralen Komponente einzufügen. Um eine
+möglichst grosse Flexibilität bezüglich verwendeter Sprache und physikalischer
+Lage zu gewährleisten, kommunizieren diese Module über ein Klartextprotokoll
+mit der Zentralkomponente (definiert in Kapitel TK).
+\\\\
+Externe Module sind das Bindeglied zwischen existierenden Geräten mit den
+dazugehörigen proprietären Protokollen (Beleuchtung, OPS), anderen Programmen
+(Media Center) und dem Rest des Mar-S Systems. Zu diesem Zwecke können
+Parameter und Kommandos über ein Netzwerk gesetzt werden.
+
+
+\section{Parameter}
+
+Einzelne Module exportieren Parameter, die von der Zentralkomponente gesetzt
+und auch ausgelesen werden können. Eine Beschreibung aller möglichen Parameter
+kann jederzeit vom Controller angefordert werden.
+\newline
+Parameter werden durch eine Kennung und durch eine Liste von Attributen
+charakterisiert, wobei Name, Voreinstellung und Flags bei allen Parametertypen
+vorhanden sind. Flags bestehen aus einer Zeichenkette, in der gespeichert ist,
+ob man diesen Parameter lesen und setzen (``rw''), nur lesen (``r'') oder nur
+setzen (``w'') kann.
+
+
+\subsection{Boole'sch}
+
+Ein einfacher Boole'scher Parameter mit zwei möglichen Zuständen: An und Aus.
+\newline
+
+\begin{tabular}{c|c|l}
+Attribut & Typ & Beschreibung\\
+\hline
+Name & string & Der Name dieses Parameters\\
+Default & bool & Die Voreinstellung dieses Parameters\\
+Flags & string & Flags\\
+\end{tabular}
+
+
+\subsection{Numerisch}
+
+Numerische Parameter stellen einen Zahlenwert in einem bestimmten Wertebereich
+mit einer separaten Schrittweite dar.
+\newline
+
+\begin{tabular}{c|c|l}
+Attribut & Typ & Beschreibung\\
+\hline
+Name & string & Der Name dieses Parameters\\
+Default & int & Die Voreinstellung dieses Parameters\\
+Flags & string & Flags\\
+Min & int & Untere Schranke des Wertebereichs\\
+Max & int & Obere Schranke des Wertebereichs\\
+Step & int & Schrittweite\\
+\end{tabular}
+
+
+\subsection{Zeichenkette}
+
+Eine einfache Zeichenkette von beliebiger Länge.
+\newline
+
+\begin{tabular}{c|c|l}
+Attribut & Typ & Beschreibung\\
+\hline
+Name & string & Der Name dieses Parameters\\
+Default & string & Die Voreinstellung dieses Parameters\\
+Flags & string & Flags\\
+\end{tabular}
+
+
+\subsection{Liste}
+
+Eine Liste aus Zeichenketten.
+\newline
+
+\begin{tabular}{c|c|l}
+Attribut & Typ & Beschreibung\\
+\hline
+Name & string & Der Name dieses Parameters\\
+Default & string* & Die Voreinstellung dieses Parameters\\
+Flags & string & Flags\\
+\end{tabular}
+
+
+\section{Kommandos}
+
+Kommandos bzw. Nachrichten dienen dazu, bestimmte Aktionen auszuführen, wobei
+das sowohl auf Seite eines externen Moduls als auch auf der Zentralkomponente
+sein kann. Beispiele dafür sind ``Tag 123 neu dazugekommen'',
+``Starte Wiedergabe der aktuellen Playliste'' oder ``User ausloggen''. Ein
+Kommando kann beliebig viele Parameter und einen Rückgabewert als Zeichenkette
+haben. Die genaue Kodierung ist in Kapitel TK beschrieben.\\
+Jedes externe Modul muss das Standardkommando ``Beschreibung'' unterstützen,
+welches die exportierte Schnittstelle an die Zentrale schickt.
+
+
+\section{Beschreibung eines Moduls}
+
+Externe Module können aufgefordert werden, ihre exportierte Schnittstelle
+(Parameter und Kommandos) an die zentrale Komponente weiterzugeben. Das genaue
+Format dieser Beschreibung ist in Kapitel TK definiert. Inhaltlich umfasst die
+Beschreibung Informationen "uber das gesamte Modul, jeden einzelnen Parameter
+mit den dazugeh"origen Attributen und jedes Kommando mit der jeweiligen Signatur.

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="server.domain">
+  <class name="SmartRoomProfile" table="SmartRoomProfile" lazy="false">
+    <id name="id" type="long" unsaved-value="null" >
+      <generator class="increment"/>
+    </id>
+    
+    <natural-id mutable="true">   
+        <property name="name" length="32"/>
+	    <many-to-one name="user" lazy="proxy"
+			class="User"
+			access="field"
+			column="User_Id"/>
+    </natural-id>
+    
+    <property name="comment"/>
+    <property name="lastChange" not-null="true" type="date"/>
+	
+    <set lazy="false" name="componentSettings" cascade="all">
+      <key column="SmartRoomProfile_Id" not-null="true"/>
+      <one-to-many class="ComponentSetting"/>
+    </set>
+  </class>
+  
+  <query name="get.SmartRoomProfile.by.name">
+    <![CDATA[from server.domain.SmartRoomProfile as srp
+    		where srp.name = ?]]>
+  </query>
+  
+    <query name="get.profile.by.id">
+    <![CDATA[from server.domain.SmartRoomProfile as srp
+    		where srp.id = ?]]>
+  </query>
+
+  <query name="get.all.profiles">
+    <![CDATA[from server.domain.SmartRoomProfile ]]>
+  </query>
+</hibernate-mapping>

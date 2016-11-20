@@ -1,0 +1,36 @@
+========================================
+MAR-S README
+27. Juni 2005
+========================================
+
+
+INHALT:
+----------------------------------------
+
+1) INSTALLATION
+ 1.1 - Abhängigkeiten
+
+
+
+1 - INSTALLATION
+----------------------------------------
+
+1.1 Abhängigkeiten
+----------------------------------------
+
+ (1) cpptask installieren
+ 
+ (1.1) Paket von http://sourceforge.net/project/showfiles.php?group_id=36177
+       herunterladen und entpacken
+
+ (1.2) cpptasks.jar in das "lib" Verzeichnis der Ant Installation kopieren
+       oder alternativ in das eigene Homeverzeichnis (~/.ant/lib bzw.
+       C:\Documents and Settings\username\.ant\lib)
+
+
+
+ (2) Tomcat tasks installieren
+
+ (2.1) Datei catalina-ant.jar aus server/lib der Tomcat 5 Installation in
+       das "lib" Verzeichnis von Ant kopieren oder alternativ in das eigene
+       Home (siehe 1.2)

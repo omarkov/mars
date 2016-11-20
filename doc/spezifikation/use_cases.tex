@@ -1,0 +1,381 @@
+\chapter{Use-Cases}
+\section{Übersicht}
+%\begin{figure}[h]
+	%\centering
+		\includegraphics[width=1.00\textwidth]{UseCaseDiagramm_1.png}
+	%\caption{Übersicht}
+	%\label{fig:UseCases_2}
+%\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Admin Use-Cases : Benutzer verwalten}
+\label{sec:AdminUseCasesBV}
+
+\minisec{Aktor}
+Der Aktor ist ein Administrator.
+
+\minisec{Globale Vorbedingungen}
+
+\begin{itemize}
+\item Der Aktor ist als Administrator am System angemeldet (siehe \hyperref[Am System anmelden]{Am System anmelden} \ref{Am System anmelden}).
+\item Der Aktor füllt immer die \hyperref[Pflichtfeld]{Pflichtfelder}.
+\item Es existiert mindestens ein Benutzer (der Aktor) im System.
+\end{itemize}
+
+\minisec{Globale Alternativabläufe}
+\begin{itemize}
+\item Ist ein Pflichtfeld nicht gefüllt, kann eine Speicher-Aktion nicht durchgeführt werden. Es wird eine sprechende 									Fehlermeldung ausgegeben.
+\end{itemize}
+
+
+
+\begin{UseCase}{Benutzer verwalten}
+{Keine.}
+{Unter diesem Use-Case sind folgende Use-Cases zusammengefasst
+\begin{itemize}
+	\item \ref{Benutzer(plural) anzeigen} Benutzer(plural) anzeigen
+	\item \ref{Benutzer anlegen} 					Benutzer anlegen 
+	\item \ref{Benutzerdaten verwalten} 	Benutzerdaten verwalten
+	\item \ref{Benutzer löschen} 					Benutzer löschen 
+\end{itemize}
+}
+{Keine}
+{Die Änderungen an den Benutzerdaten sind korrekt übernommen worden.}
+\end{UseCase}
+
+\begin{UseCase}{Benutzer(plural) anzeigen}
+{Keine.}
+{Der Aktor wählt "`Benutzer anzeigen"' aus. Er bekommt daraufhin eine Auflistung der Benutzer im System.
+}
+{Keine}
+{Keine}
+\end{UseCase}
+
+
+\begin{UseCase}{Benutzer anlegen}
+{Es existiert kein Benutzer im System mit gleichem Benutzernamen.}
+{Der Aktor wählt "`Neuer Benutzer"' und bekommt eine Maske angezeigt, in der er die Benutzerdaten erfassen kann. Er fasst die Pflichtfelder und wählt "`Benutzerdaten Speichern"'. 
+}
+{Falls bereits ein Benutzer mit gleichem Namen existiert wird eine sprechende Fehlermeldung ausgegeben. Der neue Benutzer wird nicht angelegt und der Vorgang abgebrochen. Die eingegebenen Daten bleiben aber in den Feldern erhalten.}
+{Es existiert ein neuer Benutzer mit den eingegebenen Daten.}
+\end{UseCase}
+
+
+\begin{UseCase}{Benutzerdaten verwalten}
+{Der Aktor lässt sich die Benutzerdaten eines Benutzers anzeigen.}
+{Der Aktor verändert die Benutzerdaten und wählt "`Benutzerdaten Speichern"'.
+Unter diesem Use-Case sind folgende Use-Cases zusammengefasst:
+\begin{itemize}
+	\item \ref{Benutzerdaten verändern} 	 				Benutzerdaten verändern
+	\item \ref{Benutzerprofilelemente verwalten} 	Benutzerprofilelemente verwalten
+	\item \ref{Gruppenprofilelemente verwalten} 	Gruppenprofilelemente verwalten
+	\item \ref{Benutzerprofil verwalten} 				  Benutzerprofil verwalten
+\end{itemize}
+}
+{Keine}
+{Die Änderungen an den Benutzerdaten sind korrekt übernommen worden.}
+\end{UseCase}
+
+\begin{UseCase}{Benutzer löschen}
+{Der zu löschende Benutzer ist nicht der Aktor.}
+{Der Aktor wählt einen Benutzer und wählt "`Benutzer Löschen"'. Er wird vom System zum Bestätigen der Aktion aufgefordert. Er wählt wiederholt "`Benutzer Löschen"'.}
+{1. Der Aktor versucht sich selbst zu löschen. Es wird eine sprechende Fehlermeldung ausgegeben.\\
+2. Der Aktor bestätigt nicht wiederholt den Löschvorgang sondern bricht ihn ab. Die Löschaktion wird nicht vorgenommen.}
+{Der Benutzer wird mit allen seinen Abhängigkeiten aus dem System entfernt. Seine privaten Daten werden aus der Datenbank gelöscht und seine privaten Dateien aus dem Filesystem entfernt.
+\end{UseCase}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Admin Use-Cases : Gruppen verwalten}
+\label{sec:AdminUseCasesGV}
+
+\minisec{Aktor}
+Der Aktor ist ein Administrator.
+
+\minisec{Globale Vorbedingungen}
+
+\begin{itemize}
+\item Der Aktor ist als Administrator am System angemeldet (siehe Am System Anmelden \ref{Am System anmelden}).
+\item Der Aktor füllt immer die Pflichtfelder.
+\item Es exitsiert mindestens ein Benutzer (der Aktor) im System.
+\end{itemize}
+
+\minisec{Globale Alternativabläufe}
+\begin{itemize}
+\item Ist ein Pflichfeld nicht gefüllt, kann eine Speicher-Aktion nicht durchgeführt werden. Es wird eine sprechende 									Fehlermeldung ausgegeben.
+\end{itemize}
+
+\begin{UseCase}{Gruppen anzeigen}
+{Keine}
+{Der Aktor lässt sich eine Übersicht der Gruppen des Systems anzeigen}
+{Keine}
+{Keine}
+\end{UseCase}
+
+\begin{UseCase}{Gruppe verwalten}
+{Keine}
+{Unter diesem Use-Case sind folgende Use-Cases zusammengefasst
+\begin{itemize}
+	\item \ref{Gruppe anlegen} 											Gruppe anlegen
+	\item \ref{Benutzer einer Gruppe zuordnen} 	  Benutzer einer Gruppe zuordnen
+	\item \ref{Benutzer aus einer Gruppe entfernen} Benutzer aus einer Gruppe entfernen
+	\item \ref{Gruppendaten verändern} 							Gruppendaten verändern
+	\item \ref{Gruppe löschen}										  Gruppe löschen
+	\item \ref{Gruppenprofilelemente verwalten} 	  Gruppenprofilelemente verwalten
+\end{itemize}
+}
+{Keine}
+{Die Änderungen an den Benutzerdaten sind korrekt übernommen worden.}
+\end{UseCase}
+
+
+\begin{UseCase}{Gruppe anlegen}
+{Der Name der zu erstellenden Gruppe ist noch nicht von einer anderen Gruppe benutzt.}
+{Der Aktor wählt "`Neue Gruppe"' und bekommt eine Maske angezeigt, in der er die Gruppendaten erfassen kann. Er fasst die Pflichtfelder und wählt "`Gruppendaten Speichern"'. 
+}
+{Falls bereits eine Gruppe mit gleichem Namen existiert wird eine sprechende Fehlermeldung ausgegeben. Die neue Gruppe wird nicht angelegt und der Vorgang abgebrochen. Die eingegebenen Daten bleiben aber in den Feldern erhalten.}
+{Es existiert eine neue Gruppe mit den eingegebenen Daten.}
+\end{UseCase}
+
+
+\begin{UseCase}{Benutzer einer Gruppe zuordnen}
+{Der Aktor lässt sich die Gruppenmitglieder einer Gruppe anzeigen. Ein Benutzer kann nicht mehrfach Mitglied einer Gruppe sein.}
+{Der Aktor wählt Benutzer aus und ordnet sie der Gruppe zu.}
+{Keine}
+{Die ausgewählten Benutzer sind Mitglieder der Gruppe.}
+\end{UseCase}
+
+\begin{UseCase}{Benutzer aus einer Gruppe entfernen}
+{Der Aktor lässt sich die Gruppenmitglieder einer Gruppe anzeigen. Der zu entfernende Benutzer ist nicht der Aktor.}
+{Der Aktor wählt Benutzer aus und entfernt sie aus der Gruppe.}
+{Wenn der Aktor versucht sich selbst aus einer Gruppe zu entfernen wird eine sprechende Fehlermeldung angezeigt und der Vorgang abgebrochen.}
+{Die ausgewählten Benutzer sind nicht mehr Mitglieder der Gruppe.}
+\end{UseCase}
+
+\begin{UseCase}{Gruppendaten verändern}
+{Der Aktor lässt sich die Gruppendaten einer Gruppe anzeigen.}
+{Der Aktor verändert die Gruppendaten und wählt "`Gruppendaten Speichern"'.}
+{Keine}
+{Die Änderungen an den Gruppendaten sind korrekt übernommen worden.}
+\end{UseCase}
+
+
+\begin{UseCase}{Gruppe löschen}
+{Die zu löschende Gruppe existiert.}
+{Der Aktor wählt eine Gruppe aus und wählt "`Guppe löschen"'. Er muss diese Aktion nocheinmal bestätigen.}
+{1. Der Aktor bestätigt nicht wiederholt den Löschvorgang sondern bricht ihn ab. Die Löschaktion wird nicht vorgenommen.}
+{Die Gruppe wird gelöscht. Die Benutzer jedoch nicht. Die Benutzer sind nicht mehr Mitglieder der Gruppe. Daten der Gruppe werden aus der Datenbank entfernt. Die Dateien der Gruppe werden aus dem Filesystem entfernt. Die Playlists der Benutzer, die Mitglieder der Gruppe waren, werden durchsucht und die Referenzen auf Gruppendateien entfernt.}}
+\end{UseCase}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Benutzer Use-Cases : Benutzerprofil verwalten}
+\label{sec:BenutzerUseCasesPV}
+
+\minisec{Aktor}
+Der Aktor ist ein normaler Benutzer oder Administrator.
+
+
+\minisec{Globale Vorbedingungen}
+
+\begin{itemize}
+\item Der Aktor ist als Benutzer am System angemeldet (siehe Am System Anmelden \ref{Am System anmelden}).
+\item Der Aktor füllt immer die Pflichtfelder.
+\item Es existieren mindestens zwei Benutzer (der Aktor und ein Administrator) im System.
+\item Der Administrator kann für jeden Benutzer alle Use-Cases durchführen. Das System verhält sich, wie wenn der Benutzer die 								Änderungen vornehmen würde.
+\item Beim Anhängen von Daten wird die Quota nicht überschritten.
+\end{itemize}
+
+\minisec{Globale Alternativabläufe}
+\begin{itemize}
+\item Tritt beim Anhängen von Daten ein Fehler auf, wird eine sprechende Fehlermeldung ausgegeben.
+\end{itemize}
+
+\begin{UseCase}{Benutzerdaten verändern}
+{Keine}
+{Der Aktor kann seine Benutzerdaten ändern. Er wählt "`Benutzerdaten ändern"'. Er ändert seine Daten und wählt "`Benutzerdaten speichern"'.}
+{1. Der Aktor gibt ungültige Daten ein und speichert. Das Speichern wird abgebrochen. Eine sprechende Fehlermeldung wird ausgegeben.\\
+2. Der Aktor bricht den Vorgang ab. Es werden keine Daten in die Datenbank übernommen.}
+{Die Daten wurden korrekt gespeichert.}
+\end{UseCase}
+
+\begin{UseCase}{Benutzerprofile verwalten}
+{Keine.}
+{Unter diesem Use-Case sind folgende Use-Cases zusammengefasst
+\begin{itemize}
+	\item \ref{Benutzerprofile anzeigen} 					 Benutzerprofile anzeigen
+	\item \ref{Benutzerprofil anlegen} 					 Benutzerprofil anlegen
+	\item \ref{Benutzerprofil löschen} 				   Benutzerprofil löschen
+	\item \ref{Benutzerprofil verwalten} 				 Benutzerprofil verwalten
+	\item \ref{Benutzerprofilelemente verwalten} 				 Benutzerprofilelemente verwalten
+\end{itemize}
+}
+{Keine}
+{Keine}
+\end{UseCase}
+
+
+\begin{UseCase}{Benutzerprofile anzeigen}
+{Keine}
+{Der Aktor lässt sich eine Übersicht über seine Profile anzeigen.}
+{Keine}
+{Keine}
+\end{UseCase}
+
+\begin{UseCase}{Benutzerprofil anlegen}
+{Der Aktor lässt sich seine Benutzerprofile anzeigen \ref{Benutzerprofile anzeigen}.}
+{Der Aktor wählt "`Neues Benutzerprofil anlegen"'. Er kann das Benutzerprofil verwalten \ref{Benutzerprofil verwalten}. Der Aktor wählt "`Profil speichern"'.}
+{Keine}
+{Das neue Benutzerprofil ist korrekt gespeichert.}
+\end{UseCase}
+
+\begin{UseCase}{Benutzerprofil löschen}
+{Der Aktor lässt sich seine Benutzerprofil anzeigen \ref{Benutzerprofil anzeigen}.}
+{Der Aktor wählt ein Profil aus und wählt "`Benutzerprofil löschen"'. Er muss die Löschaktion nocheinmal bestätigen.}
+{1.Der Aktor bestätigt nicht wiederholt den Löschvorgang sondern bricht ihn ab. Die Löschaktion wird nicht vorgenommen.}
+{Das Profil wird mit allen Abhängigkeiten aus dem System entfernt. Da ein Benutzerprofil nur aus Referenzen besteht, werden gespeicherte \textcolor{red}{Sinneselemente} nicht gelöscht.}
+\end{UseCase}
+
+
+\begin{UseCase}{Benutzerprofil verwalten}
+{Der Aktor hat ein Profil zum Verwalten ausgewählt.}
+{\textcolor{red}{Der Aktor kann sich sein Profil zusammenstellen, Einstellungen bezüglich Licht, Playlists, etc. machen. Anschließend speichert er seine Änderungen ab.}}
+{Keine}
+{Seine Änderungen sind korrekt in die Datenbank übernommen}
+\end{UseCase}
+
+\begin{UseCase}{Benutzerprofilelemente verwalten}
+{Keine}
+{Der Aktor kann private Profilelemente (Benutzerprofilelemente) haben. Die Verwaltung dieser Elemente gliedert sich in folgende UseCases:
+\begin{itemize}
+	\item \ref{Profilelemente anzeigen} 				 				 Profilelemente anzeigen
+	\item \ref{Benutzerprofilelemente hochladen} 				 Benutzerprofilelemente hochladen
+	\item \ref{Benutzerprofilelemente kopieren} 				 Benutzerprofilelemente kopieren
+	\item \ref{Benutzerprofilelemente löschen} 					 Benutzerprofilelemente löschen
+	\item \ref{Playlist erstellen} 				 							 Playlist erstellen
+\end{itemize}
+}
+{Keine}
+{Keine}
+\end{UseCase}
+
+\begin{UseCase}{Profilelemente anzeigen}
+{Keine}
+{Der Aktor lässt sich eine Übersicht der Profilelemente, auf die er Zugriff hat, anzeigen.}
+{Keine}
+{Keine}
+\end{UseCase}
+
+
+\begin{UseCase}{Benutzerprofilelemente hochladen}
+{Keine}
+{Der Aktor wählt "`Profilelement hinzufügen"'. Es öffnet sich ein Filebrowser. Der Aktor wählt eine Datei aus und "`bestätigt"'. }
+{Keine}
+{Das Profilelement ist korrekt gespeichert.}
+\end{UseCase}
+
+\begin{UseCase}{Benutzerprofilelemente kopieren}
+{Keine}
+{Der Aktor wählt "`Existierendes Profilelement hinzufügen"'. Ihm wird eine Liste aller Gruppenprofilelemente angezeigt, auf die er Zugriff hat. Der Aktor wählt ein Profilelement aus und "`bestätigt"'. }
+{Keine}
+{Das Profilelement ist korrekt kopiert und abgespeichert.}
+\end{UseCase}
+
+\begin{UseCase}{Benutzerprofilelemente löschen}
+{Der Aktor lässt sich seine Profilelemente anzeigen.}
+{Der Aktor wählt "`Profilelement löschen"'. Ihm wird eine Liste aller Gruppenprofilelemente angezeigt, auf die er Zugriff hat. Der Aktor wählt ein Profilelement aus und "`bestätigt"'. }
+{Keine}
+{Das Profilelement ist korrekt kopiert und abgespeichert.}
+\end{UseCase}
+
+
+\begin{UseCase}{Playlist erstellen}
+{Keine}
+{Der Aktor wählt "`Neue Playlist erstellen"'. Der Aktor wird nach dem Namen für die Playlist gefragt. Der Aktor gibt einen gültigen Namen ein. Es werden ihm die unterstützten Profilelemente \ref{UnterstützteFormateInPlaylists} auf die er Zugriff hat angezeigt. Der Aktor kann Profilelemente zur Playlist hinzufügen. Danach wählt er speichern.}
+{1. Der eingegebene Name ist nicht gültig. Es wird eine sprechende Fehlermeldung ausgegeben. Der Name kann erneut eingegeben werden.\\
+2. Der Aktor bricht den Vorgang ab. Es wird wieder die Profilelemente Verwalten Maske angezeigt. Es wird nichts in der Datenbank verändert}
+{Die Playlist ist als Benutzerprofilelement gespeichert.}
+\end{UseCase}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\section{Gruppen Use-Cases : Gruppenprofilelemente verwalten}
+\label{sec:GruppenUseCasesGPV}
+
+\minisec{Aktor}
+
+Der Aktor ist ein normaler Benutzer oder Administrator.
+
+\minisec{Globale Vorbedingungen}
+
+\begin{itemize}
+\item Es existiert mindestes eine Gruppe im System und der Aktor im System.Der Aktor ist Mitglied der Gruppe.
+\end{itemize}
+
+\begin{UseCase}{Gruppenprofilelemente verwalten}
+{Keine}
+{Gruppen haben Profilelemente auf die alle Mitgliedern der Gruppe Zugriff haben. Unter diesem Use-Case sind folgende Use-Cases zusammengefasst:
+\begin{itemize}
+	\item \ref{Gruppenprofilelemente kopieren} 				 				 Gruppenprofilelemente kopieren
+	\item \ref{Gruppenprofilelemente löschen} 				 				 Gruppenprofilelemente löschen
+\end{itemize}
+}
+{Keine}
+{Keine}
+\end{UseCase}
+
+
+\begin{UseCase}{Gruppenprofilelemente kopieren}
+{Keine}
+{Der Aktor wählt "`Profilelemente veröffentlichen"'. Dem Aktor werden alle Profilelemente angezeigt, auf die er Zugriff hat. Er kann nun einige auswählen und kopieren. Dannach werden ihm die Gruppen angezeigt, in denen er Mitglied ist. Er wählt eine Gruppe aus und bestätigt. So können beispielsweise Playlists der Gruppe zugänglich gemacht werden.}
+{1.Der Aktor bricht den Vorgang ab. Es wird wieder die Profilelemente Verwalten Maske angezeigt. Es wird nichts in der Datenbank verändert}
+{Die Dateien sind korrekt abgespeichert.}
+\end{UseCase}
+
+\begin{UseCase}{Gruppenprofilelemente löschen}
+{Keine}
+{Der Aktor wählt Gruppenprofilelemente aus und wählt "`löschen"'. Er muss den Vorgang bestätigen.}
+{Bricht der Aktor den Vorgang ab, wird der Vorgang abgebrochen. Es werden keine Daten in der Datenbank oder dem Filesystem verändert.}
+{Die Gruppenprofilelemente werden gelöscht.}
+\end{UseCase}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\section{Andere Use-Cases}
+\label{sec:AndereUseCases}
+
+\minisec{Globale Vorbedingungen}
+
+\begin{itemize}
+\item Es existiert immer mindestens ein Benutzer im System. Dieser Benutzer heißt "`admin"' und hat beim neu aufgesetzten System das Passwort "`admin"'.
+\item Es existiert immer mindestens die Gruppe mit Namen "`Jeder"' im System.
+\end{itemize}
+
+\begin{UseCase}{Am System anmelden}
+{Der Benutzer existiert im System.}
+{Der Benutzer wählt die Anmelden-Seite des Systems. Er gibt seine Anmeldedaten ein. Er bekommt seine Startseite angezeigt. }
+{Der Benutzer gibt falsche Anmeldedaten ein. Es wird eine sprechende Fehlermeldung ausgegeben. Der Benutzer ist nicht angemeldet.}
+{Der Benutzer ist angemeldet.}
+\end{UseCase}
+
+\begin{UseCase}{Vom System abmelden}
+{Der Benutzer ist am System angemeldet.}
+{Der Benutzer wählt "`Vom System abmelden"'. Es wird ihm die Anmelden-Seite angezeigt.}
+{Keine}
+{Der Benutzer ist abgemeldet.}
+\end{UseCase}

@@ -1,0 +1,327 @@
+body {
+	font-family: Century Gothic;
+	color: #708090;
+	padding: 0px ;
+	margin: 0px auto auto auto;
+	text-align: center;
+	background-color: White;
+}
+html {font-size: 100%}
+
+ p, h1, h2, h3, h4, h5, h6, ul, ol, dl {
+	margin-top: 2%;
+	margin-bottom: 1%;
+}
+h1, h2, h3, h4, h5, h6 {
+	color: #708090;
+	clear: left;
+	font-weight:normal;
+	padding-top: 3px;
+	background-color:transparent;
+	font-style: italic;
+}
+
+div.submit {
+	width:100%;
+	padding: 0px 0px 0px 10px;
+	margin: 0px 0px 0px 0px;
+}
+
+div.login {
+	text-align: right;
+	width: 400px;
+	padding: 25px 0px 175px auto; 
+}
+
+div.login_row {
+	padding: 10px 0px 0px 0px;
+}
+
+div.javascript {
+	text-align: center;
+	font-weight: bold;
+	color: Red;
+	font-size: 110%; 	
+	padding: 5px;
+}
+
+div.login label {
+	display: block;
+	float: left;
+	width: 200px;
+	padding: 0 0 0 0;
+	margin: 2px 15px 0 0px;
+	text-align: right;
+}
+
+div.error {
+	background-color: #FFF8DC;
+	color: Black;
+	border: 1px solid red;
+	margin: 15px 15px 5px 15px;
+	font-size: 88%;
+	width: 500px;
+	display: block;
+	text-align: left;
+}
+
+fieldset {
+	font-size: 100%;
+	border-width: 1px 0px 0 1px;
+	border-style: dotted none none dotted;
+	padding: 5px 0px 0px 10px;
+	margin: 15px 0px 0px 0px;
+	text-align: left;
+	border-color: Gray;
+	}
+
+fieldset div {
+	display: block;
+	text-align: left;
+	margin: 10px;
+}
+
+fieldset div label{
+	float: left;
+	width: 200px;
+	padding: 2px 2px 0 0;
+	margin: 2px 10px 0 0px;
+	text-align: left;
+}
+
+fieldset div.date {
+	display: block;
+	float: left;
+	text-align: left;
+}
+
+fieldset legend {
+	margin: 5px 0 5px 5px;
+	font-size: 120%;
+	font-weight: lighter;
+	color: #52636F;
+}
+
+/* here the area for shifting users is declared*/
+
+form fieldset div.addmember {
+	float: right;
+	text-align: right;
+	width: 40%;
+	height: 85%;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+form fieldset div.addmember select {
+	width: 100%;
+	height: 100%;
+
+}
+/* here the area for the arrows in the shifting part ist declared*/
+
+form fieldset div.arrow {
+	float: right; 
+	width: 10%;
+	height: 100px;
+	padding:0px 5px 0px 5px;
+	margin: 85px 0px 0px 0px;
+	text-align:center;
+}
+
+/* table decleration */
+
+table {
+	min-width: 500px;
+	margin: 0px 0 10px 0;
+	font-size: 80%;
+}
+
+th, td {
+	padding: 2px 4px 2px 4px;
+	text-align: left;
+	vertical-align: top;
+	color: #7C8C9A;
+}
+
+thead tr {
+	background-color: #EAEAEA;
+}
+
+th.sorted {
+	color: white;
+}
+
+th, th a, th a:visited {
+	color: #708090;
+}
+
+th a:hover {
+	background-color: #708090;
+}
+
+tr.odd {
+	background-color: White;
+}
+
+tr.even {
+	background-color:#EAEAEA;
+}
+
+tr a:hover {
+	color: white;
+	background-color: #708090;
+
+}
+
+li {
+	margin-bottom:6px;
+}
+
+dt {
+	font-weight:bold;
+}
+
+/* input fields decleration */
+
+input.field {
+	font-size: medium;
+	font-style: italic;
+	margin:1px;
+	background-color: Menu;
+	color: Navy;
+}
+/* Link decleration*/
+
+a:link, a:visited, a:hover, a:active{
+	color:#708090;	
+	text-decoration: none;
+}
+
+/*  images */
+
+img {
+	border: none;
+	text-decoration: none;
+}
+
+/*  Layout declaration */
+
+#main {
+	min-width: 780px;
+	margin: 0 auto 0px auto;
+	padding: 0 0 7px 0;
+	text-align: left;
+	background-color: white;
+	background-image: url(../images/mars_bg2.png);
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
+#content {
+	z-index: 1;
+	position: relative;
+	top:50px;
+	left: 225px;
+	max-width: 55%;
+	min-height: 500px;
+	margin: 0px 0 0px 30px;
+	padding: 25px 0 15px 0;
+	list-style-type: square;
+	list-style-position: outside;
+	text-align: left;
+}
+
+#header {
+	z-index: 2;
+	position: fixed;
+	height: 70px;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	text-align: left;
+	background-color: White;
+	background-image: url(../images/footer2.png);
+	background-repeat: no-repeat;
+	background-position: right;
+}
+#header div {
+	font-size: 80%;
+	float: left;
+	padding: 0 20% 0 0;
+}
+
+
+#footer {
+	position: absolute;
+	bottom: 0px;
+	margin: 0px;
+	padding: 0 0 0 0;
+	height: 0px;
+	text-align: center;
+	vertical-align: middle;
+}
+#footer a {
+	color: gray;
+}
+
+#list{
+	position:relative;
+	width:100%;
+	height:250px;
+	margin: 0px 0px 0px 0px;
+	padding: 25px 0px 0px 0px;
+}
+
+#menu {
+	position: fixed;
+	top: 100px;
+	width: 225px;
+	min-height: 600px;
+	background-image: url(../images/menu_bg2.png);
+	background-repeat: no-repeat;
+	background-position: left;
+	}
+
+#menu ul {
+	padding: 0px 0px 0px 10px;
+	list-style-type: none;
+	text-align: left;
+}
+
+#menu li {
+	display: block;
+	font-size: 100%;
+	text-align: left;
+	padding: 0px 20px 0px 10px;
+}
+
+#menu a {
+	color: #708090;
+	text-decoration: none;
+}
+
+#menu a:hover {
+	color: Navy;
+}
+
+
+.error {
+	background-color: Red;
+	font-weight: normal;
+	color: White;
+}
+.menutb {
+	text-align:center;
+        padding: 30px 0 0 0;
+        
+}
+
+/* right outfit for menu icons */
+
+.menutd {
+        padding: 10px 40px 0 0; 
+	text-align:center;
+       
+	
+}

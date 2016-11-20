@@ -1,0 +1,372 @@
+\documentclass[12pt,oneside,german,a4paper]{article}
+\usepackage[latin1]{inputenc}
+%\usepackage{isolatin1}
+\usepackage{a4}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{babel}
+\usepackage{german}
+\usepackage{graphicx}
+\usepackage{newcent}        % Umstellung auf Schrift Times, Wichtig für gute
+                           % PDF Qualität.
+
+
+\usepackage{makeidx}
+\makeindex 
+%----------------
+% Definitionen
+
+\setlength{\textwidth}{16cm} \setlength{\textheight}{23cm}
+\setlength{\oddsidemargin}{0cm} \setlength{\topmargin}{0cm}
+\setlength{\parindent}{0cm} \setlength{\parskip}{1.5ex}
+
+
+\begin{document}
+\onecolumn
+%---------------------------------------
+% Titelseite & Inhaltsverzeichnis
+
+\title{\textbf{Benutzerhandbuch}\\
+      \textbf{Mar-S}}
+%\author{Projektteam des Studienprojekts ''Mar-S''}
+\date{\today}
+% heutiges Datum: \date{\today}
+\maketitle
+\begin{center}
+Fraunhofer Institut Office Innovation Center\\
+Universität Stuttgart\\
+Rosensteinstr. 22-24\\
+70191 Stuttgart\\
+\end{center}
+
+\newpage
+
+
+%--------------------------------------------------------------------------------------------------
+% Inhaltsverzeichnis
+
+\tableofcontents
+%--------------------------
+% Hier kommt der Inhalt
+%--------------------------------------------------------------------------------------------------
+
+\newpage
+
+
+\section{Einleitung}
+
+Dies ist das Handbuch für das System ''Mar-S'', das im Rahmen eines Studienprojektes des Studiengangs Softwaretechnik der Universität Stuttgart entwickelt wurde. Dabei handelt es sich um ein System mit dem der adaptive Raum des Office Innovation Centers gesteuert und für verschiedene Benutzer eingestellt werden kann.\\
+
+Das System gliedert sich in mehrere Module:
+
+\begin{itemize}
+
+\item Die Web-Oberfläche. Sie wird benutzt, um die Einstellungen im Sinnesraum vorzunehmen, d.h. Benutzer und deren Profile anlegen oder editieren.
+
+\item Das MediaCenter (Freevo). Es läuft im Sinnesraum und wird zur direkten Steuerung der Einstellungen im Sinnesraum genutzt,  d.h. abspielen von Playlisten (Video, Musik, Bilder), Lichteinstellungen (Farbe, Helligkeit). Desweiteren können die wichtigsten Komponenten auch mit einem PDA oder einer Fernbedienung im Sinnesraum verändert werden.
+
+\end{itemize}
+
+\newpage
+\section{Web-Oberfläche}
+
+\subsection{Das Login-Fenster}
+
+Dieses Fenster (siehe Abb.~\ref{login}) dient zum Login in das System.\\[1ex]
+
+\textbf{Einloggen}
+
+\begin{enumerate}
+
+\item Benutzernamen und Passwort eingeben
+\item Auf ''Login'' klicken
+\item Es erscheint die normale Benutzeransicht (siehe Abb.~\ref{hauptNoAdmin}).
+
+\end{enumerate}
+
+\textbf{Web-Oberflächen-Style wechseln}\newline
+
+Im Loginfenster kann man auch einen anderen Style für die gesamte Benutzeroberfläche wählen. Dies geschieht mit den Buttons unterhalb des ''Login''- und des ''Reset''- Buttons (siehe Abb.~\ref{login}).\\[1ex]
+
+\textbf{Logout}\newline
+
+Ist man eingeloggt, ist es jederzeit möglich sich mit ''Logout''- Button, der sich immer oben rechts in der Web-Oberfläche befindet, auszuloggen.\newline
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/login.jpg}
+\caption{Loginfenster}
+\label{login}
+\end{figure}
+
+\newpage
+
+\subsection{Die Benutzeransicht}
+
+In der Benutzeransucht (siehe Abb.~\ref{hauptNoAdmin}) können  unter dem Menueintrag ''Meine Profile'' eigene Profile erstellt und verändert werden.
+
+\begin{figure}[h!]
+\includegraphics[width = 350pt]{pix/hauptAdmin.jpg}
+\caption{Benutzeransicht}
+\label{hauptNoAdmin}
+\end{figure}
+
+Unter ''Meine Eigenschaften'' (siehe Abb.~\ref{myProperties}) werden die wichtigsten Eigenschaften angezeigt . Es kann ausserdem das Loginpasswort geändert werden.
+
+\begin{figure}[h!]
+\includegraphics[width = 350pt]{pix/myProperties.jpg}
+\caption{''Meine Eigenschaften''-Fenster}
+\label{myProperties}
+\end{figure}
+
+\newpage
+
+\subsection{Verwaltung von Profilen}
+
+In diesem Abschnitt wird beschrieben, wie man Profile eines Benutzers im System verwaltet; das heißt neue Profile anlegen, Profile löschen oder Profile editieren. Hierzu klickt man in der Benutzeransicht (siehe Abb.~\ref{hauptNoAdmin}) im Menü auf ''Meine Profile''. Es erscheint die Seite (siehe Abb.~\ref{profile}) um Profile zu verwalten.\\
+
+Hier werden alle vorhandenen Profile für den Benutzer angezeigt. Jedes Profil kann als Default-Profil gesetzt werden. Es kann nur ein Default-Profil geben. Das Default-Profil wird beim Betreten des Sinnnesraumes automatisch gestartet. Profile enthalten die Einstellungen aller ansprechbarer und registrierten Komponenten im Sinnesraum (z.B. Lichteinstellungen, Musikplaylisten, usw.).\newline
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/profile.jpg}
+\caption{Profilfenster}
+\label{profile}
+\end{figure}
+
+\newpage
+
+\subsubsection{Erstellen eines neuen Profilen für einen Benutzer}
+
+\begin{enumerate}
+\item In der Benutzeransicht auf ''Meine Profile' klicken.
+\item Auf ''Neues Profil'' klicken. Es erscheint eine neue Seite (siehe Abb.~\ref{profileNew}).
+\item Daten für das Profil angeben. Unter ''Profile Settings'' werden alle verfügbaren Sinnesraum-Komponenten mit deren Einstellungen angezeigt, die dann gesetzt werden können.
+\item Sind alle Angaben eingetragen, so wird das Profil mit ''Speichern'' in die Datenbank übernommen. Mit ''Reset'' werden die Eingaben rückgängig gemacht.
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 400pt]{pix/editProfile.jpg}
+\caption{Neues Profil}
+\label{profileNew}
+\end{figure}
+
+\newpage
+
+\subsubsection{Editieren eines vorhandenen Profils für einen Benutzer}
+
+\begin{enumerate}
+\item In der Benutzeransicht auf ''Meine Profile' klicken.
+\item Auf ''Edit'' für das zu editierende Profil klicken. Es erscheint eine neue Seite (siehe Abb.~\ref{profileNew}).
+\item Änderungen für das Profil eingeben..
+\item Sind alle Angaben eingetragen, so wird das Profil mit ''Speichern'' in die Datenbank übernommen. Mit ''Reset'' werden die Eingaben rückgängig gemacht.
+\end{enumerate}
+
+
+\newpage
+
+\subsubsection{Löschen eines Profils}
+
+\begin{enumerate}
+
+\item In der Benutzeransicht auf ''Meine Profile'' klicken.
+\item Auf ''Delete'' klicken.
+\item Es folgt noch eine Sicherheitsabfrage (siehe Abb.~\ref{profileDelete}), dann wird das Profil gelöscht.
+
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/profileDelete.jpg}
+\caption{Profil löschen}
+\label{profileDelete}
+\end{figure}
+
+\subsubsection{Mediendaten verwalten}
+
+Der Benutzer kann sich mit seinem Client-Rechner über TCP/IP mit dem Server verbinden.\newline
+Die hierfür benötigte IP-Adresse ist beim Systemadministrator zu erfragen.\newline\newline
+Die Daten können per Standardnetzwerkverbindung auf das für ihn erstellte Homeverzeichnis des Servers kopiert werden.\newline\newline
+\textbf{Zu beachten ist, dass hierbei Audio-Dateien in den Audio-Ordner, die Video-Dateien in den Video-Ordner und die Bilder-Dateien in den Image-Ordner kopiert werden!}
+
+\newpage
+
+\section{Bedienung im Sinnesraum}
+
+In diesem Abschnitt wird beschreiben, wie man im Sinnesraum als Benutzer seine Profile abruft und die aktuellen Komponenteneinstellungen verändert, dabei ist zu beachten, dass diese Änderungen nicht gespeichert werden. D.h. falls z.B. die Lichtfarbe auf ''Rot'' im aktuellen Profil gesetzt ist und sie wird im Sinnesraum auf ''Grün'' gestellt, wird dies in Echtzeit übernommen, jedoch nicht in der Datenbank gespeichert.\\
+
+Die Steuerung im Sinnesraum geschieht im Wesentlichen über drei Module:
+
+\begin{itemize}
+
+\item Das Mediacenter Freevo
+\item Ein PDA
+\item Eine Fernbedienung
+\end{itemize}
+
+\subsection{Freevo}
+
+Unter ''Freevo'' hat man die Möglichkeit seine eigenen Profile auszuwählen, den eingeloggten Benutzer zu wechseln oder einfach nur seine eigenen Dateien anzuschauen (Videos und Bilder) oder anzuhören (Musik). Dies geschieht über das Freevo--Hauptfenster (siehe Abb.~\ref{FreevoMain}).
+
+\begin{enumerate}
+\item \emph{''Profiles''} Man wählt das zu spielende Profil aus. Ein Beispiel siehe Abb.~\ref{FreevoProfile}.
+\item \emph{''Change User''} Es werden alle sich im Sinnesraum befindenden Benutzer angezeigt. Jeder dieser Benutzer lässt sich  einloggen. Es lässt sich nur ein Benutzer gleichzeitig einloggen. Die Einstellungen des eingeloggten Benutzers(Lich, Musik usw.) werden geladen und abgespielt.
+\item \emph{''Watch Movie''} Man kann einen speziellen Film anschauen, die nicht unbedingt in einem Profil abgelegt sein müssen.
+\item \emph{''Listen to Music''} Man kann spezielle Musiktitel abspielen, die nicht unbedingt in einem Profil abgelegt sein müssen.
+\item \emph{''Look at Pictures''} Man kann sich spezielle Bilder anschauen, die nicht unbedingt in einem Profil abgelegt sein müssen.
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 370pt]{pix/FreevoMain.png}
+\caption{Freevo--Hauptfenster}
+\label{FreevoMain}
+\end{figure}
+
+
+
+\begin{figure}[h!]
+\includegraphics[width = 370pt]{pix/FreevoProfile.png}
+\caption{Freevo: Profil auswählen}
+\label{FreevoProfile}
+\end{figure}
+
+
+\newpage
+\subsection{PDA--Oberfläche}
+
+Die PDA-Oberfläche dient zur Steuerung im Sinnesraum. Hierbei handelt es sich um eine vereinfachte Web-Oberfläche. Die Funktionen umfassen das Ändern der Lichteinstellungen, die Steuerung von Freevo und das Auswählen von Profilen.\\
+
+Durch das Loginfenster (siehe Abb.~\ref{PDAlogin}) gelangt man durch Eingabe des Benutzernamens und des Passworts in die Hauptansicht (siehe Abb.~\ref{PDAmain}). Von hier aus gelangt man über die oben stehenden Menüpunkte zu den einzelnen Steuerungselementen. Das sind die Steuerung der Lichtanlage unter dem Menüpunkt ''Lighting''(siehe Abb.~\ref{PDAlight}),  des MediaCenters ''Freevo'' unter dem Menüpunkt ''Media'' (siehe Abb.~\ref{PDAmedia}), die Auswahl des Profils unter dem Menüpunkt ''Profiles'' (siehe Abb.~\ref{PDAprofile}) und die temporrären Einstellungsmöglichkeiten anderer Komponenten unter dem Menüpunkt ''Modules''.
+
+\subsubsection{Das Loginfenster}
+
+Dieses Fenster (siehe Abb.~\ref{login}) dient zum Login in das System.
+
+\begin{figure}[h!]
+\includegraphics[width = 200pt]{pix/PDAlogin.jpg}
+\caption{Loginfenster PDA-Oberfläche}
+\label{PDAlogin}
+\end{figure}
+
+\textbf{Einloggen}
+
+\begin{enumerate}
+
+\item Benutzernamen und Passwort eingeben.
+\item Auf ''Login'' klicken.
+\item Es erscheint die PDA--Ansicht (siehe Abb.~\ref{PDAmain}).
+
+\end{enumerate}
+\newpage
+\subsubsection{Das PDA--Hauptfenster}
+\begin{figure}[h!]
+\includegraphics[width = 200pt]{pix/PDAmain.jpg}
+\caption{Hauptfenster PDA-Oberfläche}
+\label{PDAmain}
+\end{figure}
+
+\textbf{PDA--Lichtanlage}
+
+In Abb.~\ref{PDAlight} werden die Einstellungsmöglichkeiten der Lichtanlage über den PDA dargestellt.
+
+\begin{enumerate}
+\item Gewünschte Werte eingeben.
+\item Mit ''Enter'' bestätigen. Einstellungen werden übernommen.
+\item Ebenso möglich ist es eine der Voreinstellungen zu wählen (z.B. Disco Fever, Seven of Nine usw.).
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 300pt]{pix/pdaLight.jpg}
+\caption{Lichtsteuerung PDA-Oberfläche}
+\label{PDAlight}
+\end{figure}
+
+\newpage
+\textbf{PDA--Profile}
+
+In Abb.~\ref{PDAprofile} wird die Profilauswahl über den PDA dargestellt.
+
+\begin{enumerate}
+\item Es werden alle verfügbaren Profile aufgelistet.
+\item Mit ''Use'' wird das gewünschte Profile übernommen.
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 300pt]{pix/PDAprofile.jpg}
+\caption{Profile einstellen PDA-Oberfläche}
+\label{PDAprofile}
+\end{figure}
+
+\newpage
+\textbf{PDA--Media Center Steuerung}
+
+In Abb.~\ref{PDAmedia} wird die direkte Ansteuerung von Freevo über den PDA dargestellt.
+
+\begin{enumerate}
+
+\item In der PDA--Ansicht ''Media'' auswählen. Es erscheint eine neue Seite (siehe Abb.~\ref{PDAmedia})
+\item Mit den Pfeil--Symbolen navigiert man durch die Menus. Mit ''Enter'' wird eine Auswahl bestätigt. mit ''ESC'' gelangt man ein Menu zurück oder bricht die eingabe ab.
+\item ''Vol'' dient zur Steuerung der Lautstärke. Pfeil nach oben = lauter. Pfeil nach unten = leiser.
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 200pt]{pix/PDAmedia.jpg}
+\caption{Mediafenster PDA-Oberfläche}
+\label{PDAmedia}
+\end{figure}
+
+\newpage
+
+
+
+
+\subsection{Fernbedienung im Sinnesraum}
+
+\begin{figure}
+\includegraphics[width = 400pt]{pix/Fernbedienung.jpg}
+\caption{Microsoft Media Center Fernbedienung}
+\label{Fernbedienung}
+\end{figure}
+
+Mit der Fernbedienung (siehe Abb.~\ref{Fernbedienung}) kann durch das gesamte Freevo-Menu navigiert werden. Ebenso ist es möglich direkt Lautstärke, Lichteinstellungen und Stimmungen (das sind spezielle, voreingestellte Lichteinstellungen) zu steuern.\\[1ex]
+
+\textbf{Lautstärke steuern}
+
+\begin{enumerate}
+
+\item Erhöhung der Lautstärke \emph{Volume} ''+'' drücken.
+\item Veringerung der Lautstärke \emph{Volume} ''-'' drücken.
+
+\end{enumerate}
+
+\textbf{Stimmungswechsel}
+
+\begin{enumerate}
+
+\item Es existieren 5 Stimmungen, die man dirket mit der entsprechenden Ziffer aufrufen kann.
+
+\end{enumerate}
+\newpage
+
+\textbf{Lichtsteuerung}
+
+\begin{enumerate}
+
+\item Auf den farbigen Tasten (''Rot'', ''Blau'', ''Grün'', ''Gelb'') stellt man die jeweilige Farbenintensität ein.
+\item Taste ''Rot'' drücken.
+\item Durch ''+'' und ''-'' wird die Lichtintensität für ''Rot'' geändert. Es ist auch möglich die Intensität durch dirkete Angabe einer Zahl zu verändern.
+\item Mit der  Taste ''Eingabe'' kommt man wieder in der Ausgangsposition. Es kann jetzt eine andere Farbe, z.B. ''Grün'' gewählt werden und wie oben beschrieben eingestellt werden.
+\item Mit der Taste ''Löschen'' wird das Licht abgschaltet.
+
+\end{enumerate}
+
+\textbf{Freevo}
+
+Freevo wird ganz intuitiv mit der Fernbedienung gesteuert.
+
+\begin{enumerate}
+
+\item Mit den Navigationstasten (''hoch'',''runter'', ''links'', ''rechts'' ) navigiert man durch die Menus.
+\item Mit der ''OK'' --Taste bestätigt man seine Auswahl.
+\item Mit der ''Zurück'' --Taste gelangt man einen Schritt zurück.
+
+\end{enumerate}
+
+\end{document}

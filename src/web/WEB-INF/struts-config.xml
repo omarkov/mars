@@ -1,0 +1,500 @@
+<!-- <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd"> -->
+<struts-config>
+<!-- Form Bean Definitions -->
+<form-beans>  
+    <form-bean name="loginForm" type="web.java.LoginForm" />
+    <form-bean name="mobileLoginForm" type="web.java.MobileLoginForm" />	
+    <form-bean name="manageUserForm" type="web.java.ManageUserForm" />
+    <form-bean name="manageUserNewForm" type="web.java.ManageUserNewForm" />            
+    <form-bean name="manageUserEditForm" type="web.java.ManageUserEditForm" /> 
+    <form-bean name="manageUserDeleteForm" type="web.java.ManageUserDeleteForm" />      
+    <form-bean name="manageGroupForm" type="web.java.ManageGroupForm" />
+    <form-bean name="manageGroupNewForm" type="web.java.ManageGroupNewForm" />
+    <form-bean name="manageGroupEditForm" type="web.java.ManageGroupEditForm" />
+    <form-bean name="manageGroupAddUsersForm" type="web.java.ManageGroupAddUsersForm" />
+    <form-bean name="manageGroupDeleteForm" type="web.java.ManageGroupDeleteForm" />
+    <form-bean name="myPropertiesForm" type="web.java.MyPropertiesForm" />
+    <form-bean name="myPropertiesEditForm" type="web.java.MyPropertiesEditForm" />
+    <form-bean name="manageProfilesForm" type="web.java.ManageProfilesForm" />
+    <form-bean name="manageProfilesShowForm" type="web.java.ManageProfilesShowForm" />	
+    <form-bean name="manageProfilesDeleteForm" type="web.java.ManageProfilesDeleteForm" />
+    <form-bean name="manageProfilesEditForm" type="web.java.ManageProfilesEditForm" />
+    <form-bean name="manageProfilesNewForm" type="web.java.ManageProfilesNewForm" />
+    <form-bean name="manageDepartmentForm" type="web.java.ManageDepartmentForm" />
+    <form-bean name="manageDepartmentNewForm" type="web.java.ManageDepartmentNewForm" />
+    <form-bean name="manageDepartmentEditForm" type="web.java.ManageDepartmentEditForm" />
+    <form-bean name="manageDepartmentAddUsersForm" type="web.java.ManageDepartmentAddUsersForm" />
+    <form-bean name="manageDepartmentDeleteForm" type="web.java.ManageDepartmentDeleteForm" />
+    <form-bean name="sendEmailForm" type="web.java.SendEmailForm"/>
+    <form-bean name="manageProfilesImportForm" type="web.java.ManageProfilesImportForm"/>
+    <form-bean name="mobileMediaForm" type="web.java.MobileMediaForm" />
+    <form-bean name="mobileLightingForm" type="web.java.MobileLightingForm"/>
+</form-beans>
+
+<!-- Global Exception Definitions -->
+<global-exceptions>
+	<exception 
+	    bundle="MessageResources"
+        key="errors.generalError" 
+        handler="web.java.ExceptionHandler"
+        scope="request"
+        type="java.lang.Exception" 
+        path="error.page"/>
+  	<exception 
+		bundle="MessageResources"
+	    key="errors.network" 
+	    handler="web.java.ExceptionHandler"
+	    scope="request"
+	    type="net.NetworkException" 
+	    path="error.page"/>
+  	<exception 
+		bundle="MessageResources"
+	    key="errors.notAuthorized" 
+	    handler="web.java.ExceptionHandler"
+	    scope="request"
+	    type="web.java.controller.NotAuthorizedException" 
+	    path="error.page"/>
+  	<exception 
+		bundle="MessageResources"
+	    key="errors.user" 
+	    handler="web.java.ExceptionHandler"
+	    scope="request"
+	    type="web.java.controller.GroupException" 
+	    path="error.page"/>
+  	<exception 
+		bundle="MessageResources"
+	    key="errors.wrongPassword" 
+	    handler="web.java.ExceptionHandler"
+	    scope="request"
+	    type="web.java.controller.ChangePasswordException" 
+	    path="error.page"/>
+  	<exception 
+		bundle="MessageResources"
+	    key="errors.group" 
+	    handler="web.java.ExceptionHandler"
+	    scope="request"
+	    type="web.java.controller.GroupException" 
+	    path="error.page"/>
+  	<exception 
+		bundle="MessageResources"
+	    key="errors.profile" 
+	    handler="web.java.ExceptionHandler"
+	    scope="request"
+	    type="web.java.controller.ProfileException" 
+	    path="error.page"/>
+
+</global-exceptions>
+
+<!-- Global Forward Definitions -->
+<global-forwards>
+	<forward name="logoff" path="/Logoff.do"/>
+  	<forward name="login" path="login.page"/>
+  	<forward name="welcome" path="/Welcome.do"/>  	
+</global-forwards>
+
+<!-- Action Mapping Definitions -->
+<action-mappings>
+
+        <!-- Tiles Forward -->
+               
+           <!-- Main -->
+
+       <action path="/Main" type="org.apache.struts.actions.ForwardAction" parameter="main.page" />
+       <action path="/Impressum" type="org.apache.struts.actions.ForwardAction" parameter="impressum.page" />
+           <!-- Manage Group -->
+       <action path="/ManageGroup" type="org.apache.struts.actions.ForwardAction" parameter="manageGroup.page" />
+       <action path="/ManageGroupAddUsers" type="org.apache.struts.actions.ForwardAction" parameter="manageGroupAddUsers.page" />
+       <action path="/ManageGroupDelete" type="org.apache.struts.actions.ForwardAction" parameter="manageGroupDelete.page" />
+       <action path="/ManageGroupEdit" type="org.apache.struts.actions.ForwardAction" parameter="manageGroupEdit.page" />
+       <action path="/ManageGroupNew" type="org.apache.struts.actions.ForwardAction" parameter="manageGroupNew.page" />
+           <!-- ManageUser -->
+       <action path="/ManageUser" type="org.apache.struts.actions.ForwardAction" parameter="manageUser.page" />    
+       <action path="/ManageUserAssignTagId" type="org.apache.struts.actions.ForwardAction" parameter="manageUserAssignTagId.page" />
+       <action path="/ManageUserDeactivate" type="org.apache.struts.actions.ForwardAction" parameter="manageUserDeactivate.page" />
+       <action path="/ManageUserDelete" type="org.apache.struts.actions.ForwardAction" parameter="manageUserDelete.page" />
+       <action path="/ManageUserEdit" type="org.apache.struts.actions.ForwardAction" parameter="manageUserEdit.page" />
+       <action path="/ManageUserNew" type="org.apache.struts.actions.ForwardAction" parameter="manageUserNew.page" />
+       <action path="/ManageUserResetPassword" type="org.apache.struts.actions.ForwardAction" parameter="manageUserResetPassword.page" />
+       <action path="/ManageUserShowUserDeletions" type="org.apache.struts.actions.ForwardAction" parameter="manageUserShowUserDeletions.page" />
+           <!-- ManageProfiles -->
+       <action path="/ManageProfiles" type="org.apache.struts.actions.ForwardAction" parameter="manageProfiles.page" />
+       <action path="/ManageProfilesDelete" type="org.apache.struts.actions.ForwardAction" parameter="manageProfilesDelete.page" />
+       <action path="/ManageProfilesEdit" type="org.apache.struts.actions.ForwardAction" parameter="manageProfilesEdit.page" />
+       <action path="/ManageProfilesNew" type="org.apache.struts.actions.ForwardAction" parameter="manageProfilesNew.page" />
+       <action path="/ManageProfilesShow" type="org.apache.struts.actions.ForwardAction" parameter="manageProfilesShow.page" />
+	   <action path="/ManageProfilesImport" type="org.apache.struts.actions.ForwardAction" parameter="ManageProfilesImport.page"/>
+           <!-- MyProperties -->
+       <action path="/MyProperties" type="org.apache.struts.actions.ForwardAction" parameter="myProperties.page" />
+       <action path="/MyPropertiesEdit" type="org.apache.struts.actions.ForwardAction" parameter="myPropertiesEdit.page" />
+       <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" parameter="error.page" />
+    		<!-- ManageDepartment -->
+       <action path="/ManageDepartment" type="org.apache.struts.actions.ForwardAction" parameter="manageDepartment.page" />
+       <action path="/ManageDepartmentAddUsers" type="org.apache.struts.actions.ForwardAction" parameter="manageDepartmentAddUsers.page" />
+       <action path="/ManageDepartmentDelete" type="org.apache.struts.actions.ForwardAction" parameter="manageDepartmentDelete.page" />
+       <action path="/ManageDepartmentEdit" type="org.apache.struts.actions.ForwardAction" parameter="manageDepartmentEdit.page" />
+       <action path="/ManageDepartmentNew" type="org.apache.struts.actions.ForwardAction" parameter="manageDepartmentNew.page" />
+                <!-- SendEmail-->
+       <action path="/SendEmail" type="org.apache.struts.actions.ForwardAction" parameter="sendEmail.page" />
+                <!-- Mobile -->
+       <action path="/MobileMain" type="org.apache.struts.actions.ForwardAction" parameter="mobileMain.page" /> 
+       <action path="/MobileMedia" type="org.apache.struts.actions.ForwardAction" parameter="mobileMedia.page" /> 
+       <action path="/MobileProfile" type="org.apache.struts.actions.ForwardAction" parameter="mobileProfile.page" /> 
+       <action path="/MobileLighting" type="org.apache.struts.actions.ForwardAction" parameter="mobileLighting.page" /> 
+    
+	<!-- Global -->
+	<action path="/Welcome" type="org.apache.struts.actions.ForwardAction" parameter="/pages/login.jsp"/>
+	<action path="/Login" type="org.apache.struts.actions.ForwardAction" parameter="/pages/login.jsp"/>
+
+    <action path="/LoginMobile" type="org.apache.struts.actions.ForwardAction" parameter="/mobile/mobileLogin.jsp"/>
+    <action path="/LoginFailed" type="org.apache.struts.actions.ForwardAction" parameter="/pages/loginFailed.jsp"/>
+
+            
+	<!-- Login/Logoff -->	
+	<action path="/login" 
+			type="web.java.LoginAction" 
+			name="loginForm" 
+			scope="session" 
+			input="/pages/login.jsp">
+            <forward name="success" redirect="false" path="main.page"/>
+	</action>
+	
+        <action path="/loginMobile" 
+				type="web.java.MobileLoginAction" 
+				name="mobileLoginForm" 
+				scope="session" 
+				validate="true"
+				input="/mobile/mobileLogin.jsp">
+            <forward name="success" redirect="false" path="mobileMain.page"/>
+            <forward name="failed" path="error.page" />	    
+	</action>
+        
+	<action path="/Logoff" type="web.java.LogoffAction">
+    	<forward name="success" path="/index.jsp"/>
+  	</action>
+	
+	<action path="/MobileLogoff" 
+			type="web.java.MobileLogoffAction">
+    	<forward name="success" path="/mobile/mobileLogin.jsp"/>
+  	</action>
+    
+    <!--  manage user -->	
+    	
+    <action path="/pages/manageUser-submit" 
+                        type="web.java.ManageUserAction" 
+                        name="manageUserForm" 
+                        scope="request" 
+                        validate="true" 
+                        input="manageUser.page">
+                <forward name="input" path="manageUser.page" />
+                <forward name="edit" path="manageUserEdit.page" />
+                <forward name="delete" path="manageUserDelete.page" />
+                <forward name="success" path="manageUser.page" />
+                <forward name="new" path="manageUserNew.page" />
+                <forward name="deletions" path="manageUserShowUserDeletions.page" />
+                <forward name="showProfiles" path="manageProfilesShow.page" />
+    </action>
+    	
+    <action path="/pages/manageUserNew-submit" 
+    		type="web.java.ManageUserNewAction" 
+    		name="manageUserNewForm" 
+                scope="request" 
+    		validate="true" 
+    		input="manageUserNew.page">
+        <forward name="input" path="manageUserNew.page" />
+        <forward name="success" path="manageUser.page" />
+        <forward name="reset" path="manageUserNew.page" />
+        <forward name="back" path="manageUser.page" />
+    </action>
+    
+
+	<action path="/pages/manageUserEdit-submit" 
+			type="web.java.ManageUserEditAction" 
+			name="manageUserEditForm" 
+			scope="request" 
+                        validate="true"
+			input="manageUserEdit.page">
+	  	<forward name="input" path="manageUserEdit.page" />	
+	    <forward name="success" path="manageUser.page" />
+	    <forward name="reset" path="manageUserEdit.page" />
+	    <forward name="back" path="manageUser.page" />
+   	</action>
+ 
+	<action path="/pages/manageUserDelete-submit"
+			type="web.java.ManageUserDeleteAction"
+			name="manageUserDeleteForm"
+			scope="request"
+			input="manageUserDelete.page" >
+		<forward name="input" path="manageUserDelete.page" />
+		<forward name="success" path="manageUser.page" />
+		<forward name="error" path="error.page" />
+		<forward name="cancel" path="manageUser.page" />
+	</action>
+	
+	<!--  manage group  -->	
+ 
+	<action path="/pages/manageGroup-submit" 
+			type="web.java.ManageGroupAction" 
+			name="manageGroupForm" 
+			scope="request"
+			validate="true"
+			input="manageGroup.page" >
+		<forward name="input" path="manageGroup.page" />
+      <forward name="edit" path="manageGroupEdit.page" />
+      <forward name="delete" path="manageGroupDelete.page" />
+      <forward name="success" path="manageGroup.page" />
+		<forward name="sendEmail" path="sendEmail.page" />
+		<forward name="newGroup" path="manageGroupNew.page" />
+	</action>
+
+	<action path="/pages/manageGroupNew-submit" 
+			type="web.java.ManageGroupNewAction" 
+			name="manageGroupNewForm" 
+			scope="request"
+         validate="true" 
+			input="manageGroupNew.page" >
+	  	<forward name="input" path="manageGroupNew.page" />	
+      <forward name="nothingSelected" path="manageGroupNew.page" />
+      <forward name="reset" path="manageGroupNew.page" />
+      <forward name="back" path="manageGroup.page" />
+      <forward name="success" path="manageGroup.page" />
+  	</action>
+
+	<action path="/pages/manageGroupAddUsers-submit" 
+			type="web.java.ManageGroupAddUsersAction" 
+			name="manageGroupAddUsersForm" 
+			scope="request"
+			validate="true" 
+			input="manageGroupAddUsers.page">
+	  	<forward name="input" path="manageGroupAddUsers.page" />
+	  	<forward name="nothingSelected" path="manageGroupAddUsers.page" />	
+      <forward name="success" path="manageGroupEdit.page" />
+      <forward name="back" path="manageGroupEdit.page" />
+   	</action>   	
+
+	<action path="/pages/manageGroupEdit-submit" 
+			type="web.java.ManageGroupEditAction" 
+			name="manageGroupEditForm" 
+			scope="request"
+			validate="true" 
+			input="manageGroupEdit.page" >
+      <forward name="input" path="manageGroupEdit.page" />	
+      <forward name="nothingSelected" path="manageGroupEdit.page" />
+      <forward name="success" path="manageGroup.page" />
+      <forward name="reset" path="manageGroupEdit.page" />
+      <forward name="addUsers" path="manageGroupAddUsers.page" />
+      <forward name="back" path="manageGroup.page" />
+		<forward name="error" path="error.page" />
+   </action>
+    	   
+	<action path="/pages/manageGroupDelete-submit" 
+			type="web.java.ManageGroupDeleteAction" 
+			name="manageGroupDeleteForm" 
+			scope="request" 
+			input="manageGroupDelete.page" >
+	  	<forward name="input" path="manageGroupDelete.page" />	
+      <forward name="success" path="manageGroup.page" />
+      <forward name="back" path="manageGroup.page" />
+      <forward name="cancel" path="manageGroup.page" />
+   </action>
+    
+    <!--  my properties -->	
+   	
+    <action path="/pages/myProperties-submit" 
+			type="web.java.MyPropertiesAction" 
+			name="myPropertiesForm" 
+			scope="request" 
+			validate="true"
+			input="myProperties.page">
+        <forward name="success" path="myProperties.page" />    
+		<forward name="showProperties" path="myProperties.page" />
+		<forward name="changePassword" path="myPropertiesEdit.page" />
+	</action>
+	
+	<action path="/pages/myPropertiesEdit-submit" 
+			type="web.java.MyPropertiesEditAction" 
+			name="myPropertiesEditForm" 
+			scope="request" 
+			validate="true"
+			input="myPropertiesEdit.page">
+		<forward name="success" path="myProperties.page" />
+		<forward name="failure" path="myPropertiesEdit.page" />
+	</action>
+	
+	<!-- manage profiles -->
+	
+	<action path="/pages/manageProfiles-submit"
+			type="web.java.ManageProfilesAction"
+			name="manageProfilesForm"
+			scope="request"
+			input="manageProfiles.page" >
+		<forward name="input" path="manageProfiles.page" />
+		<forward name="show" path="manageProfilesShow.page" />
+	</action>
+	
+	<action path="/pages/manageProfilesShow-submit"
+			type="web.java.ManageProfilesShowAction"
+			name="manageProfilesShowForm"
+			scope="request"
+			input="manageProfilesShow.page" >
+		<forward name="input" path="manageProfilesShow.page" />
+		<forward name="success" path="manageProfiles.page" />
+		<forward name="edit" path="manageProfilesEdit.page" />
+		<forward name="delete" path="manageProfilesDelete.page" />
+		<forward name="new" path="manageProfilesNew.page" />
+        <forward name="use" path="mobileProfile.page" />
+        <forward name="export" path="manageProfiles.page"/>
+        <forward name="import" path="manageProfilesImport.page"/>
+        <forward name="setAsDefault" path="manageProfilesShow.page"/>
+	</action>
+	
+	<action path="/pages/manageProfilesDelete-submit"
+			type="web.java.ManageProfilesDeleteAction"
+			name="manageProfilesDeleteForm"
+			scope="request"
+			input="manageProfilesDelete.page">
+		<forward name="delete" path="manageProfilesShow.page" />
+		<forward name="cancel" path="manageProfilesShow.page" />
+	</action>
+	
+	<action path="/manageProfilesEdit"
+			name="manageProfilesEditForm"
+			scope="request"
+            type="org.apache.struts.actions.ForwardAction" 
+            parameter="manageProfilesEdit.page"/>
+
+	<action path="/pages/manageProfilesEdit-submit"
+			type="web.java.ManageProfilesEditAction"
+			name="manageProfilesEditForm"
+			scope="request"
+			input="manageProfilesEdit.page">
+		<forward name="save" path="manageProfilesShow.page" />
+		<forward name="back" path="manageProfilesShow.page" />
+		<forward name="reset" path="manageProfilesEdit.page" />
+	</action>
+	
+        <action path="/pages/manageProfilesNew-submit" 
+                    type="web.java.ManageProfilesNewAction" 
+                    name="manageProfilesNewForm" scope="request" 
+                    validate="false" 
+                    input="manageProfilesNew.page">
+                <forward name="input" path="manageProfilesNew.page" />
+                <forward name="success" path="manageProfilesShow.page" />
+                <forward name="save" path="manageProfilesShow.page" />
+        </action>
+    
+	<!--<action path="/pages/manageProfilesImport-submit" type="web.java.ManageProfilesImportAction" name="manageProfilesImportForm" scope="request" validate="true" input="/pages/manageProfilesImport.jsp">
+		<forward name="reload" path="/manageProfilesImport.do"/>
+		<forward name="importdone" path="/manageProfilesShow.do"/>
+	</action>-->
+    
+	<!--  manage department  -->	
+
+	<action path="/pages/manageDepartment-submit" 
+			type="web.java.ManageDepartmentAction" 
+			name="manageDepartmentForm" 
+			scope="request"
+			input="manageDepartment.page" >
+		<forward name="input" path="manageDepartment.page" />
+                <forward name="edit" path="manageDepartmentEdit.page" />
+                <forward name="delete" path="manageDepartmentDelete.page" />
+                <forward name="success" path="manageDepartment.page" />
+		<forward name="email" path="sendEmail.page" />
+		<forward name="newDepartment" path="manageDepartmentNew.page" />
+	</action>
+	
+	<action path="/pages/manageDepartmentNew-submit" 
+			type="web.java.ManageDepartmentNewAction" 
+			name="manageDepartmentNewForm" 
+			scope="request"
+                        validate="true" 
+			input="manageDepartmentNew.page" >
+	  	<forward name="input" path="manageDepartmentNew.page" />	
+                <forward name="nothingSelected" path="manageDepartmentNew.page" />
+                <forward name="reset" path="manageDepartmentNew.page" />
+                <forward name="back" path="manageDepartment.page" />
+                <forward name="success" path="manageDepartment.page" />
+  	</action>
+	
+	<action path="/pages/manageDepartmentAddUsers-submit" 
+			type="web.java.ManageDepartmentAddUsersAction" 
+			name="manageDepartmentAddUsersForm" 
+			scope="request" 
+			input="manageDepartmentAddUsers.page">
+	  	<forward name="input" path="manageDepartmentAddUsers.page" />
+	  	<forward name="nothingSelected" path="manageDepartmentAddUsers.page" />	
+                <forward name="success" path="manageDepartmentEdit.page" />
+                <forward name="back" path="manageDepartmentEdit.page" />
+   	</action>   	
+
+	<action path="/pages/manageDepartmentEdit-submit" 
+			type="web.java.ManageDepartmentEditAction" 
+			name="manageDepartmentEditForm" 
+			scope="request" 
+			input="manageDepartmentEdit.page" >
+                <forward name="input" path="manageDepartmentEdit.page" />	
+                <forward name="nothingSelected" path="manageDepartmentEdit.page" />
+                <forward name="success" path="manageDepartment.page" />
+                <forward name="reset" path="manageDepartmentEdit.page" />
+                <forward name="addUsers" path="manageDepartmentAddUsers.page" />
+                <forward name="back" path="manageDepartment.page" />
+                <forward name="error" path="error.page" />
+   	</action>
+
+	<action path="/pages/manageDepartmentDelete-submit" 
+			type="web.java.ManageDepartmentDeleteAction" 
+			name="manageDepartmentDeleteForm" 
+			scope="request"
+                        validate="true" 
+			input="manageDepartmentDelete.page" >           
+	  	<forward name="input" path="manageDepartmentDelete.page" />	
+                <forward name="success" path="manageDepartment.page" />
+                <forward name="back" path="manageDepartment.page" />
+                <forward name="cancel" path="manageDepartment.page" />
+   	</action>
+   	
+	<!--  send Email -->	
+
+	<action path="/pages/sendEmail-submit" 
+			type="web.java.SendEmailAction" 
+			name="sendEmailForm" 
+			scope="request"
+			validate="true"
+			input="sendEmail.page" >
+	    <forward name="success" path="manageGroup.page" />
+	    <forward name="nothingSelected" path="sendEmail.page" />
+	</action>
+	
+
+        <action path="/mobile/mobileMedia-submit"
+                type="web.java.MobileMediaAction"
+                name="mobileMediaForm"
+                scope="request"
+                input="mobileMedia.page">
+          <forward name="success" path="mobileMedia.page" />	
+        </action>        
+	
+        <action path="/mobile/mobileLighting-submit"
+                type="web.java.MobileLightingAction"
+                name="mobileLightingForm"
+                scope="request"
+                input="mobileLighting.page">
+          <forward name="success" path="mobileLighting.page" />	
+        </action>
+</action-mappings>
+
+<!-- Controller Configuration -->
+
+<!-- Message Resources Definitions -->
+<message-resources parameter="MessageResources" null="false"/>
+
+<!-- Plugin Definitions -->
+  <plug-in className="org.apache.struts.tiles.TilesPlugin">
+    <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml"/>
+  </plug-in>
+
+ <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml" />
+    <set-property property="stopOnFirstError" value="true" />
+  </plug-in> 
+
+</struts-config>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="server.domain">
+  <class name="GroupMars" table="GroupMars"  lazy="false">	
+    <id name="id" type="long" unsaved-value="null" >
+      <generator class="increment"/>
+    </id>
+
+    <property name="name" unique="true"/>
+    <property name="comment"/>
+    <property name="expirationDate" type="date"/>
+
+    <set name="users" table="user_group">
+      <key column="Group_Id" not-null="true" />
+      <many-to-many class="server.domain.User" column="User_Id"/>
+    </set>
+    
+  </class>
+  
+  <query name="get.all.groups">
+    <![CDATA[from server.domain.GroupMars]]>
+  </query>
+  
+  <query name="get.group.by.name">
+    <![CDATA[from server.domain.GroupMars as groupmars
+    		where groupmars.name = ?]]>
+  </query>
+
+  <query name="get.group.by.id">
+    <![CDATA[from server.domain.GroupMars as groupmars
+    		where groupmars.id = ?]]>
+  </query>
+  
+</hibernate-mapping>

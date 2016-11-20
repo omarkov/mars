@@ -1,0 +1,101 @@
+body {
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	padding: 0px ;
+	margin: 0px 0 0 3px;
+	text-align: center;
+}
+html {font-size: 100%}
+
+ p, h1, h2, h3, h4, h5, h6, ul, ol, dl {
+	margin-top: 2%;
+	margin-bottom: 1%;
+}
+
+div.error {
+	background-color: #FFF8DC;
+	color: Black;
+	border: 1px solid red;
+	margin: 15px 15px 5px 15px;
+	font-size: 88%;
+	width: 500px;
+	display: block;
+	text-align: left;
+}
+
+/* table decleration */
+
+table {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	border-width: 0px;
+	font-size: 80%;
+	text-align: right;
+	
+}
+
+th, td {
+	padding: 2px 4px 2px 4px;
+	text-align: left;
+}
+
+thead tr {
+	background-color: #D3D3D3;
+}
+
+th a, th a:visited {
+	color: black;
+}
+
+tr.odd {
+	background-color: White;
+}
+
+tr.even {
+	background-color: #EEEEEE;
+}
+
+/* input fields decleration */
+
+input.field {
+	margin:1px;
+	background-color: White;
+	color: Black;
+}
+/* Link decleration*/
+
+a:link, a:visited{
+	background: White;
+	color:black;	
+	text-decoration: underline;
+}
+
+/*  images */
+
+img {
+	border: none;
+	text-decoration: none;
+}
+
+/*  Layout declaration */
+
+#content {
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-size: 100%;
+	text-align: center;
+	color: Black;
+	background: White;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+#menu {
+	padding: 0;
+	margin: 0px 5px;
+	text-align: center;
+	}
+
+.error {
+	background-color: Red;
+	font-weight: normal;
+	color: White;
+}

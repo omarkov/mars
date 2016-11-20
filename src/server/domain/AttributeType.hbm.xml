@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="server.domain">
+  <class name="AttributeType" table="AttributeType" abstract="true" lazy="false">
+    <id name="id" type="long" unsaved-value="null">
+      <generator class="increment"/>
+    </id>
+
+    <joined-subclass name="BooleanType" table="BooleanType">
+      <key column="AttributeType_Id"/>
+      <property name="defaultVal" not-null="true" access="field"/>
+    </joined-subclass>
+
+    <joined-subclass name="NumericType" table="NumericType">
+      <key column="AttributeType_Id"/>
+      <property name="defaultVal" not-null="true" access="field"/>
+      <property name="min" not-null="true"/>
+      <property name="max" not-null="true"/>
+      <property name="step" not-null="true"/>
+    </joined-subclass>
+
+    <joined-subclass name="StringType" table="StringType">
+      <key column="AttributeType_Id"/>
+      <property name="defaultVal" not-null="true" access="field"/>
+    </joined-subclass>
+
+    <joined-subclass name="ListType" table="ListType">
+      <key column="AttributeType_Id"/>
+      <property name="contentType" not-null="true"/>
+    </joined-subclass>
+  </class>
+  
+    <query name="get.all.attributeteypes">
+    <![CDATA[from server.domain.AttributeType]]>
+  </query>
+  
+</hibernate-mapping>

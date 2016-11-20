@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="server.domain">
+  <class name="ComponentAttributeValue" table="ComponentAttributeValue" abstract="true" lazy="false">
+    <id name="id" type="long" unsaved-value="null">
+      <generator class="increment"/>
+    </id>
+
+    <many-to-one lazy="false" name="setting" cascade="none" insert="false" update="false"
+		class="ComponentSetting"
+		column="ComponentSetting_Id"/>
+    
+    <many-to-one lazy="false" name="componentAttribute"
+		 cascade="none"
+		 class="ComponentAttribute"
+		 column="ComponentAttribute_Id"/>
+    
+    <joined-subclass name="BooleanValue" table="BooleanValue">
+      <key column="ComponentAttributeValue_Id"/>
+      <property name="val" column="BOOLEAN_VALUE" access="field"/>
+    </joined-subclass>
+    
+    <joined-subclass name="StringValue" table="StringValue">
+      <key column="ComponentAttributeValue_Id"/>
+      <property name="val" column="STRING_VALUE" access="field"/>
+    </joined-subclass>
+
+    <joined-subclass name="NumericValue" table="NumericValue">
+      <key column="ComponentAttributeValue_Id"/>
+      <property name="val" column="NUMERIC_VALUE" access="field"/>
+    </joined-subclass>
+
+    <joined-subclass name="ListValue" table="ListValue">
+      <key column="ComponentAttributeValue_Id"/>
+      <bag name="val" table="ListValues" cascade="all" access="field" lazy="false">
+    	<key column="ComponentAttribute_Id"/>
+    	<element column="value" type="string"/>
+      </bag>
+    </joined-subclass>
+  </class>
+
+  <query name="get.values.by.settingid">
+    <![CDATA[from server.domain.ComponentAttributeValue as value
+    		where value.setting = ?]]>
+  </query>
+</hibernate-mapping>

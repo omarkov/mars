@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="server.domain">
+  <class name="Department" table="Department" lazy="false">
+    <id name="id" type="long" unsaved-value="null">
+      <generator class="increment"/>
+    </id>
+    
+    <natural-id mutable="true">   
+        <property name="name" type="string" length="32"/>
+        <property name="abbreviation" length = "16"/> 
+    </natural-id>
+	
+    <property name="comment"/>
+
+    <set name="users" inverse="true">
+      <key column="Department_Id"/>
+      <one-to-many class="server.domain.User"/>
+    </set>
+
+  </class>
+  
+  <query name="get.department.by.name">
+    <![CDATA[from server.domain.Department as department
+    		where department.name = ?]]>
+  </query>
+
+  <query name="get.department.by.id">
+    <![CDATA[from server.domain.Department as department
+    		where department.id = ?]]>
+  </query>
+  
+  <query name="get.all.departments">
+    <![CDATA[from server.domain.Department as department]]>
+  </query>
+
+</hibernate-mapping>

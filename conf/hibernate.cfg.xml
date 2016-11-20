@@ -1,0 +1,19 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="show_sql">false</property>
+    <property name="current_session_context_class">thread</property>
+
+    <mapping resource="../src/server/domain/AttributeType.hbm.xml"/>
+    <mapping resource="../src/server/domain/ComponentAttribute.hbm.xml"/>
+    <mapping resource="../src/server/domain/ComponentAttributeValue.hbm.xml"/>
+    <mapping resource="../src/server/domain/SmartRoomComponent.hbm.xml"/>
+    <mapping resource="../src/server/domain/SmartRoomProfile.hbm.xml"/>
+    <mapping resource="../src/server/domain/User.hbm.xml"/>
+    <mapping resource="../src/server/domain/Department.hbm.xml"/>
+    <mapping resource="../src/server/domain/GroupMars.hbm.xml"/>
+    <mapping resource="../src/server/domain/ComponentSetting.hbm.xml"/>
+    <mapping resource="../src/server/domain/Identification.hbm.xml"/>
+    <mapping resource="../src/server/domain/LogInSystem.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

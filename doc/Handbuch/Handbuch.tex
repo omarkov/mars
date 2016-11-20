@@ -1,0 +1,285 @@
+\documentclass[12pt,oneside,german,a4paper]{article}
+\usepackage[latin1]{inputenc}
+%\usepackage{isolatin1}
+\usepackage{a4}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{german}
+\usepackage{graphicx}
+\usepackage{newcent}        % Umstellung auf Schrift Times, Wichtig für gute
+                           % PDF Qualität.
+
+
+\usepackage{makeidx}
+\makeindex 
+%----------------
+% Definitionen
+
+\setlength{\textwidth}{16cm} \setlength{\textheight}{23cm}
+\setlength{\oddsidemargin}{0cm} \setlength{\topmargin}{0cm}
+\setlength{\parindent}{0cm} \setlength{\parskip}{1.5ex}
+
+
+\begin{document}
+\onecolumn
+%---------------------------------------
+% Titelseite & Inhaltsverzeichnis
+
+\title{\textbf{Administrationshandbuch}\\
+      \textbf{Mar-S}}
+%\author{Projektteam des Studienprojekts ''Mar-S''}
+\date{\today}
+% heutiges Datum: \date{\today}
+\maketitle
+\begin{center}
+Fraunhofer Institut Office Innovation Center\\
+Universität Stuttgart\\
+Rosensteinstr. 22-24\\
+70191 Stuttgart\\
+\end{center}
+
+\newpage
+
+
+%--------------------------------------------------------------------------------------------------
+% Inhaltsverzeichnis
+
+\tableofcontents
+%--------------------------
+% Hier kommt der Inhalt
+%--------------------------------------------------------------------------------------------------
+
+\newpage
+
+\section{Web-Oberfläche}
+
+\subsection{Die Administratoransicht}
+
+Ist man im System eingeloggt und besitzt Administratorrechte hat man die Möglichkeit Benutzer, Abteilungen und Gruppen anzulegen, zu verändern und zu löschen (siehe Abb~\ref{hauptAdmin}). Im Folgenden werden diese einzelnen Punkte genauer beschrieben.
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/hauptAdmin.jpg}
+\caption{Administratoransicht}
+\label{hauptAdmin}
+\end{figure}
+
+\newpage
+
+\subsection{Verwaltung der Systembenutzer}
+
+In diesem Abschnitt wird beschrieben, wie man die Benutzer des Systems verwaltet, d.h. neue Benutzer anlegen, Benutzer löschen oder Benutzer editieren kann. Hierzu klickt man in der Administratoransicht (siehe Abb.~\ref{hauptAdmin}) im Menü auf ''Benutzer''. Es erscheint die Seite (siehe Abb.~\ref{user}) um Benutzer zu verwalten.
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/user.jpg}
+\caption{Benutzerfenster}
+\label{user}
+\end{figure}
+
+
+\newpage
+
+\subsubsection{Erstellen eines neuen Benutzers}
+
+\begin{enumerate}
+
+\item In der Administratoransicht auf ''Benutzer'' klicken
+\item Auf ''Neuer Benuzer'' klicken. Es erscheint eine neue Seite (siehe Abb.~\ref{userNew})
+\item Daten für den Benutzer eingeben. Benutzername ist der Loginname im System. Die Quota legt fest wieviel Speicherplatz dem Benutzer für seine Daten zu Verfügung stehen. Setzt man die Quota auf 0, so ist diese unbegrenzt.
+\item Sind alle Eingaben eingetragen, so wird der Benutzer mit ''Speichern'' in die Datenbank übernommen. Mit ''Reset'' werden die Eingaben rückgängig gemacht.
+
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/userNew.jpg}
+\caption{Neuer Benutzer}
+\label{userNew}
+\end{figure}
+
+\newpage
+
+\subsubsection{Editieren eines vorhandenen Benutzers}
+
+\begin{enumerate}
+
+\item In der Administratoransicht auf ''Benutzer'' klicken
+\item Auf ''Edit'' klicken. Es erscheint eine neue Seite (siehe Abb.~\ref{userEdit}).
+\item Änderungen des Benutzers vornehmen
+\item Sind alle Eingaben eingetragen, so wird der Benutzer mit ''Speichern'' in die Datenbank übernommen. Mit ''Reset'' werden die Eingaben rückgängig gemacht.
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/userEdit.jpg}
+\caption{Benutzer editieren}
+\label{userEdit}
+\end{figure}
+
+\newpage
+
+\subsubsection{Löschen eines Benutzers}
+
+\begin{enumerate}
+
+\item In der Administratoransicht auf ''Benutzer'' klicken
+\item Auf ''Delete'' klicken.
+\item Es folgt noch eine Sicherheitsabfrage (siehe Abb.~\ref{userDelete}), dann wird der Benutzer gelöscht.
+
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/userDelete.jpg}
+\caption{Benutzer löschen}
+\label{userDelete}
+\end{figure}
+
+\newpage
+
+\subsection{Verwaltung der Gruppen}
+
+In diesem Abschnitt wird beschrieben, wie man die Gruppen von Benutzern des Systems verwaltet, d.h. neue Gruppen anlegen, Gruppen löschen oder Gruppen editieren kann. Hierzu klickt man in der Administratoransicht (siehe Abb.~\ref{hauptAdmin}) im Menü auf ''Gruppen''. Es erscheint die Seite (siehe Abb.~\ref{gruppe}) um Gruppen zu verwalten.
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/gruppe.jpg}
+\caption{Gruppenfenster}
+\label{gruppe}
+\end{figure}
+
+\newpage
+
+\subsubsection{Erstellen einer neuen Gruppe}
+
+\begin{enumerate}
+\item In der Administratoransicht auf ''Gruppen' klicken
+\item Auf ''Neue Gruppe'' klicken. Es erscheint eine neue Seite (siehe Abb.~\ref{gruppeNew}).
+\item Daten für die Gruppe eingeben
+\item Sind alle Eingaben eingetragen, so wird die Gruppe mit ''Speichern'' in die Datenbank übernommen. Mit ''Reset'' werden die Eingaben rückgängig gemacht.
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/gruppeNew.jpg}
+\caption{Neue Gruppe erstellen}
+\label{gruppeNew}
+\end{figure}
+
+\newpage
+
+\subsubsection{Editieren einer vorhandenen Gruppe}
+
+\begin{enumerate}
+\item In der Administratoransicht auf ''Gruppen' klicken
+\item Auf ''Edit'' für die zu editierende Gruppe klicken. Es erscheint eine neue Seite (siehe Abb.~\ref{gruppeEdit}).
+\item Änderungen für die Gruppe eingeben. Links bei den aufgelisteten Benutzern werden die Markierungen gesetzt. Um die Benutzer zu entfernen oder hinzuzufügen sollten die Buttons ''Benutzer hinzufügen'' und ''Benutzer löschen'' noch vor dem ''Speichern''- Button geklickt werden und die entsprechenden Benutzer markiert werden.
+\item Sind alle Eingaben eingetragen, so wird die Gruppe mit ''Speichern'' in die Datenbank übernommen. Mit ''Reset'' werden die Eingaben rückgängig gemacht.
+\end{enumerate}
+ 
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/gruppeEdit.jpg}
+\caption{Gruppe editieren}
+\label{gruppeEdit}
+\end{figure}
+
+\newpage
+
+\subsubsection{Löschen einer Gruppe}
+
+\begin{enumerate}
+
+\item In der Administratoransicht auf ''Gruppe'' klicken.
+\item Auf ''Delete'' klicken.
+\item Es folgt noch eine Sicherheitsabfrage (siehe Abb.~\ref{gruppeDelete}), dann wird die Gruppe gelöscht.
+
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/gruppeDelete.jpg}
+\caption{Gruppe löschen}
+\label{gruppeDelete}
+\end{figure}
+
+\newpage
+
+\subsubsection{Email an alle Gruppenmitglieder senden}
+
+\begin{enumerate}
+\item In der Administratoransicht auf ''Gruppen' klicken
+\item Auf ''E-Mail absenden'' klicken. Es erscheint eine neue Seite (siehe Abb.~\ref{gruppeMail}).
+\item Betreff und Nachricht eingeben.
+\item Alle Gruppen markieren, an die die E-Mail geschickt werden soll
+\item  Mit ''E-Mail absenden'' wird die E-Mail verschickt. Mit ''Reset'' werden die Eingaben rückgängig gemacht.
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/gruppeMail.jpg}
+\caption{E-Mail an Gruppen versenden}
+\label{gruppeMail}
+\end{figure}
+
+\newpage
+
+\subsection{Verwaltung der Abteilungen}
+
+In diesem Abschnitt wird beschrieben, wie man die Abteilungen im System verwaltet, d.h. neue Abteilungen anlegen, Abteilungen löschen oder Abteilungen editieren. Hierzu klickt man in der Administratoransicht (siehe Abb.~\ref{hauptAdmin}) im Menü auf ''Abteilungen''. Es erscheint die Seite (siehe Abb.~\ref{department}) um Abteilungen zu verwalten.
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/department.jpg}
+\caption{Abteilungenfenster}
+\label{department}
+\end{figure}
+
+\newpage
+
+\subsubsection{Erstellen einer neuen Abteilung}
+
+\begin{enumerate}
+
+\item In der Administratoransicht auf ''Abteilungen' klicken.
+\item Auf ''Neue Abteilung'' klicken. Es erscheint eine neue Seite (siehe Abb.~\ref{departmentNew}).
+\item Daten für die Abteilung eingeben. Mitglieder werden hinzugefügt, in dem die Markierung links neben den verfügbaren Benutzern gesetzt wird.
+\item Sind alle Eingaben eingetragen, so wird die Abteilung mit ''Speichern'' in die Datenbank übernommen. Mit ''Reset'' werden die Eingaben rückgängig gemacht.
+
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/departmentNew.jpg}
+\caption{Neue Abteilung erstellen}
+\label{departmentNew}
+\end{figure}
+
+\newpage
+
+\subsubsection{Editieren einer vorhandenen Abteilung}
+
+\begin{enumerate}
+
+\item In der Administratoransicht auf ''Abteilungen' klicken.
+\item Auf ''Edit'' für die zu ändernde Abteilung klicken. Es erscheint eine neue Seite (siehe Abb.~\ref{departmentEdit}).
+\item Änderungen für die Abteilung eingeben. Mitglieder werden hinzugefügt, in dem die Markierung links neben den verfügbaren Benutzern gesetzt wird. Links bei den aufgelisteten Benutzern werden die Markierungen gesetzt. Um die Benutzer zu entfernen oder hinzuzufügen, sollten die Buttons ''Benutzer hinzufügen'' und ''Benutzer löschen'' noch vor dem ''Speichern''- Button geklickt werden und die entsprechenden Benutzer markiert werden.
+\item Sind alle Eingaben eingetragen, so wird die Abteilung mit ''Speichern'' in die Datenbank übernommen. Mit ''Reset'' werden die Eingaben rückgängig gemacht.
+
+\end{enumerate}
+ 
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/departmentEdit.jpg}
+\caption{Abteilung editieren}
+\label{departmentEdit}
+\end{figure}
+
+\newpage
+
+\subsubsection{Löschen einer Abteilung}
+
+\begin{enumerate}
+
+\item In der Administratoransicht auf ''Abteilung'' klicken.
+\item Auf ''Delete'' klicken.
+\item Es folgt noch eine Sicherheitsabfrage (siehe Abb.~\ref{departmentDelete}), dann wird die Abteilung gelöscht.
+
+\end{enumerate}
+
+\begin{figure}[h!]
+\includegraphics[width = 450pt]{pix/departmentDelete.jpg}
+\caption{Abteilung löschen}
+\label{departmentDelete}
+\end{figure}
+
+
+\end{document}

@@ -1,0 +1,87 @@
+%%% -*- Mode: LaTeX; indent-tabs-mode: nil -*-
+%%%
+%%% Copyright (c) 2004, Oliver Markovic <entrox@entrox.org> 
+%%%   All rights reserved. 
+%%%
+%%% Redistribution and use in source and binary forms, with or without
+%%% modification, are permitted provided that the following conditions are met:
+%%%
+%%%  o Redistributions of source code must retain the above copyright notice,
+%%%    this list of conditions and the following disclaimer. 
+%%%  o Redistributions in binary form must reproduce the above copyright
+%%%    notice, this list of conditions and the following disclaimer in the
+%%%    documentation and/or other materials provided with the distribution. 
+%%%  o Neither the name of the author nor the names of the contributors may be
+%%%    used to endorse or promote products derived from this software without
+%%%    specific prior written permission. 
+%%%
+%%% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+%%% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+%%% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+%%% ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+%%% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+%%% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+%%% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+%%% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+%%% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+%%% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+%%% POSSIBILITY OF SUCH DAMAGE.
+
+\chapter{Datenschicht}
+\section{Allgemein}
+Im folgenden wir das Datenmodell des Mar-s Systems beschrieben. Die Beschreibung orientiert sich am UML-Klassendiagramm des zu entwerfenden Systems. Das Datenbankschema wird nicht weiter beschrieben, da es aus dem Datenmodell (Klassendiagramm) generiert wird. Das Mapping zwischen den Datenklassen des Klassendiagramms und den Datenbanktabellen übernimmt das Mappingframework \textbf{HIBERNATE}. 
+\newpage
+
+\section{Datenmodell/Klassendiagramm}
+Aus Gründen der Übersichtlichkeit sind die Methoden der Klassen im nachfolgenden Diagramm ausgeblendet. 
+\begin{figure}[!h]
+\begin{center}
+  \includegraphics[width=360pt]{Klassendiagramm.png}
+  \caption{Klassendiagramm}
+\end{center}
+\vspace*{-6mm}
+\end{figure}
+
+
+\section{Beschreibung der Datenklassen}
+
+\subsection{Klasse: \textit{Department}}
+Enthält Informationen zu den Abteilungen in der Einsatzumgebung des Mar-s Systems. Dient der Verwaltung der User. Verwaltet werden Abt.-name, -kürzel und ein Kommentarfeld. 
+
+\subsection{Klasse: \textit{User}}
+Speichert alle Benutzers die im Mar-S System registriert sind. 
+Außerdem beinhaltet sie alle wichtigen Daten um die Anmeldung am Betriebssystem (MS Windows XP Mediacenter Edition), 
+die Zuordnung zwischen Identifications (Anmeldungen an den SmartRoom) und Mar-s-User sowie dem Autostart von Profilen zu realisieren. Zusätzlich ist die Quota des Users in dieser Klasse hinterlegt. Das Passwort wird aus Sicherheitsgründen in verschlüsselter Form in der Datenbank gespeichert (Symmetrisches Verschlüsselungsverfahren), eine Entschlüsselung muss Betriebssystembedingt (vgl. Windows-API Systemlogin) gewährleistet werden. Über die Klasse \textit{User} ist der direkte Zugriff auf SmartRoomProfile möglich.
+  
+
+\subsection{Klasse: \textit{Group}}
+Diese Klassen beschreibt die Gruppen mit einem eindeutigen Name und einem Kommentarfeld. Die Gruppen verfügen über ein Haltbarkeitsdatum. Wird es Überschritten wird die Gruppe sowie aller Referenzen zu ihr gelöscht.
+Benutzer des Mar-s Systems können SmartRoomProfile definieren die für alle Mitlieder einer bestimmten Gruppe sichtbar sind. Jedes Objekt der Klasse \textit{UserLogin} gehört mindestens der Gruppe \underline{\textit{Public}} an.
+
+\subsection{Klasse: \textit{LogInSystem}}
+Diese Klasse repräsentiert LogInSysteme mit denen sich ein Benutzer an den SmartRoom anmelden kann. Ein LogInSystem ist das OPS ein anderes der PDA
+
+\subsection{Klasse: \textit{Identification}}
+Identifications bestehen aus einem LogInSystem und einem für das LogInSystem eindeutige tagID. Jeder Benutzer kann mehrere Identifications haben.
+
+
+
+\subsection{Klasse: \textit{SmartRoomComponent}}
+Die Klasse repräsentiert eine Komponente im SmartRoom. Eine Komponente kann mehrere Attribute (ComponenentAttributes) besitzen.
+
+\subsection{Klasse: \textit{ComponentAttribute}}
+Die Klasse beschreibt die Attribute einer Komponente bzw. die Subattribute eines übergeordneten Attributs.
+Jedes Komponentenattribut besitzt einen Wert (Siehe klasse \textit{ComponentAttributeValue}). Die Änderbarkeit der Attributwerte kann über das Feld editable eingeschränkt werden, dies ist wichtig für die Generierung der JSP-Seiten um Komponentenattributwerte zu modifizieren (Z.B. Lichtintensität) oder nur darzustellen (z.B. maximale Lichtintensität). Jedes Attribut hat einen bestimmten Typ (AttributeType).
+
+\subsection{Klasse: \textit{AttributeType}}
+Die Subklassen von AttributeType legen die Typen eines Attributs fest. Bisher kann ein Attribut mit Werten vom Typ String, Numeric, Boolean und List befüllt sein. Im Attributtyp ist auch der Default-Wert für das Attribut fest gelegt.
+
+\subsection{Klasse: \textit{SmartRoomProfil}}
+Diese Klasse enthält die Raumprofile für den Smartroom, diese beinhalten alle Komponenten des Smartrooms. Diese Klasse ermöglicht den Zugriff auf die einzelnen Komponenten. Ein Profil besteht also aus lauter Einstellungen von Componenteneigenschaften. Diese werden in ComponentSettings zusammengefasst.
+
+\subsection{Klasse: \textit{ComponentSetting}}
+ComponentSettings fassen die konkreten Einstellungen eines Profils (SmartRoomProfile) für eine Komponente (SmartRoomComponent) zusammen.
+
+
+\subsection{Klasse: \textit{ComponentAttributeValue}}
+Instanzen dieser Klasse realisieren die Werte die das verknüpfte ComponentAttribute annehmen soll. Wie die AttributTypen können die Values auch vom Typ Numeric, String, Boolean und List sein.

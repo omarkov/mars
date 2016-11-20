@@ -1,0 +1,811 @@
+<?xml version="1.0"?>
+
+<!-- -*- Mode: XML; indent-tabs-mode: nil -*-
+
+ Copyright (c) 2004, Oliver Markovic <entrox@entrox.org> 
+   All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+
+  o Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer. 
+  o Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution. 
+  o Neither the name of the author nor the names of the contributors may be
+    used to endorse or promote products derived from this software without
+    specific prior written permission. 
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<project name="mars" default="usage" basedir=".">
+  <description>Mar-S Build file</description>
+
+  <!--
+    ***************************************************************************
+    *                                                                         *
+    * Build properties                                                        *
+    *                                                                         *
+    *  src: source code directory                                             *
+    *  build: build directory                                                 *
+    *  dist: distribution directory                                           *
+    *                                                                         *
+    *  compile.debug: compile with debug information                          *
+    *  compile.deprecation: compile with deprecation information              *
+    *  compile.optimize: compile with optimizations                           *
+    *                                                                         *
+    *  tomcat.manager.user: username of the tomcat manager account            *
+    *  tomcat.manager.password: password of the tomcat manager account        *
+    *  tomcat.manager.url: URL of the tomcat manager application              *
+    *                                                                         *
+    *  classpath.base: the base classpath                                     *
+    *  classpath.server: the classpath needed for the server module           *
+    *  classpath.web: the classpath needed for the webinterface               *
+    *                                                                         *
+    ***************************************************************************
+    -->
+
+  <!-- directories -->
+  <property name="src" location="${basedir}/src"/>
+  <property name="lib" location="${basedir}/lib"/>
+  <property name="conf" location="${basedir}/conf"/>
+  <property name="build" location="${basedir}/build"/>
+  <property name="dist" location="${basedir}/dist"/>
+  <property name="scripts" location="${basedir}/scripts"/>
+  <property name="web"	location="${basedir}/src/web"/>
+
+  <!-- compilation properties -->
+  <property name="compile.debug" value="true"/>
+  <property name="compile.deprecation" value="false"/>
+  <property name="compile.optimize" value="true"/>
+
+  <!-- Tomcat properties -->
+  <property name="tomcat.manager.user" value="manager"/>
+  <property name="tomcat.manager.password" value="manager"/>
+  <property name="tomcat.manager.url" value="http://localhost:8080/manager"/>
+
+  <!-- classpaths -->
+  <path id="classpath.base">
+    <dirset dir="${build}"/>
+    <dirset dir="${conf}"/>
+  </path>
+
+  <path id="classpath.net">
+    <path refid="classpath.base"/>
+    <filelist dir="${lib}">
+      <file name="hibernate3.jar"/>
+      <file name="xstream-1.1.2.jar"/>
+      <file name="log4j-1.2.11.jar"/>
+      <file name="xpp3-1.1.3.4d_b4_min.jar"/>
+    </filelist>
+  </path>
+
+  <path id="classpath.ir">
+    <path refid="classpath.server"/>
+  </path>
+
+  <path id="classpath.light">
+    <path refid="classpath.server"/>
+    <filelist dir="${lib}">
+      <file name="RXTXcomm.jar"/>
+    </filelist>
+  </path>
+
+  <path id="classpath.beamercontrol">
+    <path refid="classpath.server"/>
+    <filelist dir="${lib}">
+      <file name="RXTXcomm.jar"/>
+    </filelist>
+  </path>
+
+  <path id="classpath.ops">
+    <path refid="classpath.server"/>
+    <filelist dir="${lib}">
+      <file name="RXTXcomm.jar"/>
+    </filelist>
+  </path>
+ 
+  <path id="classpath.server">
+    <path refid="classpath.base"/>
+    <filelist dir="${lib}">
+      <file name="antlr-2.7.5H3.jar"/>
+      <file name="cglib-2.1.jar"/>
+      <file name="xpp3-1.1.3.4d_b4_min.jar"/>
+      <file name="asm.jar"/>
+      <file name="asm-attrs.jar"/>
+      <file name="xstream-1.1.2.jar"/>
+      <file name="commons-collections.jar"/>
+      <file name="commons-logging.jar"/>
+      <file name="ehcache-1.1.jar"/>
+      <file name="hibernate3.jar"/>
+      <file name="jta.jar"/>
+      <file name="dom4j-1.6.jar"/>
+      <file name="xercesImpl.jar"/>
+      <file name="xml-apis.jar"/>
+      <file name="log4j-1.2.11.jar"/>
+      <file name="postgresql-8.0-311.jdbc3.jar"/>
+    </filelist>
+  </path>
+
+  <path id="classpath.opsemulator">
+    <path refid="classpath.server"/>
+  </path>
+
+  <path id="classpath.web">
+    <path refid="classpath.base"/>
+    <filelist dir="${lib}">
+      <file name="dom4j-1.6.jar"/>
+      <file name="xercesImpl.jar"/>
+      <file name="xml-apis.jar"/>
+      <file name="xstream-1.1.2.jar"/>
+      <file name="xpp3-1.1.3.4d_b4_min.jar"/>
+      <file name="struts.jar"/>
+      <file name="struts-legacy.jar"/>
+      <file name="servlet-api.jar"/>
+      <file name="log4j-1.2.11.jar"/>
+      <file name="displaytag-1.0.jar"/>
+    </filelist>
+  </path>
+
+
+
+  <!--
+    ***************************************************************************
+    *                                                                         *
+    * Network module                                                          *
+    *                                                                         *
+    *  build-net: compile *.java files and jar them up                        *
+    *                                                                         *
+    ***************************************************************************
+    -->
+
+  <!-- compile the network module -->
+  <target name="build-net" depends="init"
+	  description="Build the network module">
+    <javac srcdir="${src}"
+	   destdir="${build}"
+           debug="${compile.debug}"
+	   includes="net/**/*.java"
+	   classpathref="classpath.net">
+      <compilerarg value="-Xlint:deprecation"/>
+      <!-- <compilerarg value="-Xlint:unchecked"/> -->
+    </javac>
+
+    <jar jarfile="${dist}/lib/net.jar" basedir="${build}" includes="net/**"/>
+  </target>
+
+
+
+  <!--
+    ***************************************************************************
+    *                                                                         *
+    * Server module                                                           *
+    *                                                                         *
+    *  build-server: compile *.java files and jar them up                     *
+    *  build-osi: compile the OS interface                                    *
+    *  dump-schema: dump the database schema to a file                        *
+    *  export-schema: upload the database schema to a running database        *
+    *  update-schema: update the schema on a running database                 *
+    *  save-testdata: save testdata in the database                           *
+    *                                                                         *
+    ***************************************************************************
+    -->
+
+  <target name="run-opsemulator" depends="build-opsemulator">
+    <java fork="true" classname="opsemulator.OPSEmulator"
+	  classpathref="classpath.opsemulator">
+            <jvmarg value="-Djava.net.preferIPv4Stack=true"/>
+    </java>
+  </target>
+
+  <target name="run-server" depends="">
+    <java classname="server.ServerMain" 
+	  classpathref="classpath.server">
+            <jvmarg value="-Djava.net.preferIPv4Stack=true"/>
+    </java>
+  </target>
+
+  <!-- compile the server -->
+  <target name="build-server" depends="build-net,build-osi"
+	  description="Build the server">
+    <javac srcdir="${src}"
+	   destdir="${build}"
+           debug="${compile.debug}"
+	   includes="server/**/*.java"
+	   classpathref="classpath.server">
+    </javac>
+
+    <copy todir="${build}/server/domain">
+      <fileset dir="${src}/server/domain">
+	<include name="**/*.xml"/>
+      </fileset>
+    </copy>
+
+    <jar jarfile="${dist}/lib/server.jar" basedir="${build}" includes="server/**">
+      <manifest>
+	<attribute name="Main-Class" value="server.ServerMain"/>
+	<attribute name="Class-Path" value="../etc"/>
+      </manifest>
+
+      <fileset dir="${conf}">
+	<include name="log4j.properties"/>
+	<include name="ehcache.xml"/>
+      </fileset>
+
+      <zipfileset src="${dist}/lib/net.jar"/>
+      <zipfileset src="${lib}/antlr-2.7.5H3.jar"/>
+      <zipfileset src="${lib}/cglib-2.1.jar"/>
+      <zipfileset src="${lib}/xpp3-1.1.3.4d_b4_min.jar"/>
+      <zipfileset src="${lib}/asm.jar"/>
+      <zipfileset src="${lib}/asm-attrs.jar"/>
+      <zipfileset src="${lib}/xstream-1.1.2.jar"/>
+      <zipfileset src="${lib}/commons-collections.jar"/>
+      <zipfileset src="${lib}/commons-logging.jar"/>
+      <zipfileset src="${lib}/ehcache-1.1.jar"/>
+      <zipfileset src="${lib}/hibernate3.jar"/>
+      <zipfileset src="${lib}/jta.jar"/>
+      <zipfileset src="${lib}/dom4j-1.6.jar"/>
+      <zipfileset src="${lib}/xercesImpl.jar"/>
+      <zipfileset src="${lib}/xml-apis.jar"/>
+      <zipfileset src="${lib}/log4j-1.2.11.jar"/>
+      <zipfileset src="${lib}/postgresql-8.0-311.jdbc3.jar"/>
+    </jar>
+
+    <jar jarfile="${dist}/lib/server-stub.jar" basedir="${build}" includes="server/domain/**" />
+
+    <copy todir="${dist}/etc">
+      <fileset dir="${src}/server">
+	<include name="**/*.properties"/>
+      </fileset>
+    </copy>
+
+    <copy file="${scripts}/server.sh" todir="${dist}/bin"/>
+  </target>
+
+  <!-- compile the os interface -->
+  <target name="build-osi" depends="init"
+	  description="Build the JNI OS interface">
+    
+  </target>
+
+  <!-- export the schema -->
+  <target name="dump-schema" depends="build-server"
+	  description="Dump the database schema to mars-schema.sql">
+    <!-- define the exporting task -->
+    <taskdef name="schemaexport"
+	     classname="org.hibernate.tool.hbm2ddl.SchemaExportTask"
+             classpathref="classpath.server"/>
+
+    <schemaexport properties="${conf}/hibernate.properties"
+		  text="yes"
+		  delimiter=";"
+		  output="${dist}/etc/dbschema.sql">
+      <fileset dir="${src}/server/domain">
+	<include name="**/*.hbm.xml"/>
+      </fileset>
+    </schemaexport>
+  </target>
+
+  <!-- export the schema to a running database -->
+  <target name="export-schema" depends="build-server"
+	  description="Upload the database schema to a running database">
+    <!-- define the exporting task -->
+    <taskdef name="schemaexport"
+	     classname="org.hibernate.tool.hbm2ddl.SchemaExportTask"
+             classpathref="classpath.server"/>
+
+    <schemaexport properties="${conf}/hibernate.properties" quiet="no"
+        text="no"
+        drop="no"
+        delimiter=";"
+        output="schema-export.sql">
+    	
+      <fileset dir="${src}/server/domain">
+	<include name="**/*.hbm.xml"/>
+      </fileset>
+    </schemaexport>
+  </target>
+
+  <!-- update the schema -->
+  <target name="update-schema" depends="build-server"
+	  description="Update the database schema on a running database">
+    <!-- define the updating task -->
+    <taskdef name="schemaupdate"
+	     classname="org.hibernate.tool.hbm2ddl.SchemaUpdateTask"
+             classpathref="classpath.server"/>
+
+    <schemaupdate properties="${conf}/hibernate.properties">
+      <fileset dir="${src}/server/domain">
+	<include name="**/*.hbm.xml"/>
+      </fileset>
+    </schemaupdate>
+  </target>
+
+  <target name="save-testdata" depends="build-server"
+    description="Save testdata in the database">
+  	<java classname="server.domain.mainTest" classpathref="classpath.server"/>
+  </target>
+
+  <!--
+    ***************************************************************************
+    *                                                                         *
+    * IR control module                                                    *
+    *                                                                         *
+    *  build-ir: compile *.java files and jar them up                      *
+    *                                                                         *
+    ***************************************************************************
+    -->
+
+  <!-- compile the IR module -->
+  <target name="build-ir" depends="build-net"
+          description="Build the IR module">
+    <javac srcdir="${src}"
+           destdir="${build}"
+           includes="ir/**/*.java"
+           debug="${compile.debug}"
+           deprecation="${compile.deprecation}"
+           optimize="${compile.optimize}"
+           classpathref="classpath.ir"/>
+
+    <copy todir="${dist}/etc">
+      <fileset dir="${src}/ir">
+	<include name="**/*.properties"/>
+      </fileset>
+    </copy>
+
+    <copy file="${scripts}/mars_ir.sh" todir="${dist}/bin"/>
+
+    <jar jarfile="${dist}/lib/ir.jar" basedir="${build}" includes="ir/**">
+      <manifest>
+        <attribute name="Main-Class" value="ir.IRController"/>
+      </manifest>
+
+      <zipfileset src="${dist}/lib/server-stub.jar"/>
+      <zipfileset src="${dist}/lib/net.jar"/>
+      <zipfileset src="${lib}/RXTXcomm.jar"/>
+      <zipfileset src="${lib}/antlr-2.7.5H3.jar"/>
+      <zipfileset src="${lib}/cglib-2.1.jar"/>
+      <zipfileset src="${lib}/xpp3-1.1.3.4d_b4_min.jar"/>
+      <zipfileset src="${lib}/asm.jar"/>
+      <zipfileset src="${lib}/asm-attrs.jar"/>
+      <zipfileset src="${lib}/xstream-1.1.2.jar"/>
+      <zipfileset src="${lib}/commons-collections.jar"/>
+      <zipfileset src="${lib}/commons-logging.jar"/>
+      <zipfileset src="${lib}/ehcache-1.1.jar"/>
+      <zipfileset src="${lib}/hibernate3.jar"/>
+      <zipfileset src="${lib}/jta.jar"/>
+      <zipfileset src="${lib}/dom4j-1.6.jar"/>
+      <zipfileset src="${lib}/xercesImpl.jar"/>
+      <zipfileset src="${lib}/xml-apis.jar"/>
+      <zipfileset src="${lib}/log4j-1.2.11.jar"/>
+    </jar>
+  </target>
+
+  <target name="run-ir" depends="build-ir">
+    <java fork="yes" classname="ir.IRController"
+	  classpathref="classpath.ir">
+	    <jvmarg value="-noverify"/> 
+            <jvmarg value="-Djava.net.preferIPv4Stack=true"/>
+<!--        <jvmarg value="-Djava.library.path=./native"/>-->
+    </java>
+  </target>
+
+  <!--
+    ***************************************************************************
+    *                                                                         *
+    * Light control module                                                    *
+    *                                                                         *
+    *  build-light: compile *.java files and jar them up                      *
+    *                                                                         *
+    ***************************************************************************
+    -->
+
+  <!-- compile the LIGHT module -->
+  <target name="build-light" depends="build-net"
+          description="Build the LIGHT module">
+    <javac srcdir="${src}"
+           destdir="${build}"
+           includes="light/**/*.java"
+           debug="${compile.debug}"
+           deprecation="${compile.deprecation}"
+           optimize="${compile.optimize}"
+           classpathref="classpath.light"/>
+
+    <copy todir="${dist}/etc">
+      <fileset dir="${src}/light">
+	<include name="**/*.properties"/>
+      </fileset>
+    </copy>
+
+    <copy file="${scripts}/light.sh" todir="${dist}/bin"/>
+
+    <jar jarfile="${dist}/lib/light.jar" basedir="${build}" includes="light/**">
+      <manifest>
+        <attribute name="Main-Class" value="light.LightControl"/>
+      </manifest>
+
+      <zipfileset src="${dist}/lib/server-stub.jar"/>
+      <zipfileset src="${dist}/lib/net.jar"/>
+      <zipfileset src="${lib}/RXTXcomm.jar"/>
+      <zipfileset src="${lib}/antlr-2.7.5H3.jar"/>
+      <zipfileset src="${lib}/cglib-2.1.jar"/>
+      <zipfileset src="${lib}/xpp3-1.1.3.4d_b4_min.jar"/>
+      <zipfileset src="${lib}/asm.jar"/>
+      <zipfileset src="${lib}/asm-attrs.jar"/>
+      <zipfileset src="${lib}/xstream-1.1.2.jar"/>
+      <zipfileset src="${lib}/commons-collections.jar"/>
+      <zipfileset src="${lib}/commons-logging.jar"/>
+      <zipfileset src="${lib}/ehcache-1.1.jar"/>
+      <zipfileset src="${lib}/hibernate3.jar"/>
+      <zipfileset src="${lib}/jta.jar"/>
+      <zipfileset src="${lib}/dom4j-1.6.jar"/>
+      <zipfileset src="${lib}/xercesImpl.jar"/>
+      <zipfileset src="${lib}/xml-apis.jar"/>
+      <zipfileset src="${lib}/log4j-1.2.11.jar"/>
+    </jar>
+  </target>
+
+  <target name="run-light" depends="build-light">
+    <java fork="yes" classname="light.LightControl"
+	  classpathref="classpath.light">
+	    <jvmarg value="-noverify"/> 
+            <jvmarg value="-Djava.net.preferIPv4Stack=true"/>
+<!--        <jvmarg value="-Djava.library.path=./native"/>-->
+    </java>
+  </target>
+
+
+  <!--
+    ***************************************************************************
+    *                                                                         *
+    * BeamerControl control module                                            *
+    *                                                                         *
+    *  build-beamercontrol: compile *.java files and jar them up              *
+    *                                                                         *
+    ***************************************************************************
+    -->
+
+  <!-- compile the BeamerControl module -->
+  <target name="build-beamercontrol" depends="build-net"
+          description="Build the BeamerControl module">
+    <javac srcdir="${src}"
+           destdir="${build}"
+           includes="beamer/**/*.java"
+           debug="${compile.debug}"
+           deprecation="${compile.deprecation}"
+           optimize="${compile.optimize}"
+           classpathref="classpath.beamercontrol"/>
+
+    <copy todir="${dist}/etc">
+      <fileset dir="${src}/beamer">
+	<include name="**/*.properties"/>
+      </fileset>
+    </copy>
+
+    <jar jarfile="${dist}/lib/beamer.jar" basedir="${build}" includes="beamer/**">
+      <manifest>
+        <attribute name="Main-Class" value="beamer.BeamerControl"/>
+      </manifest>
+
+      <zipfileset src="${dist}/lib/server-stub.jar"/>
+      <zipfileset src="${dist}/lib/net.jar"/>
+      <zipfileset src="${lib}/RXTXcomm.jar"/>
+      <zipfileset src="${lib}/antlr-2.7.5H3.jar"/>
+      <zipfileset src="${lib}/cglib-2.1.jar"/>
+      <zipfileset src="${lib}/xpp3-1.1.3.4d_b4_min.jar"/>
+      <zipfileset src="${lib}/asm.jar"/>
+      <zipfileset src="${lib}/asm-attrs.jar"/>
+      <zipfileset src="${lib}/xstream-1.1.2.jar"/>
+      <zipfileset src="${lib}/commons-collections.jar"/>
+      <zipfileset src="${lib}/commons-logging.jar"/>
+      <zipfileset src="${lib}/ehcache-1.1.jar"/>
+      <zipfileset src="${lib}/hibernate3.jar"/>
+      <zipfileset src="${lib}/jta.jar"/>
+      <zipfileset src="${lib}/dom4j-1.6.jar"/>
+      <zipfileset src="${lib}/xercesImpl.jar"/>
+      <zipfileset src="${lib}/xml-apis.jar"/>
+      <zipfileset src="${lib}/log4j-1.2.11.jar"/>
+    </jar>
+  </target>
+
+  <target name="run-beamercontrol" depends="build-beamercontrol">
+    <java fork="yes" classname="beamer.BeamerControl"
+	  classpathref="classpath.beamer">
+      <jvmarg value="-noverify"/> 
+      <jvmarg value="-Djava.net.preferIPv4Stack=true"/>
+    </java>
+  </target>
+ 
+
+  <!--
+    ***************************************************************************
+    *                                                                         *
+    * Office Positioning System module                                        *
+    *                                                                         *
+    *  build-ops: compile *.java files and jar them up                        *
+    *                                                                         *
+    ***************************************************************************
+    -->
+
+  <!-- compile the OPS module -->
+  <target name="build-ops" depends="build-net"
+          description="Build the OPS module">
+    <javac srcdir="${src}"
+           destdir="${build}"
+           includes="ops/**/*.java"
+           debug="${compile.debug}"
+           deprecation="${compile.deprecation}"
+           optimize="${compile.optimize}"
+           classpathref="classpath.ops"/>
+
+    <copy todir="${dist}/etc">
+      <fileset dir="${src}/ops">
+	<include name="**/*.properties"/>
+      </fileset>
+    </copy>
+
+    <copy file="${scripts}/ops.sh" todir="${dist}/bin"/>
+
+    <jar jarfile="${dist}/lib/ops.jar" basedir="${build}" includes="ops/**">
+      <manifest>
+        <attribute name="Main-Class" value="ops.SimpleRead"/>
+      </manifest>
+
+      <zipfileset src="${dist}/lib/server-stub.jar"/>
+      <zipfileset src="${dist}/lib/net.jar"/>
+      <zipfileset src="${lib}/RXTXcomm.jar"/>
+      <zipfileset src="${lib}/antlr-2.7.5H3.jar"/>
+      <zipfileset src="${lib}/cglib-2.1.jar"/>
+      <zipfileset src="${lib}/xpp3-1.1.3.4d_b4_min.jar"/>
+      <zipfileset src="${lib}/asm.jar"/>
+      <zipfileset src="${lib}/asm-attrs.jar"/>
+      <zipfileset src="${lib}/xstream-1.1.2.jar"/>
+      <zipfileset src="${lib}/commons-collections.jar"/>
+      <zipfileset src="${lib}/commons-logging.jar"/>
+      <zipfileset src="${lib}/ehcache-1.1.jar"/>
+      <zipfileset src="${lib}/hibernate3.jar"/>
+      <zipfileset src="${lib}/jta.jar"/>
+      <zipfileset src="${lib}/dom4j-1.6.jar"/>
+      <zipfileset src="${lib}/xercesImpl.jar"/>
+      <zipfileset src="${lib}/xml-apis.jar"/>
+      <zipfileset src="${lib}/log4j-1.2.11.jar"/>
+    </jar>
+  </target>
+
+  <target name="run-ops" depends="build-ops">
+    <java fork="yes" classname="ops.SimpleRead"
+	  classpathref="classpath.ops">
+	    <jvmarg value="-noverify"/> 
+        <jvmarg value="-Djava.net.preferIPv4Stack=true"/>
+        <jvmarg value="-Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0"/>
+    </java>
+  </target>
+
+  <!--
+    ***************************************************************************
+    *                                                                         *
+    * OPS emulator module                                                     *
+    *                                                                         *
+    *  build-opsemulator: compile *.java files and jar them up                *
+    *                                                                         *
+    ***************************************************************************
+    -->
+
+  <!-- compile the OPS emulator -->
+  <target name="build-opsemulator" depends="build-net"
+	  description="Build the OPS emulator">
+    <javac srcdir="${src}"
+	   destdir="${build}"
+	   includes="opsemulator/**/*.java"
+           debug="${compile.debug}"
+	   deprecation="${compile.deprecation}"
+           optimize="${compile.optimize}"/>
+    <jar jarfile="${dist}/lib/opsemulator.jar" basedir="${build}" includes="opsemulator/**">
+      <manifest>
+	<attribute name="Main-Class" value="opsemulator.OPSEmulator"/>
+      </manifest>
+    </jar>
+  </target>
+
+
+
+  <!--
+    ***************************************************************************
+    *                                                                         *
+    * Web Module                                                              *
+    *                                                                         *
+    *  build-web: compile *.java files and create necessary directories       *
+    *  install-web: deploy the web module to a running tomcat                 *
+    *  uninstall-web: remove the web module from a running tomcat             *
+    *  reload-web: restart a running tomcat                                   *
+    *                                                                         *
+    ***************************************************************************
+    -->
+       
+  <!-- compile the web module -->
+  <target name="build-web" depends="build-net"
+	  description="Build the web module">
+    <javac srcdir="${src}/web/java"
+	   destdir="${web}/WEB-INF/classes"
+	   includes="**/*.java"
+	   debug="${compile.debug}"
+	   deprecation="${compile.deprecation}"
+	   optimize="${compile.optimize}"
+	   classpathref="classpath.web">
+      <compilerarg value="-Xlint:deprecation"/>
+      <!-- <compilerarg value="-Xlint:unchecked"/> -->
+    </javac>
+
+    <!-- create web directory -->
+    <mkdir dir="${dist}/web"/>
+
+    <!-- copy directory structure -->
+    <copy todir="${dist}/web/">
+      <fileset dir="${src}/web/">
+	<exclude name="**/*.java"/>
+      </fileset>
+    </copy>
+	
+    <!-- copy struts properties files -->
+    <copy todir="${dist}/web/WEB-INF/classes/">
+      <fileset dir="${src}/web/WEB-INF/classes/">
+	<include name="**/*.properties"/>
+      </fileset>
+    </copy>
+  	
+    <!-- copy external libraries -->
+    <copy todir="${dist}/web/WEB-INF/lib">
+      <fileset dir="${dist}/lib">
+	<include name="net.jar"/>
+	<include name="server-stub.jar"/>
+      </fileset>
+      
+    <fileset dir="${lib}">
+      <include name="dom4j-1.6.jar"/>
+      <include name="xercesImpl.jar"/>
+      <include name="xml-apis.jar"/>
+      <include name="struts.jar"/>
+      <include name="hibernate3.jar"/>
+      <include name="xpp3-1.1.3.4d_b4_min.jar"/>
+      <include name="xstream-1.1.2.jar"/>
+      <include name="struts-legacy.jar"/>
+      <include name="servlet-api.jar"/>
+      <include name="commons-beanutils.jar"/>
+      <include name="commons-digester.jar"/>
+      <include name="commons-lang-2.1.jar"/>
+      <include name="commons-collections.jar"/>
+      <include name="displaytag-1.0.jar"/>
+      <include name="log4j-1.2.11.jar"/>
+      <include name="commons-validator.jar"/>
+      <include name="oro-gump-13082005.jar"/>
+      <include name="appserv-jstl.jar"/>
+    </fileset>
+    </copy>
+  </target>
+
+
+  <target name="install-web" depends="build-web"
+	  description="Deploy the web module">
+    <!-- define the deploying task -->
+    <taskdef name="deploy"
+	     classname="org.apache.catalina.ant.DeployTask"
+	     classpath="${lib}/catalina-ant.jar"/>
+
+    <deploy url="${tomcat.manager.url}"
+	    username="${tomcat.manager.user}"
+	    password="${tomcat.manager.password}"
+            path="/mars"
+	    localWar="file://${dist}/web/"/>
+  </target>
+
+  <target name="uninstall-web" depends="build-web"
+	  description="Undeploy the web module">
+    <!-- define the uninstalling task -->
+    <taskdef name="undeploy"
+	     classname="org.apache.catalina.ant.UndeployTask"
+	     classpath="${lib}/catalina-ant.jar"/>
+
+    <undeploy url="${tomcat.manager.url}"
+	      username="${tomcat.manager.user}"
+	      password="${tomcat.manager.password}"
+              path="/mars"/>
+  </target>
+
+  <target name="reload-web" depends="uninstall-web, install-web"
+	  description="Restarts the TomCat server">
+    <!-- define the reloading task -->
+    <taskdef name="reload"
+	     classname="org.apache.catalina.ant.ReloadTask"
+	     classpath="${lib}/catalina-ant.jar"/>
+  
+    <reload url="${tomcat.manager.url}"
+	    username="${tomcat.manager.user}"
+	    password="${tomcat.manager.password}"
+            path="/mars"/>
+  </target>
+
+
+  <!--
+    ***************************************************************************
+    *                                                                         *
+    * Administrative targets                                                  *
+    *                                                                         *
+    *  all: compile everything                                                *
+    *  init: initialize build and distribution directories                    *
+    *  clean: removes build and distribution directories                      *
+    *  usage: default target, shows usage                                     *
+    *                                                                         *
+    ***************************************************************************
+    -->
+
+  <!-- create the distribution -->
+  <target name="all" depends="build-server,build-web,build-ops,build-opsemulator,build-light"
+	  description="Build everything">
+  </target>
+
+  <!-- initialize the build -->
+  <target name="init" description="Create build directories">
+    <tstamp/>
+    <mkdir dir="${build}"/>
+    <mkdir dir="${dist}"/>
+    <mkdir dir="${dist}/bin"/>
+    <mkdir dir="${dist}/lib"/>
+    <mkdir dir="${dist}/etc"/>
+    <mkdir dir="${dist}/doc"/>
+  </target>
+
+  <!-- clean everything -->
+  <target name="clean" description="Clean up">
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+    <delete file="${src}/server/osi/osi.h"/>
+  </target>
+
+  <!-- show usage -->
+  <target name="usage" description="Show usage">
+    <echo>Available targets:
+
+Administrative:
+  all ............... build everthing
+  init .............. initialize build directories
+  clean ............. clean all directories
+  usage ............. show this page (default target)
+
+Networking:
+  build-net ......... build the networking module
+
+Server:
+  build-server ...... build the server module
+  build-osi ......... build the OS interface
+  dump-schema ....... dump the database schema to mars-schema.sql
+  export-schema ..... export the schema to a running database
+  update-schema ..... update the schema in a running database
+
+OPS:
+  build-ops ......... build the OPS module
+  run-ops ........... run the OPS module
+  build-opsemulator . build the OPS emulator
+
+Webinterface:
+  build-web ......... build the webinterface
+  install-web ....... install the web module into a running Tomcat
+  uninstall-web ..... remove the web module from a runnign Tomcat
+  reload-web ........ reload a running Tomcat
+
+Lighting:
+  build-light ....... build the lighting module
+  run-light ......... run the lighting module</echo>
+  </target>
+</project>

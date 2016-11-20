@@ -1,0 +1,301 @@
+%%% -*- Mode: LaTeX; indent-tabs-mode: nil -*-
+%%%
+%%% Copyright (c) 2004, Oliver Markovic <entrox@entrox.org> 
+%%%   All rights reserved. 
+%%%
+%%% Redistribution and use in source and binary forms, with or without
+%%% modification, are permitted provided that the following conditions are met:
+%%%
+%%%  o Redistributions of source code must retain the above copyright notice,
+%%%    this list of conditions and the following disclaimer. 
+%%%  o Redistributions in binary form must reproduce the above copyright
+%%%    notice, this list of conditions and the following disclaimer in the
+%%%    documentation and/or other materials provided with the distribution. 
+%%%  o Neither the name of the author nor the names of the contributors may be
+%%%    used to endorse or promote products derived from this software without
+%%%    specific prior written permission. 
+%%%
+%%% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+%%% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+%%% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+%%% ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+%%% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+%%% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+%%% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+%%% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+%%% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+%%% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+%%% POSSIBILITY OF SUCH DAMAGE.
+
+\chapter{WebApp}
+	
+	\section{Webserver}
+		\subsection{Container und Ordnerstrucktur}
+			Der Webserver besteht aus einem Tomcat 5.0.x welcher als JSP Container dient. Hierdurch ergibt sich 
+			auch folgende Ordnerstrucktur: 
+			
+				\begin{verbatim}
+					...\Tomcat\webapps\mars
+					...\Tomcat\webapps\mars\web
+					...\Tomcat\webapps\mars\web\images
+					...\Tomcat\webapps\mars\web\jsp
+					...\Tomcat\webapps\mars\web\mldocs
+					...\Tomcat\webapps\mars\WEB-INF
+					...\Tomcat\webapps\mars\WEB-INF\classes
+					...\Tomcat\webapps\mars\WEB-INF\etc
+					...\Tomcat\webapps\mars\WEB-INF\etc\docs
+					...\Tomcat\webapps\mars\WEB-INF\lib
+					...\Tomcat\webapps\mars\WEB-INF\src
+				\end{verbatim}
+  		Der Standard Port des Servers ist \verb|8080| %wir baruchen da wohl noch ne IP bzw nen Hostnamen?%
+  		 
+		\subsection{Aufbau}
+		
+			\begin{center}
+		 		\includegraphics[width=0.50\textwidth]{Level1.jpg}
+			\end{center}
+			
+			Wie die Abbildung zeigt stellt sie die Anwendung dem Benutzer als eine reine html Anwendung dar. 
+			An dieser Stelle wird darauf hingewiesen, dass der Einstieg in das System über die Seite \verb|index.html|
+			erfolgt. Diese besteht aus reinem html und verweist auf die folgenden jsp Seiten.
+			Dies dient dem "`Information hiding"'.
+			Da es sich nicht um eine WWW Applikation handelt, wird davon abgesehen den \verb|web|-Baum unter \verb|WEB-INF|
+			unterzubringen.
+			    
+			Die durch den User gestellten Anfragen an das System(\textit{Request})(wie z.B. nach dem Ausf"ullen eins Formulars)
+			behandelt die Anwendung in Form eines Model 1\footnote{\url{http://en.wikipedia.org/wiki/Model_2}} (siehe Abbildung).
+			
+			\begin{center}
+		 		\includegraphics[width=0.80\textwidth]{Model1.jpg}
+			\end{center}		  		
+			
+			Hierbei findet, wie in der Abbildung zu sehen, eine Unterscheidung zwischen statischen und dynamischen Seiten statt.
+			
+			\paragraph{Statische Seiten}
+				Die Anwendung beinhaltet zwei statische Seiten:
+				
+					\begin{itemize}
+						\item \verb|index.html|
+						\item \verb|help.html|
+					\end{itemize}
+ 				Diese Seiten werden "`hart"' kodiert und beinhalten keinen dynamischen Inhalt.
+ 			
+ 			\paragraph{Dynamische Seiten}
+				Die in der Anwendung vorkommenden dynamischen Seiten werden durch ihre Funktionalit"at gekennzeichnet.
+				Es lassen sich folgende drei Klassen von dynamischen Seiten unterscheiden:
+				
+					\begin{itemize}
+						\item Login
+						\item Anzeigen von dynamischen Inhalten (User Profil,Playlisten)
+						\item Seiten mit Formularcharcter (Benutzererfassung)
+					\end{itemize}
+					
+				Alle vorkommenden jsp Seiten setzen sich aus diesen drei Klassen zusammen.
+				
+			Eine Interpretation von statischen Seiten findet nicht statt. Diese werden direkt als Response vom Server zurückgegeben. 
+			Bei der Übergabe an den Browser werden Cascading Style 
+			Sheets\footnote{\url{http://en.wikipedia.org/wiki/Cascading_Style_Sheets}} (kurz: css) verwendet.
+			Hierbei kommt die aktuelle Version 2.0 zum Einsatz.
+			
+			Dynamische Seiten werden durch den Server interpretiert und verarbeitet. Die Ausgabe erfolgt analog zu statischen Seiten.
+			 
+			\subsection{Request / Response}
+
+				\begin{center}
+			 		\includegraphics[width=0.80\textwidth]{Level2.jpg}
+				\end{center}	
+				
+				Die Kommunikation mit der Datenschicht erfolgt das Mapping Framework Hibernate, das in den Business-Klassen, die Zugriffsmethoden zur Datenbank bereitstellt.
+				Eine Spezifikation der Schnittstellen erfolgt im folgenden Abschnitt.
+				
+				\subsubsection{Schnittstellen}
+					Die Schnittstellen der WebApp zur Datenschicht werden über Hibernate bereitgestellt (siehe entsprechendes Kapitel).  
+					Schnittstellen bestehen dabei wie folgt:
+						WebApplikation - Businesslogik		(über JavaBeans, HelperKlassen)
+						Businesslogik -	Datenbank 				(über entsprechende JavaKlassen)
+					
+					Die WebApplikation darf selbst keine Logik enthalten, einerseits um die Wiederverwendung von Logik zu ermöglichen, andererseits um die JSP-Seiten übersichtlich und wartbar zu halten. 
+					 
+				\subsubsection{Datentypen}
+					Die zur Anwendung kommenden Datentypen sind dem Datenmodell zu entnehmen.
+										
+					
+	\section{Globale Voraussetzungen}
+		Die Globalenvoraustzungen der WebApp werden im Kapitel Systemumgebung beschrieben.
+								
+	\section{CSS}
+		\subsection{Bildschirmaufteilung}
+			Für die Applikation wir eine Bildschirmauflösung von 800x600 Pixeln angenommen.
+			
+			Der daraus resultierende Platz für die Web-Applikation:\\
+			Absolute Werte für die zur Verfügung stehende Höhe und Breite zu bestimmen, ist nur schwer
+			möglich. Besonders die Höhe kann durch viele Faktoren beeinflußt werden, einerseits durch die
+			persönlichen Einstellungen des Benutzers (Buttons des Browsers, Adreßzeile des Browsers,
+			Startmenü des Desktops), sowie durch zusätzliche Elemente der Portale.
+			Aber auch die Breite kann nicht mit Sicherheit bestimmt werden. Punkte wie: Ist eine Scrollbar sichtbar?
+			Oder: Hat der Benutzer eine Explorer-Leiste aktiviert? Können Einfluß auf die Breite haben.
+			Daher können an dieser Stelle nur Richtwerte in Abhängigkeit der Bildschirmauflösung gegeben werden.
+			
+				\begin{description}
+					\item[Bildschirmauflösung:]	800x600
+					\item[ungefähre Breite:] 780
+					\item[ungefähre Höhe:] 420 
+				\end{description}
+		
+		
+		\subsection{Textformatierung}
+			
+			\subsubsection{Schriftart}
+				Als Standard Schrift kommt Verdana zum Einsatz. Ersatzschrift für Verdana ist Helvetica, liegt weder Verdana noch Helvetica 
+				beim Anwender vor, ist eine beliebige serifen-freie Schrift zu verwenden.
+
+				Schriftfarbe in Fließtexten ist schwarz, Schrifthintergrund ist weiß.
+				Ausnahmen hiervon bilden Links, Navigationselemente, teilweise Überschriften, Spalten- und Zeilenköpfe in Tabellen
+				sowie strukturierende Texte.
+			\subsubsection{Schriftgrößen, -stil, -farben}
+				
+				\begin{description}
+					\item[Überschriften 1. Klasse:] Verdana, 160\% (15 pt), \#305070, mager
+					\item[Überschriften 2. Klasse:] Verdana, 160\% (15 pt), black, mager
+					\item[Überschriften 3. Klasse:] Verdana, 135\% (11pt), black, mager
+					\item[Überschriften 4. Klasse:] Verdana, 120\% (default), black, mager, border-bottom: 1px solid silver;
+					\item[Überschriften 5. und 6. Klasse (zurühaltend verwenden)] Verdana, 100\%
+					(default), black, mager, border-bottom: 1px solid silver; solid silver;\\
+					Verdana, 80\% (default), black, mager, border-bottom: 1px solid silver;
+					\item[Schrift normal:] Verdana, 80\% (10pt), mager, black
+					\item[Schrift klein:] Verdana, 85\% relativ (8pt), mager, black
+					\item[Hervorhebungen:] nur fett, selten kursiv, nie unterstrichen, ggf.
+					farbliche Hervorhebung, sofern nicht blau oder rot (Verwechslungsgefahr mit Links)
+					\item[Links (frisch):] blue, im Fließtext unterstrichen
+					\item[Links (besucht):]\#204070 (blaugrau)
+					\item[Links (aktiv, fokus, hover):] Bevorzugt 'red'
+				\end{description}
+
+		\subsection{Farben}
+			\subsubsection{Flächenfarben}
+				\begin{description}
+					\item [\#ffffff] Seitenhintergrund
+					\item [\#f7f7f9] Boxenzellen
+					\item [\#ffffcc] Navigation
+				\end{description}
+			\subsubsection{Schrift- und Linienfarben}
+				\begin{description}
+					\item [\#7f7f7f] Grau (für Überschriften)
+					\item [\#000000] Schrift
+					\item [\#204070] Besuchter Link
+					\item [\#0000ff] Link
+					\item [\#ff0000] Hover Link u.a.
+				\end{description}
+	\section{JSP Allgemein}			
+		Für alle Benutzer gilt dasselbe Seitenlayout, den Administratoren werden jedoch zusätzliche Funktionen angezeigt. Die Erfolgt über eine Abfrage des Attributs \textit{administrator} der Datenklasse \textit{User}.  
+		
+		Alle Erstellten jsp-Seiten sollen folgendem Aufbau genügen:
+	\begin{verbatim}
+		<!-- Packageimport -->
+		<%@ ...List of required imports...%>"
+		<%@ ... >
+		
+		<!-- Data Declarations --->
+		<%! ...List of declarations ...%>
+		<%! ... >
+		
+		<!-- Site description -->
+		<%-- Author:			 ... 
+				 Date:				 ... 
+				 Description:	 ... --%>
+		
+		<html>
+			<head>
+			</head>
+			
+			</body>
+			<!-- Only if required -->
+			<jsp:useBean id="... " class="...">
+			
+			...
+			
+			<!-- Code comment in one line -->
+			<% ...code as required... >
+			
+			...
+			
+			</body>
+		</html>
+		\end{verbatim}
+		
+		Mehrzeilige Kommentare sollen im Body-Bereich nicht verwendet werden.
+		
+		Die JSP-Seiten sollen keine Businesslogik enthalten.  
+					
+	\section{Benutzer- und Gruppenverwaltung}
+		
+		Die Benutzer- und Gruppenverwaltung ist nur Administratoren zugänglich.
+		
+		\textbf{Benutzer} können nur lesend auf Ihre Gruppen-Mitgliedschaften zugreifen.
+		
+		\textbf{Benutzer} haben jedoch die Möglichkeit ihr eignens Profil zu ändern.
+		Eine JSP-Seite mit Möglichkeiten zur Änderung folgenden Daten wird den Benutzern angezeigt.
+		
+	Datenfeld		Typ		Bedingungen	
+\begin{itemize}
+	\item 		\textit{lastName 			: String :  Nicht leer, [A-Z,a-z,.,-,äÄöÖüÜß,0-9] }
+	\item 		\textit{firstName			: String :  Nicht leer, [A-Z,a-z,.,-,äÄöÖüÜß,0-9] }
+	\item 		\textit{email					: String :  Nicht leer, [A-Z,a-z,.,-,\_',äÄöÖüÜß,0-9] nach Schema xxx@[xxx.]+xxx }
+	\item 		\textit{password			: String :	Nicht leer }
+	\item 		\textit{defaultProfil	: String :	 }
+\end{itemize}
+		
+		\textbf{Benutzerverwaltung:}
+		\textbf{Adminstratoren} erhalten eine JSP-Seite zum Anlegen, Bearbeiten und Löschen von Benutzern.
+		Diese Seite Enhält eine Maske mit allen Datenfeldern die es zu Benutzern gibt,
+		eine Buttonleiste die die oben genannten Aktionen ermöglicht.
+		Eine Tabelle bzw. Liste mit allen Benutzern des Systems.
+		
+		Ein Administrator darf sich selbst nicht das Recht Administrator entziehen können.  
+		
+		\textbf{Gruppenverwaltung:}
+		\textbf{Adminstratoren} erhalten eine JSP-Seite zum Anlegen, Bearbeiten und Löschen von Gruppen.
+		Diese Seite Enhält eine Maske mit allen Datenfeldern die es zu Gruppen gibt.
+		Eine Buttonliste die die oben genannten Aktionen ermöglicht.
+		Eine Tabelle bzw. Liste mit allen Gruppen des Systems.
+		
+	\section{Profilverwaltung}
+		
+		Jeder Benutzer des Mar-S System hat die Möglichkeit, Profile anzulegen,  zu löschen und zu bearbeiten.
+		Dabei wird zunächst eine Liste an Profilen angezeigt deren Ersteller der aktuelle Benutzer ist.
+		
+		Bei Auswahl eines Profils werden alle verfügbaren Komponenten des Profils angezeigt (Aus Klasse \textit{SmartRoomComponent}).  
+		Die Profilverwaltung muss dann in Abhängigkeit der ausgewählten Komponente des Profils eine passende Seite 
+		generieren.
+		
+		Dazu werden alle Komponentenattribute (Aus Klasse \textit{ComponentAttribut}) einer Komponente aus der Datenbank geholt und entsprechend ihres Typs dargestellt.
+		
+		Alle Komponentenattribute werden Zeilenweise in einer Tabelle dargestellt. Die Komponentenattribute werden entsprechend ihres Typs dargestellt
+	
+		\begin {itemize}
+			\item Nicht editierbare Komponentenattribute werden grundsätzlich als Labels dargestellt.
+			\item Strings werden in einem editierbaren Textfeld angezeigt.
+			\item Booleanwerte werden als Checkbox angezeigt.
+			\item Integerwerte werden als Slider angezeigt.
+		\end {itemize}
+		
+		Zusammengesetze Werte wie Playlist oder Einstellungen mit Minimum und Maximum-Werten müssen jeweils als zusammenhängende Tabelle oder in einer Zeile dargestellt werden.    
+		
+		Der Aufbau einer Komponentenattributseite erfolgt durch eine Schleife die alle Einträge zu einer Komponente eines Profils durchläuft und entsprechend den oben genannten Bedingungen darstellt.  		
+		
+
+	\section{Exceptions}
+		\subsection{Standard Exceptions}
+			Eine vollständige Auflistung aller Http Exceptions ist unter\\ 
+			\href{http://www.w3.org/Protocols/HTTP/1.1/spec.html#Status-Codes}{http://www.w3.org/Protocols/HTTP/1.1}
+			zu finden. Diese kommen standardmäßig zum Einsatz.
+		
+		\subsection{Mars Exceptions}
+			Kommt es innerhalb der Anwendung zu einen Fehlerfall, so reagiert die WebApp konstruktiv, dies bedeute, dass die Anwendung 
+			dem User keine Fehlermeldung ausgibt, sondern Fehlerfälle reaktiv bearbeitet.
+			Kommt es bei dem von der Datenschicht zurückgelieferten Datentyp zu einem Konflikt, so wird dies von der WebApp erkannt und 
+			durch einen Platzhalter ersetzt. 
+			
+			Excepitions werden in einem eigenen Paket der Mar-S Businesslogik behandelt.
+			In Fehlerfällen, z.B. Verbindung zur Datenbank konnte nicht aufgebaut werden, wird eine JSP-Fehler Seite angezigt die sich an das Layoutschema der gesamten Anwendung halten. Es soll eine Klartext Fehlerbeschreibung, Fehlerursache und Fehlerbehebungsstrategie ausgegeben werden, anstatt der Java-Exceptionmeldung.      
+			

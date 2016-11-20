@@ -1,0 +1,527 @@
+\chapter{Rechtesystem}
+\section{Überblick}
+
+Die folgende Abbildung soll die Beziehungen zwischen den beteiligten Elementen im Smartroom verdeutlichen.
+
+\begin{figure}[!h]
+	\begin{center}
+		\includegraphics[width=360pt]{01-uebersicht.png}
+	\end{center}
+\end{figure}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Benutzer}
+
+\subsection{Allgemein}
+
+Jeder Benutzer hat:
+\begin{itemize}
+	\item genau eine Rollen (Administrator, Standard-User, Gast)
+	\item	die Rechte und Funktionen eines Standard-Users (siehe Besonderheiten bei Gast und Administrator)
+	\item genau eine datenbankweit eindeutige Identifikationskennung.
+\end{itemize}
+Jeder Benutzer bzw. sein Benutzerprofil muss mindestens über folgende Daten verfügen:
+(Optionale Felder sind explizit als solche bezeichnet)
+
+\vspace{0.5cm}
+\small
+\begin{tabular}{|c|c|p{7.5cm}|p{2cm}|}
+	\hline
+	Datenfeld & Typ &	Bemerkung \\
+	\hline
+	Benutzer-/Loginname &	String &	Muss datenbankweit eindeutig sein \\
+	\hline
+	Passwort & String &	MD5-Hashwert der Klartextpassworts \\
+	\hline
+	Name & String \\
+	\hline	
+	Vorname &	String \\
+	\hline	
+	Email	& String &	RegEx für Email \\
+	\hline
+	Abteilungskürzel &	String &	-Eingabe optional- \\
+	\hline
+	Bemerkungen	& String &	-Eingabe optional- \\
+	\hline
+	Rolle	& Enumeration &	{Gast, Standard-User, Administrator} \\
+	\hline
+	Gruppenzugehörigkeit & Gruppe[ ] &	Gruppenbezeichnungen, 0..n Gruppenzugehörigkeiten möglich \\
+	\hline
+\end{tabular}
+
+\begin{itemize}
+	\item Benutzer können nur von Administratoren angelegt, bearbeitet, organisiert und verwaltet werden. 
+	\item Es muss sichergestellt werden, dass für einen Benutzer im Mar-S System und im Netzlaufwerk ein Ordner existiert. Für jeden Benutzer muss ein Account im MS Windows XP Media Center Edition erstellt werden.
+	\item Jeder Benutzer soll jederzeit sein Passwort für die Anmeldung am System ändern können
+	\item Benutzerrollen werden sofort beim Anlegen vergeben, sie müssen jederzeit änderbar sein.
+	\item Über den Benutzer-/Loginnamen muss eine eindeutige Beziehung zu den OPS-Tag-IDs erzeugt werden können.
+\end{itemize}
+
+Kommentar: \textit{Es muss eine automatische Zuordnung von im Smartroom erkannten OPS-Tags und in der Datenbank registrierten Benutzern möglich sein. Nicht zuordenbare OPS-Tag-IDs sollen ignoriert werden, sie dürfen nicht die Abläufe im Smartroom stören.}
+
+\begin{itemize}
+	\item Jeder Benutzer kann über ein Defaultprofil verfügen. Der Benutzer soll sich unter allen ihm zugänglichen Playlists und Raumprofilen ein Defaultprofil auswählen können.
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{itemize}
+	\item Das Defaultprofil wird beim Betreten des Smartrooms automatisch gestartet, sofern der Benutzer keine andere Auswahl trifft.
+	\item Ein Benutzer kann Mitglied in keiner, einer oder mehreren Gruppen sein.
+	\item Wird ein Benutzer angelegt oder gelöscht, sie ist Ihm auf seine Emailadresse eine Benachrichtigung zu senden.
+\end{itemize}
+
+\subsection{Gast}
+Folgende Abweichungen vom Standard-User gelten für Benutzer die als Gast fungieren sollen:
+
+\begin{itemize}
+	\item Gast-Benutzer besitzen keine Quota. ( 0 MB) 
+	\item Der Gast-Benutzer muss als solcher erkennbar sein
+\end{itemize}
+
+Kommentar: \textit{Dies soll die Benutzerverwaltung auf Seiten des Mar-S Systems vereinfachen.}
+
+\subsection{Standard-User}
+Für Standard-User gelten folgende Anforderungen:
+
+\textbf{Gruppenzugehörigkeit:}
+\begin{itemize}
+	\item Ein Standard-User kann Mitglied in keiner, einer oder mehreren Gruppen sein
+	\item Die Zugehörigkeit zu einer Gruppe soll nur durch den Administrator jederzeit änderbar sein
+\end{itemize}
+
+\textbf{Speichervolumen auf dem Dateisystem (Netzlaufwerk):}
+\begin{itemize}
+	\item Für jeden Benutzer soll eine Quota individuell festlegbar sein.
+	\item Die Quota soll mit einem konfigurierbaren Defaultwert belegt werden
+	\item Die Quota je Benutzer darf das zulässige freie Speichervolumen nicht überschreiten
+	\item Auf dem Dateisystem besitzt jeder Standard-User genau einen Ordner, in dem er seine atomare Dateien (mit der Sichtbarkeit private) speichern kann.
+	\item Die Quota soll nur für private Ordner gelten.
+\end{itemize}
+
+\textbf{Eigenes Benutzer-Profil ändern:}
+\begin{itemize}
+	\item Ein Standard-User kann nur sein Passwort für die Anmeldung am System ändern, ansonsten kann er keine Daten seines Benutzer-Profils ändern.
+\end{itemize}
+  
+\textbf{Mar-S Profil erstellen:}
+\begin{itemize}
+	\item Ein Standard-User kann über kein, ein oder mehrere Profile verfügen.
+	\item Es kann genau ein Profil als Default ausgewählt werden.
+	\item Ein Profil besteht dabei aus einer Playlist und einem Raumprofil.
+	\item Die Erstellung eines Profils soll effizient möglich sein.
+	\item Die Profile dürfen nur durch den Besitzer (Ausnahme: Administrator) geändert oder gelöscht werden.
+	\item Profile werden in der Datenbank des Mar-S Systems gespeichert.
+\end{itemize}
+
+\textbf{Datenstreams:}
+\begin{itemize}
+	\item Der Standard-User muss die Möglichkeit haben, einen Datenstream im Smartroom abspielen zu können.  
+\end{itemize}
+
+\textbf{Sichtbare Daten und verfügbares Volumen:}
+\begin{itemize}
+	\item Dem Standard-User ist seine Verfügbare und frei Quota anzuzeigen
+	\item Der Standard-User soll alle ihm zugänglichen Daten im Webinterface sehen können. 
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection {Administratoren}
+Folgende Abweichungen vom Standard-User gelten für Benutzer die als Administrator fungieren sollen:
+
+\textbf{Der Administrator}
+\begin{itemize}
+	\item hat auf alle Daten in der Mar-S Datenbank Lese- und Schreibrecht. 
+	\item hat auf alle Dateien im Netzlaufwerk (Mar-S Dateiordner) Lese- und Schreibrecht.
+	\item kann Benutzer anlegen, ändern und löschen.
+	\item kann Gruppen anlegen, ändern und löschen.
+	\item ist automatisch Mitglied in alle Gruppen.
+	\item kann sich selbst nicht löschen.
+	\item hat Lese- und Schreibrecht auf alle Konfigurations- und Einstellungsmöglichkeiten des Mar-S Systems. 
+\end{itemize}
+
+Beim Löschen von Daten muss die Datenkonsistenz gewährleistet werden.
+
+Kommentar: \textit{Der Umfang und die Ausgestaltung einzelner Funktionen und Einstellungen wird an anderer Stellen spezifiziert.}
+
+\section {Gruppen}
+Kommentar: \textit{Gruppen haben den Zweck einer Menge an Benutzer (unabhängig von ihrer Rolle) eine gemeinsame Sicht auf Daten zu ermöglichen.} 
+
+\textbf{Gruppen im Netzlaufwerk:}
+\begin{itemize}
+	\item Für jede Gruppe gibt es genau einen Ordner auf dem Netzlaufwerk, dieser dient zur Speicherung von atomarer Daten der Sichtbarkeit group. 
+	\item Gruppen haben im Rahmen der Systemressourcen unbegrenzte Quota. Dateien.
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Gruppenverwaltung:}
+\begin{itemize}
+	\item Gruppen können nur durch Administratoren angelegt, bearbeitet und gelöscht werden.
+	\item Es muss sichergestellt werden, dass für eine Gruppe im Mar-S System und im Netzlaufwerk ein Ordner existiert. 
+	\item Der Gruppenordner im MS Windows XP Media Center Edition muss für alle Mitglieder der Gruppe sichtbar sein.
+	\item Gruppen haben ein in der Zukunft liegendes Verfallsdatum. Es muss durch Administratoren jederzeit änderbar sein.
+	\item Sieben Tage und einen Tag vor Erreichen des Verfalldatums einer Gruppe, wird eine Email an die Administratoren und die Gruppenmitglieder geschickt, mit einem Hinweistext, dass die Gruppe in Kürze ihr Verfallsdatum erreicht und gelöscht wird.
+	\item Abgelaufene Gruppen werden automatisch über einen Hintergrunddienst gelöscht. Nach dem Löschvorgang ist eine Email mit Erfolgs- oder Fehlermeldung an die Administratoren zu schicken.
+	\item Ein Löschen einer Gruppe muss zusätzlich jederzeit durch Administratoren möglich sein. Wird eine Gruppe manuell gelöscht, so ist ebenfalls eine Erfolgs- oder Fehlermeldung anzuzeigen.
+\end{itemize}
+
+Kommentar: \textit{Wird das Verfallsdatum erreicht oder eine gruppe manuell gelöscht,, wird das Gruppenverzeichnis (im Netzlaufwerk und auf der Mar-S Datenbank) samt aller Daten (Gruppenprofile und atomare Dateien) unter Beachtung der Datenkonsistenz gelöscht.}
+
+Kommentar: \textit{Gruppen verfügen über keine Rechte. Sie beinhalten keine Rechte für keine ihre Mitglieder.}
+
+Jede Gruppe muss mindestens über folgende Daten verfügen:
+(Optionale Felder sind explizit als solche bezeichnet)
+
+\vspace{0.5cm}
+\small
+\begin{tabular}{|c|c|p{7.5cm}|p{2cm}|}
+	\hline
+	Datenfeld	& Typ &	Bemerkung \\
+	\hline
+	GruppenIDname	& String &	Muss datenbankweit eindeutig sein \\
+	\hline
+	Bemerkungen	& String & -Eingabe optional- \\
+	\hline
+	Verfallsdatum	& Datum	& Datum muss in der Zukunft liegen oder "'unendlich"' \\
+	\hline
+	Gruppenmitglieder	& Benutzer[ ]	& 0..n Mitglieder möglich  \\
+	\hline
+\end{tabular}
+
+\subsection {Die Gruppe \textit{PUBLIC}}
+\begin{itemize}
+	\item Die Gruppe Public stellt eine Gruppe dar, deren Mitglied jeder Benutzer im Mar-S System sein muss.
+	\item Sie hat innerhalb der Systemressourcen unbegrenzte Quota
+	\item Für die Gruppe Public muss im Mar-S System und im Netzlaufwerk jeweils ein gleichnamiger Ordner angelegt werden.
+	\item Der genannte Ordner dient jeweils als Speicherort für Daten mit der Sichtbarkeit public
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section {Rechte}
+Im Mar-S System ist ein Rechtesystem einzurichten, das in Abhängigkeit des Benutzers und seiner Sichtbarkeit auf Daten Aktionen zur Veränderung der Daten zulässt.
+
+\textbf{Das Rechtesystem gliedert sich dabei in drei Klassen:}
+
+\begin{itemize}
+	\item \textbf{R} ead (Lesen, Abspielen, Kopieren)
+	\item \textbf{W} rite (beinhaltet Erstellen, Ändern, Löschen)
+	\item \textbf{A} dministrate (Administrieren incl. R+W)
+\end{itemize}
+
+Das Write-Recht wird nur dem Besitzer einer Datei eingeräumt
+
+Das Administrate-Recht beeinhaltet das Read und Write-Recht auf alle Daten 
+
+Die Verwaltung und der Status der Rechte muss jederzeit konsistent zu den Daten gehalten werden.
+
+Kommentar: \textit{Das Rechtesystem ergibt sich implizit aus dem Datentyp (und ggf. seines Besitzstatus), auf den zugegriffen werden soll, der Benutzerrolle und der Sichtbarkeit der Daten für den Benutzer. Das Rechtesystem ist daher nicht sichtbar, den Benutzern ist keine Änderung der  Einstellungen am Rechtssystem möglich.}
+
+\begin{itemize}
+	\item Administratoren haben auf alle Daten Read und Write Recht.
+	\item Besitzer haben auf ihre Daten Read und Write Recht.
+	\item Sonstige Benutzer haben auf ihnen Sichtbare Daten nur Read Recht.
+\end{itemize}
+
+Im Kapitel Daten wird spezifiziert welche Rechte sich für den Benutzer in Abhängigkeit der zugegriffen Daten ergeben und deren Sichtbarkeit. 
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section {Daten}
+\subsection {Allgemein:}
+Kommentar: \textit{Der Zugriff auf Daten im Mar-S System ist in Abhängigkeit der jeweiligen Benutzerrolle zu gewähren.}
+
+\begin{itemize}
+	\item Werden Daten erstellt, bearbeitet oder gelöscht, muss die Konsistenz der Daten erhalten bleiben. 
+	\item Durch ein Quotasystem ist sicherzustellen, dass das Datenvolumen innerhalb der durch die Einsatzumgebung vorgegebenen Ressourcen liegt.
+	\item Es muss sichergestellt werden, dass die Daten gesichert werden. 
+\end{itemize}
+
+Kommentar: \textit{Dies ist durch die Einsatzumgebung des Mar-S Systems sicherzustellen.}
+
+\subsection {Sichtbarkeit der Daten (Views)}
+Auf atomaren Dateien und Profile ist im Mar-S System ein Sichtbarkeitskonzept einzurichten. Dieses Konzept umfasst drei Klassen an Sichtbarkeit:
+
+\begin{itemize}
+	\item Private:	Zugriff nur durch Benutzer (Besitzer) oder Administratoren
+	\item Group	:	Zugriff nur durch Gruppenmitglieder oder Administratoren
+	\item Public:	Zugriff durch alle Benutzer des Mar-S Systems
+\end{itemize}
+
+Kommentar: \textit{Die Public-Sichtbarkeit wird durch eine Gruppe realisiert, der alle Benutzer des Mar-S Systems angehören.}
+
+Eine ausführliche Beschreibung, welche Aktionen sich durch Benutzerrechte (Benutzerrolle) und Sichtbarkeit ergeben, ist bei den einzelnen Datentypen spezifiziert.
+
+Das oben genannte Sichtbarkeitskonzept muss konsistent, zu den atomaren Dateien im Netzlaufwerk und zum Mar-S System (Datenbank) gehalten werden.  
+
+\subsection {Atomare Dateien}
+\begin{itemize}
+	\item In der Datenbank des Mar-S Systems werden Referenzen zu jeder atomaren Dateien gespeichert, die sich im Mar-S Verzeichnis des Netzlaufwerks befindet. 
+	\item Über diese Referenz müssen Informationen wer Ersteller und damit Besitzer der Datei ist, abgerufen werden können. 
+\end{itemize}
+	
+Kommentar: \textit{Systembenutzer müssen daher eine eindeutige Beziehung zur Benutzerkennung im Mar-S System haben.}
+
+\textbf{Rechte auf atomare Dateien:}
+\begin{itemize}
+	\item Administratoren haben Read + Write-Rechte auf alle atomaren Dateien im Mar-S Verzeichnis des Netzlaufwerks, unabhängig ihrer Sichtbarkeit und ihres Besitzers.
+	\item Der Besitzer (Ersteller) einer atomaren Datei hat das Read + Write-Recht auf die Datei
+\end{itemize}
+
+\textbf{Sichtbarkeit:}
+\begin{itemize}
+	\item Durch die Verzeichnisstruktur im Netzlaufwerk muss das Sichtbarkeitskonzept des Mar-S Systems implementiert werden
+\end{itemize}
+
+\textbf{Atomare Dateien mit der Sichtbarkeit:}
+
+\begin{itemize}
+	\item \textbf{<private>}  befinden sich nur in den Benutzerordner des Netzlaufwerks.
+	Besitzer und Administratoren haben R+W-Recht auf die Datei.   
+	\item \textbf{<group>}  befinden sich im jeweiligen Ordner der Gruppen im Netzlaufwerk. 
+	Nicht Gruppenmitglieder haben kei Recht auf die Datei.
+Gruppenmitglieder haben R+W-Recht auf die Datei
+Besitzer und Administratoren haben R+W-Recht auf die Datei.
+	\item \textbf{<public>}  	befinden sich im Public-Ordner (=Gruppe Public) im Netzlaufwerk
+		Alle Benutzer haben R-Recht auf die Datei
+		Besitzer und Administratoren haben R+W-Recht auf die Datei.
+\end{itemize}
+    
+Kommentar: \textit{Die Dateireferenzen in der Datenbank müssen sich konsistent zur Situation im Netzlaufwerk verhalten}
+
+\textbf{Atomare Dateien löschen:}
+\begin{itemize}
+	\item Das Löschen ist direkt im Netzlaufwerk  (über Betriebssystem)  und über das Webinterface (Mar-S Systems) möglich.
+	\item Vor dem Löschen ist eine Warnung anzuzeigen, ob wirklich gelöscht werden soll. Nach Bestätigung des Löschvorgangs muss unter Beachtung der Datenkonsistenz gelöscht werden.  
+	\item Atomare Dateien können nur vom Besitzer einer Datei oder von einem Administrator gelöscht werden. Bei Gruppendateien durch alle Mitglieder der Gruppe.
+\end{itemize}
+
+Kommentar:	\textit{Wird eine Datei im Netzlaufwerk gelöscht, so muss eine Funktion alle Referenzen auf diese Datei in der Datenbank ebenfalls löschen \textbf{-> Datenkonsistenz}.}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Atomare Dateien hochladen:}
+\begin{itemize}
+	\item Das Hochladen funktioniert direkt über das Netz, indem die Datei in den entsprechenden Ordner im Mar-S Netzlaufwerk kopiert oder verschoben wird. 
+	\item Innerhalb der Datenbank müssen auf die atomaren Dateien eindeutige Referenzen gespeichert werden. Die Referenzen auf die atomaren Dateien müssen automatisch beim Hochladen der Datei in der Datenbank erzeugt werden.
+	\item Über den Pfad zur atomaren Datei auf dem Netzlaufwerk, muss abfragbar sein, wer der Ersteller (Besitzer) der Datei ist, die Größe der Datei und das Erstellungsdatum.
+\end{itemize}
+
+\subsection {Datenstreams}
+\begin{itemize}
+	\item Auf Datenstreams werden durch innerhalb des Mas-Systems durch absolute Pfade zu Mediendateien repäsentiert.
+\end{itemize}
+
+Kommentar: \textit{Dadurch soll es ermöglicht werden,  große Dateien (z.B. Filme) direkt im Smart-Room abzuspielen, ohne sie ins Dateienverzeichnis des Mar-S Systems hochzuladen.}   
+
+\begin{itemize}
+	\item Der Pfad zum Datenstream wird in die Playlist eingetragen und kann beim nächsten Betreten des Smartrooms abgespielt werden.
+	\item Kombinationen mit Dateien des Mar-S Verzeichnisses sollen möglich sein. 
+\end{itemize}
+
+Kommentar: \textit{Der Datenstream verhält sich exakt wie eine atomare Datei.} 
+
+\subsection {Smartroomprofile}
+
+\begin{itemize}
+	\item Ein Smartroomprofil besteht aus einer Playlist und einem Raumprofil
+	\item Ein Smartroomprofil kann pro Benutzer als Default markiert werden, dies wird dann im Fall eines Autostarts des Mar-S Systems geladen. 
+	\item Wird ein Smortroomprofil im SmartRoom geladen, so müssen sich alle betroffenen Komponenten mindestens von einem Standby-Zustand aus aktivieren lassen. 
+	\item Mitglieder einer Gruppe (die nicht Besitzer sind) haben auf Profile für Gruppen nur Leserechte.   
+\end{itemize}
+
+Kommentar: \textit{Für die Benutzer gelten die selben Rechte wie für atomare Dateien.
+Es ist zu evaluieren, ob für das Betriebssystem (MS Win XP Media Center) ein Wake-Up über LAN implementiert werden kann. Alle peripheren Geräte des Smartrooms können ev. über ein Master-Slave Energieversorgungssystem gestartet werden. }
+
+Die Smartroomprofile müssen mindestens folgende Daten enthalten:\\
+
+\vspace{0.5cm}
+\small
+\begin{tabular}{|c|c|p{3.0cm}|p{4.0cm}|}
+	\hline
+	Datenfeld	& Typ	& Bemerkung \\ 
+	\hline
+	Raumprofilname &	String & Mindestens innerhalb eines Ordners eindeutig \\
+	\hline	
+	Bemerkungen	& String & -Eingabe optional- \\
+	\hline	
+	Zuletzt geändert &	Datum	& Datum wird automatisch gepflegt \\
+	\hline
+	Ersteller & Besitzer & 	String	Schlüssel auf Benutzer \\
+	\hline
+	Raumeinstellungen	& String[] &	Datenfelder müssen generisch erzeugt werden \\
+	\hline	
+	Elemente der Playlist &	Dateireferenzen [] &	0..n Dateireferenzen möglich \\
+	\hline
+\end{tabular}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection {Definition: \textbf{PLAYLIST}}
+Eine Playlist besteht aus Referenzen auf atomare Dateien und Datenstreams. Die Playlist kann Bilddateien, Musikdateien und Videodateien enthalten. 
+
+Kommentar: \textit{Eine Playlist sollte nur Dateitypen beinhalten, die von der Playersoftware im Mar-S System erkannt und abgespielt werden können.}
+
+Ein Playlist kann den Pfad zu einer Datei enthalten, die nicht auf dem Speicherlaufwerk des Mar-S Systsems liegt (Stramingplaylist). 
+
+Alle Elemente der Playlist werden sequentiell abgespielt, unabhängig davon welchen Typs sie sind.  Enthält eine Playlist nur Bild und Musikdateien, so muss es die es die Möglichkeit geben, eine Bildershow parallel zur Musik abspielen zu lassen.  
+
+\begin{itemize}
+	\item Bilddateien und Videodateien sollen nicht gleichzeitig abgespielt werden können.
+	\item Musikdateien und Videodateien sollen nicht gleichzeitig abgespielt werden können.
+\end{itemize}
+
+Zur Übergabe an die Playersoftware muss die Playlist (auf Seiten der Datenbank) in ein geeignetes Playlist-Dateiformat überführt werden, um ein Abspielen der Playlist zu ermöglichen.
+
+\subsubsection {Definition: \textbf{RAUMPROFIL}}
+\begin{itemize}
+	\item Ein Raumprofil besteht aus Einstellungen für die über das Mar-S System steuerbare peripheren Geräte wie Lichtanlage, Klimaanlage, usw. 
+	\item Die Einstellungsparameter müssen sich dynamisch den vorhandenen und erkannten peripheren Geräten des SmartRooms angepasst werden.
+	\item Zur Übergabe an den Smartroom, muss das Raumprofil (auf Seiten der Datenbank) in ein geeignetes Format überführt werden, um eine effiziente Steuerung der Einstellungen im Smartroom  vornehmen zu können.
+\end{itemize}
+
+\subsection {Rechtespezifikation Smartroomprofile}
+
+Kommentar: \textit{Nachfolgend wird die Einbettung der Smartroomprofile  im Mar-S System spezifiziert.}
+
+\begin{itemize}
+	\item Smartroomprofile können alle Sichtbarkeiten ("'Private"', "'Group"' , "'Public"') haben, entsprechend ist in den Benutzern von Mar-S der Zugriff darauf zu ermöglichen. 
+	\item Jeder Benutzer kann ein Smartroomprofil  als Default markieren, das bei einem Autostart im Smartroom automatisch gestartet wird.
+	\item Smartroomprofile mit der Sichtbarkeit "'Group"' oder "'Public"' können von Benutzern mit Leserecht abgespielt und ggf. kopiert werden. 
+	\item Beim Kopiervorgang muss der Besitzer aktualisiert werden und die Sichtbarkeit angepasst werden. (Auf denjenigen, der den Kopiervorgang startet.)
+	\item Auf der Kopie hat der Benutzer volle Rechte. Das Original darf durch den Kopiervorgang nicht verändert werden.
+\end{itemize}
+Kommentar: \textit{Der Kopiervorgang muss die Konsistenzerhaltend sein.}
+\begin{itemize}
+	\item Besitzer oder Administrator der Smartroomprofile haben alle Rechte auf das betreffende Smartroomprofil.
+	\item In der Datenbank muss daher für ein Smartroomprofile verfügbar sein, wer es erstellt hat und als Besitzer hinterlegt ist. 
+	\item Den Besitzer eines Smartroomprofile soll es möglich sein, Smartroomprofile mit der Sichtbarkeit "'Group"' oder "'Public"' zu löschen, zu verschieben oder zu bearbeiten. 
+\end{itemize}
+ 
+\emph{\textbf{Beispiel:}}
+
+\textbf{Profilordner mit Sichtbarkeit: GROUP und PUBLIC } 
+
+ Nr.:  Name des Profils   Besitzer  Sichtbar für
+ 1  acdc-album-playlist   <greisle-alexander>	 <public>
+ 2  developer-movies      <dreharov-nikolay>	 <developer>
+ 3  cebit-fair-pictures   <greisle-alexander>	 <marketing>
+ ...  ...                 <...>                <...>	
+
+\textbf{Profilordner mit Sichtbarkeit: PRIVATE  ( Benutzer mar-s-team ) }
+
+ Nr.:	 Name des Profils  Besitzer  Sichtbar für
+ ...	 ...               <...>     <...>
+
+Der Benutzer <mar-s-team>  ist Mitglied der Gruppe <developer>, d.h. er hätte aus oben genanntem Beispiel lesenden Zugriff auf das Smartroomprofil developer-movies  und acdc-album-playlist.
+
+Will der Benutzer beide Profile in seinen Private-Bereich kopieren ergibt sich
+folgendes Bild: 
+
+Kommentar: \textit{An den Public- und Group-ordnern darf sich nichts ändern.}
+
+\textbf{Profilordner mit Sichtbarkeit: PRIVATE - Benutzer <mar-s-team> } 
+
+ Nr.:	 Name des Profils			 Besitzer		 Sichtbar für 
+\textbf{ 1	 developer-movies		   < mar-s-team >		 < private :  mar-s-team >}
+\textbf{ 2	 acdc-album-playlist	 < mar-s-team >		 < private : mar-s-team >}
+ ...	 ...				 <...>			 <...>
+
+Kommentar: \textit{Die erstellten Kopien können im Folgenden unabhängig von den Orginalen bearbeitet oder gelöscht werden.}  
+
+\begin{itemize}
+	\item Werden Playlists aus dem Private-Bereich in öffentlicherer Verzeichnisse kopiert, muss darauf geachtet werden, dass die Sichtbarkeit der Playlist-Dateien den Sichbarkeiten des Zielbereichs entsprechen, ansonsten ist der Kopiervorgang mit einem Hinweis an den Benutzer abzubrechen.
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Veranschaulichung}
+Kopieren einer Playlist
+
+\begin{figure}[!h]
+	\begin{center}
+		\includegraphics[width=360pt]{02-kopieren.png}
+	\end{center}
+\end{figure}
+
+\begin{itemize}
+	\item Analog zum Kopieren, ist es den Besitzer eines Profils und den Administratoren möglich dieses zu verschieben .
+	\item Bei den Verschiebevorgängen muss die Sichtbarkeit jeweils angepasst werden. 
+	\item Das Besitzerfeld ändert sich beim Verschieben von Private nach Public oder Group und umgekehrt nicht. 
+\end{itemize}
+
+\emph{Beim Verschieben sind folgende Regeln zu beachten zu beachten:}
+
+Verschieben einer Playlist: (Nur für Besitzer und Administratoren)
+
+\begin{figure}[!h]
+	\begin{center}
+		\includegraphics[width=360pt]{03-tabelle.png}
+	\end{center}
+\end{figure}
+
+\textbf{Anmerkung:}
+\begin{enumerate}
+	\item Alle Dateien mit Sichtbarkeit Group müssen für die auch Gruppe sichtbar sein. D.H. die  sichtbaren Dateien für die Gruppe und die Public Dateien müssen eine Obermenge der Playlist-Dateien bilden. 
+	\item Nur falls Benutzer der Besitzer der Playlist ist, sonst ist Verschieben nicht möglich.
+	\item Wird Systemseitig nicht angeboten.
+\end{enumerate}
+
+Kommentar: \textit{Administratoren haben vollen Zugriff auf alle Profile unabhängig ihrer Sichtbarkeit oder ihres Besitzers. Bezüglich kopieren und verschieben, sind Sie aber genau wie allen anderen Benutzer an das Rechtekonzept gebunden. Die Datenkonsistenz hat ein höheres Gewicht.} 
+
+\subsection {Fileupload}
+\begin{itemize}
+	\item Für Benutzer, muss es die Möglichkeit geben, atomare Dateien in das Speicherlaufwerk des Mar-S System hochzuladen.
+	\item Den jeweiligen Benutzer sind alle ihnen sichtbaren Ordner zur Ablage einer oder mehrer Dateien anzuzeigen.
+	\item Der Filuploadprozess muss mehrere Dateien nach einander speichern können. Vor dem Fileupload ist zu prüfen, ob die Quota des Zielordners (Beim Upload in den Privatebereich) oder die des Laufwerks überschritten wird.
+	\item Entsprechend  ist der Fileuploadprozess mit Erfolgs oder Fehlermeldungen zu gestalten.
+	\item Nach erfolgtem Uplaod muss ein Hintergrundprozess, die neue Datei in die Referenztabelle der Datenbank entsprechend ihrer Sichtbarkeit eintragen.  
+\end{itemize}
+    
+\subsection {Quotierung}
+
+\begin{itemize}
+	\item Die Speichervolumen der Privat-Ordner eines Benutzers, können mit einer frei wählbaren Quota kontigentiert werden.
+	\item Auf dem Public und Group Speicherbereich des Laufwerks, sind keine expliziten Quota möglich.
+	\item Beschränkungen ergeben sich jedoch implizit aus dem Speichervolumen des Laufwerks minus der Quota für jeden Benutzer mal deren Anzahl.
+	\item Es ist sicherzustellen, dass das Mar-S System keine Überschreitungen der maxmialen Speichervolumen zulässt. 
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section {Zustandswechsel im SmartRoom}
+\subsection {Allgemein}
+Im Smartroom gibt es die Zustände "'Raum aktiv"', "'Raum nicht aktiv"' und "Raum aus"'. Im Folgenden wird spezifiziert wie sich der Raum verhält, wenn Benutzer den Raum betreten und verlassen.
+
+Dabei gilt grundsätzlich:
+\begin{itemize}
+	\item Ein Autostart erfolgt verzögert, um Benutzerwechsel vor Beginn einer Multimediavorführung zu ermöglichen (Dialog mit Benutzerauswahl, Default: Programmstart für ersten erkannten Benutzer) 
+	\item Ein laufendes Programm kann jederzeit durch Administratoren beendet werden. 
+	\item Durch das Betreten eines Raums wird das laufende Programm nicht unterbrochen
+	\item Nach einem Autostart soll der Raum in den Zustand "'Raum nicht aktiv"' wechseln, wenn keine Interaktion mit dem Raum stattfindet. (Dialogabfrage mit Timer) 
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection {Zustandswechsel}
+Folgendes Diagramm soll die Zustandswechsel des Smartrooms verdeutlichen.
+
+\begin{figure}[!h]
+	\begin{center}
+		\includegraphics[width=360pt]{04-zustaende.png}
+	\end{center}
+\end{figure}

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="server.domain">
+  <class name="ComponentSetting" table="ComponentSetting" lazy="false">
+    <id name="id" type="long" unsaved-value="null">
+      <generator class="increment"/>
+    </id>
+
+    <many-to-one cascade="none" name="smartRoomComponent"
+		class="SmartRoomComponent"
+		column="SmartRoomComponent_Id"/>
+	
+    <set name="componentAttributeValues" cascade="all" lazy="false">
+      <key column="ComponentSetting_Id" not-null="true"/>
+      <one-to-many class="ComponentAttributeValue"/>
+    </set>
+
+  </class>
+
+  <query name="get.setting.by.id">
+    <![CDATA[from server.domain.ComponentSetting as system
+    		where system.id = ?]]>
+  </query>
+</hibernate-mapping>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+
+	<!--
+		This is a minimal Validator form file with a couple of examples.
+	-->
+	<global>
+
+		<!-- An example global constant
+			<constant>
+			<constant-name>postalCode</constant-name>
+			<constant-value>^\d{5}\d*$</constant-value>
+			</constant>
+			end example-->
+
+	</global>
+	<formset>
+		<form name="loginForm">
+			<field property="username" depends="required">
+				<arg0 key="errors.username" />
+			</field>
+			
+			<field property="password" depends="required">
+				<arg0 key="errors.password" />
+			</field>
+		</form>
+		
+		<form name="mobileLoginForm">
+			<field property="username" depends="required">
+				<arg0 key="errors.username" />
+			</field>
+			
+			<field property="password" depends="required">
+				<arg0 key="errors.password" />
+			</field>
+		</form>
+
+		
+		<form name="myPropertiesForm">
+			<field property="firstname" depends="required, maxlength">
+			<arg0 key="errors.firstName" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+			<field property="lastname" depends="required, maxlength">
+				<arg0 key="errors.lastName" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+			<field property="email" depends="email, required, maxlength">
+				<arg0 key="errors.email" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+		</form>			
+			
+		<form name="manageUserNewForm">
+			<field property="email" depends="email, required, maxlength">
+				<arg0 key="errors.email" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+			
+			<field property="userLoginId" depends="required, maxlength">
+				<arg0 key="errors.userLoginId" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+			
+			<field property="firstName" depends="required, maxlength">
+				<arg0 key="errors.firstName" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+			
+			<field property="lastName" depends="required, maxlength">
+				<arg0 key="errors.lastName" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+			<field property="quota"
+				depends="required, integer, intRange">
+
+				<arg0 key="errors.quota" />
+
+				<arg1 name="intRange" key="${var:max}" resource="false" />
+				<arg2 name="intRange" key="${var:min}" resource="false" />
+
+				<var>
+					<var-name>min</var-name>
+					<var-value>0</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>10000</var-value>
+				</var>
+
+			</field>
+
+			<field property="password" depends="required, maxlength">
+				<arg0 key="errors.password" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+
+		</form>
+
+		<form name="manageUserEditForm">
+			<field property="email" depends="email, required, maxlength">
+				<arg0 key="errors.email" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+			
+			<field property="userLoginId" depends="required, maxlenth">
+				<arg0 key="errors.userLoginId" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+			
+			<field property="firstName" depends="required, maxlength">
+				<arg0 key="errors.firstName" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+			
+			<field property="lastName" depends="required, maxlenth">
+				<arg0 key="errors.lastName" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+
+			<field property="quota"
+				depends="required, integer, intRange">
+
+				<arg0 key="errors.quota" />
+
+				<arg1 name="intRange" key="${var:max}" resource="false" />
+				<arg2 name="intRange" key="${var:min}" resource="false" />
+
+				<var>
+					<var-name>min</var-name>
+					<var-value>0</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>10000</var-value>
+				</var>
+			</field>
+			
+			<field property="password" depends="required, maxlength">
+				<arg0 key="errors.password" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="manageDepartmentNewForm">
+			<field property="name" depends="required, maxlength">
+				<arg0 key="errors.departmentName" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>32</var-value>
+				</var>
+			</field>
+			<field property="abbreviation" depends="required, maxlength">
+				<arg0 key="errors.abbreviation" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>16</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="manageDepartmentEditForm">
+			<field property="name" depends="required, maxlength">
+				<arg0 key="errors.departmentName" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>32</var-value>
+				</var>
+			</field>
+			
+			<field property="abbreviation" depends="required, maxlength">
+				<arg0 key="errors.abbreviation" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>7</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="manageGroupNewForm">
+			<field property="name" depends="required, maxlength">
+				<arg0 key="errors.groupName" />
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+				
+			</field>
+		</form>
+
+		<form name="manageGroupEditForm">
+			<field property="name" depends="required, maxlength">
+				<arg0 key="errors.groupName" />		
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="myPropertiesEditForm">
+			<field property="oldpassword" depends="required">
+				<arg0 key="errors.oldPassword" />
+			</field>
+			
+			<field property="newpassword" depends="required">
+				<arg0 key="errors.newPassword" />
+			</field>
+			
+			<field property="retypenewpassword" depends="required">
+				<arg0 key="errors.retypePassword" />
+			</field>
+		</form>
+		
+		<form name="sendEmailForm">			
+			<field property="subject" depends="required">
+				<arg0 key="errors.subject" />
+			</field>
+			
+			<field property="messageBody" depends="required">
+				<arg0 key="errors.body" />
+			</field>
+		</form>
+	</formset>
+</form-validation>

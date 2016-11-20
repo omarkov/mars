@@ -1,0 +1,153 @@
+\documentclass[12pt,oneside,german,a4paper]{article}
+\usepackage[latin1]{inputenc}
+%\usepackage{isolatin1}
+\usepackage{a4}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{german}
+\usepackage{graphicx}
+\usepackage{newcent}        % Umstellung auf Schrift Times, Wichtig für gute
+                           % PDF Qualität.
+
+
+\usepackage{makeidx}
+\makeindex 
+%----------------
+% Definitionen
+
+\setlength{\textwidth}{16cm} \setlength{\textheight}{23cm}
+\setlength{\oddsidemargin}{0cm} \setlength{\topmargin}{0cm}
+\setlength{\parindent}{0cm} \setlength{\parskip}{1.5ex}
+
+
+\begin{document}
+\onecolumn
+%---------------------------------------
+% Titelseite & Inhaltsverzeichnis
+
+\title{\textbf{Installationshandbuch}\\
+      \textbf{Mar-S}}
+%\author{Projektteam des Studienprojekts ''Mar-S''}
+\date{\today}
+% heutiges Datum: \date{\today}
+\maketitle
+\begin{center}
+Fraunhofer Institut Office Innovation Center\\
+Universität Stuttgart\\
+Rosensteinstr. 22-24\\
+70191 Stuttgart\\
+\end{center}
+
+\newpage
+
+
+%--------------------------------------------------------------------------------------------------
+% Inhaltsverzeichnis
+
+\tableofcontents
+%--------------------------
+% Hier kommt der Inhalt
+%--------------------------------------------------------------------------------------------------
+
+\newpage
+
+\section{Systemvoraussetzungen}
+
+\subsection{Medienrechner}
+
+Es wird benötigt:
+
+\begin{enumerate}
+
+\item Vorinstalliertes und lauffähiges Linux-System
+\item Java 1.5 Umgebung
+\item Samba 3.x
+\item Freevo
+\begin{enumerate}
+\item Mplayer
+\item Python 2.3 oder höher
+\end{enumerate}
+
+\item PostgreSQL 7.4
+\end{enumerate}
+
+\subsection{Webrechner}
+
+Medienrechner und Webrechner können der gleiche Rechner sein. Auf diesem muss TomCat 5.x laufen.
+
+\newpage
+
+\section{Inbetriebnahme}
+
+Den Inhalt der gelieferten CD in das gewünschte Verzeichnis(<mars\_install>) kopieren (muss mit Rootrechten geschehen).
+
+\subsection{Starten und Stoppen des Systems}
+
+Für den korrekten Ablauf muss alles konfiguriert sein (siehe Abschnitt~\ref{conf}).
+Es wird ein Skript geliefert, das im Installationsordner ausgeführt werden muss (muss mit Rootrechten geschehen):
+
+<mars\_install>/bin/mars.sh start
+
+Das System wird gestartet.
+
+Zum Stoppen des Systems das Skript ''<mars\_install>/bin/mars.sh stop'' ausführen (muss mit Rootrechten geschehen).
+
+\subsection{Web--Komponente auf Tomcat deployen}
+
+Tomcat muss installiert sein. Die Web-Komponente wird als \emph{.war}--Datei geliefert. Diese muss in den Tomcat--Server deployed werden.
+
+\begin{enumerate}
+\item Tomcat stoppen.
+\item Falls schon mal installiert, muss im \emph{<tomcat\_install/webapps/>}-Verzeichnis die Web-Komponente erst gelöscht werden.
+\item Einfach die .war--Datei in das \emph{tomcat\_install/webapps/} kopieren.
+\item Den Tomcat wieder starten. Die Web--Komponente ist jetzt deployed.
+\end{enumerate}
+
+\newpage
+
+\section{Konfiguration}\label{conf}
+
+\subsection{Datenbank einrichten}
+
+Um die Datenbank einzurichten, muss ein die Datenbank installiert sein und ein Hauptuser existieren. Username und Passwort müssen den Angaben in dem Datenbank--Konfigurationsfile ''hibernate.properties'' entsprechen.
+
+Ist alles soweit eingerichtet muss das Datenbank--Schema importiert werden. Es liegt in ''<mars\_install>/etc/dbschema.sql''.
+
+Mit dem Befehl ''\$ psql -d Mydatabase -f dbschema.sql'' wird das Schema in die Datenbank importiert. Für weitere Informationen\\ siehe http://www.postgresql.org/docs/7.4/static/index.html.
+
+
+
+\subsection{Sonstiges}
+
+\subsubsection{Freevo einrichten}
+
+Freevo muss installiert sein. Um die ''Mar-S'' Freevo--Oberfläche zu integrieren:
+
+\begin{enumerate}
+\item Ins Verzeichnis \emph{python\_install/site-packages/freevo} die Files von\\ \emph{mars\_install/src/media} kopieren oder einen symbolischen Link setzen.
+\end{enumerate}
+
+\subsubsection{LIRC}
+
+LIRC muss installiert, gestartet und für die benutzte Fernbedienung konfiguriert sein. Nähere Informationen auf \emph{lirc.org}.
+
+\subsection{Mailserver einrichten}
+
+Es wird ein SMTP--Mailserver benötigt. Das System ''Mar-S'' muss dafür konfiguriert werden. Hierzu existiert im Konfigurationsverzeichnis (mars\_install/etc/) des Systems die Konfigurationsdatei \emph{server\_config.properties}. Darin wird gesetzt:
+
+\begin{enumerate}
+\item mailer\_server = ''Hostname des Servers'', z.B. mail.mars.de.
+\item mailer\_username = ''username''.
+\item mailer\_password = ''Passwort''
+\end{enumerate}
+
+\subsection{Mediendaten verwalten}
+
+In diesem Kapitel wird beschrieben, wie man als Benutzer seine eigenen Daten in sein persönliches systemeigenes Verzeichnis kopiert.
+
+Hierzu wird Samba benötigt, das schon Zugriff auf die persönlichen Verzeichnisse hat. Diese Verzeichnisse befinden sich im Pfad unter Linux \emph{/home/username/}, wobei hier nur der eigentliche User Schreibrechte besitzt. Die Passwörter werden vom System ''Mar-S'' gesetzt. Es können nun mittels Samba die gewünschten Daten in die Home--Verzeichnisse der User übertragen werden.
+
+Die Gruppen--Verzeichnisse sind frei konfigurierbar. Sie werden im Konfigurationsverzeichnis (\emph{mars\_install/etc/}) des Systems in der Konfigurationsdatei \- \emph{server\_config.properties} mit dem Attribut \emph{fs\_groupdir = ''z.B. /usr/mars\_data''} gesetzt. Der Ordner wird automatisch angelegt.
+
+
+\end{document}

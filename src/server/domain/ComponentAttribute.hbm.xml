@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="server.domain">
+  <class name="ComponentAttribute" table="ComponentAttribute" lazy="false">
+    <id name="id" type="long" unsaved-value="null">
+      <generator class="increment"/>
+    </id>
+	
+	<natural-id mutable="false">   
+      	  <property name="name" length="32"/>
+	  <many-to-one name="smartRoomComponent"
+				 access="field"
+                 lazy="false"
+		         class="SmartRoomComponent"
+		         column="SmartRoomComponent_Id"/>
+	</natural-id>
+	
+	<property name="flag" not-null="true"/>
+	<many-to-one name="attributeType"
+	             cascade="all"
+		         class="AttributeType"
+		         unique="true"
+                 lazy="false"
+		         column="AttributeType_Id"/>
+	
+
+  </class>
+  
+   <query name="get.all.attributes">
+    <![CDATA[from server.domain.ComponentAttribute]]>
+  </query>
+
+</hibernate-mapping>

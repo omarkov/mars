@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+ <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+
+
+<tiles-definitions>
+
+    <!-- Default Profile -->
+    <definition name="mars.default" path="/pages/layout.jsp">
+        <put name="header"/>
+        <put name="menu"/>
+        <put name="content"/>
+        <put name="footer"/>
+    </definition>
+    
+    <!-- Default Mobile -->
+    <definition name="mars.mobile" path="/mobile/layoutMobile.jsp">
+        <put name="menu"/>
+        <put name="content"/>
+    </definition>
+    
+    
+    <!-- Error -->
+    <definition name="error.page" extends="mars.default" path="/pages/layout.jsp">
+        <put name="header" value="/pages/header.jsp" />
+        <put name="menu" value="/pages/menu.jsp" /> 
+        <put name="content" value="/pages/error.jsp" />
+        <put name="footer" value="/pages/footer.jsp" />
+    </definition>
+    
+    <!-- Login -->
+    <definition name="login.page" extends="mars.default" path="/pages/layout.jsp"> 
+        <put name="menu" />
+        <put name="content" value="/pages/login.jsp" />
+		  <put name="footer" value="/pages/footer.jsp" />       
+    </definition>
+        
+    <!-- Home -->
+    <definition name="main.page" extends="mars.default" path="/pages/layout.jsp">
+        <put name="header" value="/pages/header.jsp" />
+        <put name="menu" value="/pages/menu.jsp" /> 
+        <put name="content" value="/pages/main.jsp" />
+        <put name="footer" value="/pages/footer.jsp" />
+    </definition>
+    
+    <!-- Impressum -->
+    <definition name="impressum.page" extends="mars.default" path="/pages/layout.jsp"> 
+        <put name="header" value="/pages/header.jsp" />
+        <put name="menu" value="/pages/menu.jsp" /> 
+        <put name="content" value="/pages/impressum.jsp" />
+        <put name="footer" value="/pages/footer.jsp" />
+    </definition>
+
+    <!-- manageGroupxxx -->
+    
+    <definition name="manageGroup.default" extends="mars.default" path="/pages/layout.jsp"> 
+        <put name="header" value="/pages/header.jsp" />
+        <put name="menu" value="/pages/menu.jsp" />
+        <put name="content" />
+        <put name="footer" value="/pages/footer.jsp" />
+    </definition>
+    
+    <definition name="manageGroup.page" extends="manageGroup.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageGroup.jsp" />
+    </definition>
+    
+    <definition name="manageGroupAddUsers.page" extends="manageGroup.default" path="/pages/layout.jsp"> 
+      <put name="content" value="/pages/manageGroupAddUsers.jsp" />
+    </definition>
+
+    <definition name="manageGroupAddUsersToNewGroup.page" extends="manageGroup.default" path="/pages/layout.jsp"> 
+      <put name="content" value="/pages/manageGroupAddUsersToNewGroup.jsp" />
+    </definition>
+
+    <definition name="manageGroupDelete.page" extends="manageGroup.default" path="/pages/layout.jsp"> 
+      <put name="content" value="/pages/manageGroupDelete.jsp" />
+    </definition>
+   
+    <definition name="manageGroupEdit.page" extends="manageGroup.default" path="/pages/layout.jsp"> 
+      <put name="content" value="/pages/manageGroupEdit.jsp" />
+    </definition>
+    
+    <definition name="manageGroupNew.page" extends="manageGroup.default" path="/pages/layout.jsp"> 
+      <put name="content" value="/pages/manageGroupNew.jsp" />
+    </definition>
+
+    <definition name="sendEmail.page" extends="manageGroup.default" path="/pages/layout.jsp"> 
+      <put name="content" value="/pages/sendEmail.jsp" />
+    </definition>
+
+    
+    <!-- manageUserxxx -->
+    
+    <definition name="manageUser.default" extends="mars.default" path="/pages/layout.jsp"> 
+        <put name="header" value="/pages/header.jsp" />
+        <put name="menu" value="/pages/menu.jsp" />
+        <put name="content" />
+        <put name="footer" value="/pages/footer.jsp" />
+    </definition>
+      
+    <definition name="manageUser.page" extends="manageUser.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageUser.jsp" />
+    </definition>
+
+    <definition name="manageUserAssignTagId.page" extends="manageUser.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageUserAssignTagId.jsp" />
+    </definition>
+
+    <definition name="manageUserDeactivate.page" extends="manageUser.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageUserDeactivate.jsp" />
+    </definition>
+    
+    <definition name="manageUserDelete.page" extends="manageUser.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageUserDelete.jsp" />
+    </definition>
+    
+    <definition name="manageUserEdit.page" extends="manageUser.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageUserEdit.jsp" />
+    </definition>
+    
+    <definition name="manageUserNew.page" extends="manageUser.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageUserNew.jsp" />
+    </definition>                    
+    
+    <definition name="manageUserResetPassword.page" extends="manageUser.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageUserResetPassword.jsp" />
+    </definition>    
+    
+    <definition name="manageUserShowUserDeletions.page" extends="manageUser.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageUserShowUserDeletions.jsp" />
+    </definition>   
+    
+    <!-- manageProfilesxxx -->
+    
+    <definition name="manageProfiles.default" extends="mars.default" path="/pages/layout.jsp"> 
+        <put name="header" value="/pages/header.jsp" />
+        <put name="menu" value="/pages/menu.jsp" />
+        <put name="content" />
+        <put name="footer" value="/pages/footer.jsp" />
+    </definition>
+      
+    <definition name="manageProfiles.page" extends="manageProfiles.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageProfiles.jsp" />
+    </definition>
+    
+    <definition name="manageProfilesDelete.page" extends="manageProfiles.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageProfilesDelete.jsp" />
+    </definition>
+    
+    <definition name="manageProfilesEdit.page" extends="manageProfiles.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageProfilesEdit.jsp" />
+    </definition>
+    
+    <definition name="manageProfilesNew.page" extends="manageProfiles.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageProfilesNew.jsp" />
+    </definition>
+    
+    <definition name="manageProfilesShow.page" extends="manageProfiles.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageProfilesShow.jsp" />
+    </definition>
+
+        <!-- myPropertiesxxx -->
+    
+    <definition name="myProperties.default" extends="mars.default" path="/pages/layout.jsp"> 
+        <put name="header" value="/pages/header.jsp" />
+        <put name="menu" value="/pages/menu.jsp" />
+        <put name="content" />
+        <put name="footer" value="/pages/footer.jsp" />
+    </definition>
+      
+    <definition name="myProperties.page" extends="myProperties.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/myProperties.jsp" />
+    </definition>
+    
+    <definition name="myPropertiesEdit.page" extends="myProperties.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/myPropertiesEdit.jsp" />
+    </definition>
+    
+    <!-- Error --> 
+    <definition name="errorPage.page" extends="mars.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/error.jsp" />
+    </definition>
+    <!-- manageDepartmentxxx -->
+    
+    <definition name="manageDepartment.default" extends="mars.default" path="/pages/layout.jsp"> 
+        <put name="header" value="/pages/header.jsp" />
+        <put name="menu" value="/pages/menu.jsp" />
+        <put name="content" />
+        <put name="footer" value="/pages/footer.jsp" />
+    </definition>
+    
+    <definition name="manageDepartment.page" extends="manageDepartment.default" path="/pages/layout.jsp"> 
+        <put name="content" value="/pages/manageDepartment.jsp" />
+    </definition>
+    
+    <definition name="manageDepartmentAddUsers.page" extends="manageDepartment.default" path="/pages/layout.jsp"> 
+      <put name="content" value="/pages/manageDepartmentAddUsers.jsp" />
+    </definition>
+
+    <definition name="manageDepartmentDelete.page" extends="manageDepartment.default" path="/pages/layout.jsp"> 
+      <put name="content" value="/pages/manageDepartmentDelete.jsp" />
+    </definition>
+   
+    <definition name="manageDepartmentEdit.page" extends="manageDepartment.default" path="/pages/layout.jsp"> 
+      <put name="content" value="/pages/manageDepartmentEdit.jsp" />
+    </definition>
+    
+    <definition name="manageDepartmentNew.page" extends="manageDepartment.default" path="/pages/layout.jsp"> 
+      <put name="content" value="/pages/manageDepartmentNew.jsp" />
+    </definition>
+    
+        <!-- mobile -->
+    
+    <definition name="mobile.default" extends="mars.mobile" path="/mobile/layoutMobile.jsp"> 
+        <put name="menu" value="/mobile/menuMobile.jsp" />
+        <put name="content" />
+    </definition>
+      
+    <definition name="mobileMain.page" extends="mobile.default" path="/mobile/layoutMobile.jsp"> 
+        <put name="content" value="/mobile/mobileMain.jsp" />
+    </definition>
+    
+    <definition name="mobileMedia.page" extends="mobile.default" path="/mobile/layoutMobile.jsp"> 
+        <put name="content" value="/mobile/mobileMedia.jsp" />
+    </definition>
+
+    <definition name="mobileLighting.page" extends="mobile.default" path="/mobile/layoutMobile.jsp"> 
+        <put name="content" value="/mobile/mobileLighting.jsp" />
+    </definition>
+    
+    <definition name="mobileProfile.page" extends="mobile.default" path="/mobile/layoutMobile.jsp"> 
+        <put name="content" value="/mobile/mobileProfile.jsp" />
+    </definition>
+
+    
+         
+</tiles-definitions>

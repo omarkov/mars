@@ -1,0 +1,184 @@
+\documentclass[12pt,oneside,german,a4paper]{article}
+\usepackage[latin1]{inputenc}
+%\usepackage{isolatin1}
+\usepackage{a4}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{german}
+\usepackage{graphicx}
+\usepackage{newcent}        % Umstellung auf Schrift Times, Wichtig für gute
+                           % PDF Qualität.
+
+
+\usepackage{makeidx}
+\makeindex 
+%----------------
+% Definitionen
+
+\setlength{\textwidth}{16cm} \setlength{\textheight}{23cm}
+\setlength{\oddsidemargin}{0cm} \setlength{\topmargin}{0cm}
+\setlength{\parindent}{0cm} \setlength{\parskip}{1.5ex}
+
+
+\begin{document}
+\onecolumn
+%---------------------------------------
+% Titelseite & Inhaltsverzeichnis
+
+\title{\textbf{Administrationshandbuch}\\
+      \textbf{Mar-S}}
+%\author{Projektteam des Studienprojekts ''Mar-S''}
+\date{\today}
+% heutiges Datum: \date{\today}
+\maketitle
+\begin{center}
+Fraunhofer Institut Office Innovation Center\\
+Universität Stuttgart\\
+Rosensteinstr. 22-24\\
+70191 Stuttgart\\
+\end{center}
+
+\newpage
+
+
+\tableofcontents
+\newpage
+
+\section{Komponenteninstallation}
+Um eine neue Komponente zu installieren muss für diese in Mar-S ein Treiberprogramm geschrieben werden.
+Das Treiberprogramm übernimmt dabei drei Funktionen:
+\begin{enumerate}
+\item Verbindungsaufbau zum System
+\item Kommunikation mit dem System
+\item Verbindungabbau vom System
+\end{enumerate}
+\subsection{Verbindungsaufbau zum  System}
+Bevor eine Komponente mit dem System kommunizieren kann, muss eine Verbindung zum System aufgebaut werden.
+Dieser Verbindungsaufbau besteht aus x Schritten.
+Im Code muss man zunächst die Netzwerkklasse importieren.
+\begin{verbatim}
+import net.*;
+\end{verbatim}
+Den Verbindungsaufbau und Beschreibung der neuen Komponente kapselt man am besten in einer Funktion (im unteren Beispiel ist dies initNetwork()).
+In dieser Funktion muss mann nun eine Instanz der Netzwerkkomponente holen.
+\begin{verbatim}
+public void initNetwork(){
+NetworkFactory net = NetworkFactory.getInstance();
+
+}
+\end{verbatim}
+
+Im nächsten Schritt muss man eine neue Modulbeschreibung anlegen. Bei der Modulbeschreibung muss angegeben werden, ob die Komponente im Web einstellbar ist.
+Hierfür muss folgende Zeile im Code geschrieben werden
+\begin{verbatim}
+module.setWebModule(true);
+\end{verbatim}
+Die Modulbeschreibung besteht desweiteren aus Parametern und Kommandos.
+Hierbei stehen folgende Parameter zu Verfügung:
+\begin{itemize}
+\item Boolscher Parameter: Dieser ist zu setzen, wenn ein Komponente ein- und ausgeschaltet werden kann.
+\item Numerischer Parameter: Dieser ist zu setzen, wenn eine Komponente mit einem bestimmten Zahlenwert gesteuert werden kann (Bsp. Raumtemperatur).
+\item Zeichenkette: Der Komponente wird eine Zeichenkette geschickt, um sie anzusteuern. 
+\item Liste: Der Komponente wird eine Liste von Zeichenketten geschickt, um sie anzusteuern (Bsp. Playlist).
+\end{itemize}
+Jeder dieser Parameter hat ein eigenen Konstruktor.
+\begin{verbatim}
+BooleanParameter(String name, Boolean default, String flags, Object obj)
+NumericParameter(String name, int default, String flags, int min, int max, step int, Object obj)
+StringParameter(String name, Boolean default, String flags, Object obj)
+ListParameter(String name, String default, String flags, Object obj)
+\end{verbatim}
+Die genaueren Beschreibungen der Konstruktorparameter sind dem Entwurf Kapitel 8 zu entnehmen.
+
+Im folgenden Codefragment wird zunächst eine Modulbeschreibung instanziiert und dieser werden vier verschiedene Parameter zugewiesen.
+\begin{verbatim}
+public void initNetwork(){
+        
+        net = NetworkFactory.getInstance();
+        
+        ModuleDescription module = new ModuleDescription("TESTMODULE", "V1.0");
+	module.setWebModule(true);
+
+        BooleanParameter testBool = new BooleanParameter("testBool", true, "rw", this);
+        NumericParameter testNumeric   = new NumericParameter("testNumeric", new Integer(50), "rw", 0, 255, 10, this);
+        StringParameter testString = new StringParameter("testString", false, "w", this);
+        ListParameter testList = new ListParamter("testList", "0", "rw", this);
+
+        module.addInterface(testBool);
+        module.addInterface(testNumeric);
+        module.addInterface(testString);
+        module.addInterface(testList);
+
+}
+\end{verbatim}
+
+Neben den Parametern kann eine Modulbeschreibung auch Kommandos enthalten. Die Kommandos sind Methoden die über das Netzwerk aufgerufen werden können.
+Das heißt, die geschriebenen Java-Methoden müssen aufrufbar zur Verfügung gestellt werden. Der Netzwerkkomponente müssen folgende
+ Informationen übergeben werden:
+\begin{itemize}
+\item Name der Methode
+\item Rückgabetyp
+\item Parameterliste
+\end{itemize}
+Das Kommando hat folgenden Konstruktor.
+\begin{verbatim}
+Command(String name, Parameter returnType, Object obj)
+\end{verbatim}
+Dem Kommando müssen ebenfalls die Parameter der aufzurufenden Methode zugewiesen werden. Dies geschieht mit dem addParameter-Konstrukt.
+ Hierbei wird der Name und null übergeben. Die Parameter müssen in der richtigen Reihenfolge des Konstruktors hinzugefügt werden.
+Nach dem Hinzufügen der Kommandos kann die Komponente also gestartet werden. Der Code sieht nun so aus:
+
+\makebox[\textwidth]{\hrulefill}
+\begin{verbatim}
+public void initNetwork(){
+        net = NetworkFactory.getInstance();
+        
+        ModuleDescription module = new ModuleDescription("TESTMODULE", "V1.0");
+	module.setWebModule(true);
+
+        BooleanParameter testBool = new BooleanParameter("testBool", true, "rw", this);
+        NumericParameter testNumeric   = new NumericParameter("testNumeric", new Integer(50), "rw", 0, 255, 10, this);
+        StringParameter testString = new StringParameter("testString", false, "w", this);
+        ListParameter testList = new ListParamter("testList", "0", "rw", this);
+
+        module.addInterface(testBool);
+        module.addInterface(testNumeric);
+        module.addInterface(testString);
+        module.addInterface(testList);       
+
+
+	Command testCmd = new Command("testMethod", new StringParameter(), this);
+	testCmd.addParameter(new NumericParameter("testp", null));
+
+
+        module.addInterface(testCmd);
+
+        net.setModuleDescription(module);
+        net.startModule("localhost", 1234);
+}
+\end{verbatim}
+Die zum Kommando gehörende Java-Methode würde hier folgendermaßen aussehen:
+\begin{verbatim}
+public String testMethod(String testString){
+   
+...Hier kommt auszuführende Code rein
+
+}
+\end{verbatim}
+Das Modul kann sich jetzt also anmelden und kann auf Kommandos warten.
+\subsection{Kommunikation mit dem System}
+Bei der Kommunikation mit dem System muss man:
+\begin{itemize}
+\item Aufrufen von Kommandos
+\item Setzen von Parametern
+\end{itemize}
+Hierfür sind zwei Methoden in der NetworkFactory vorhanden.\newline
+Aufrufen von Kommandos:
+\begin{verbatim}
+net.call(String moduleName, String methodName, new Object[]{});
+\end{verbatim}
+Setzen von Parametern:
+\begin{verbatim}
+net.set(String moduleName, String parameterName, Parameter parameterValue);
+\end{verbatim}
+\end{document}

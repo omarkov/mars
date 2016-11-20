@@ -1,0 +1,48 @@
+\chapter{Datenbank}
+
+\section{Verwendete Software}
+
+\begin{itemize}
+
+\item PostgreSQL Version 8.0 RC2 für Windows
+
+\item Hibernate 3.0x
+\end{itemize}
+
+\section{PostgreSQL}
+
+PostgreSQL ist die persistente SQL-Datenbank, in der die Benutzer des Systems und deren Profile gespeichert werden.
+
+Ein Benutzer enthält:
+
+\begin{itemize}
+
+\item eindeutige MitarbeiterID als Primärschlüssel
+\item Abteilungsnummer
+\item EMail-Adresse
+
+\end{itemize}
+
+Ein Profil enthält:
+
+\begin{itemize}
+
+\item eindeutige ProfilID als Primärschlüssel
+\item zugehörige MitarbeiterID
+\item Alle Einstellungnen für die verfügbaren Komponenten
+
+\begin{itemize}
+\item Licht: Farbe, Programm, Helligkeit
+\item Musiklautstärke
+\item Playlist
+\item Und weitere Komponenten, die hinzukommen können
+
+\end{itemize}
+\item ein Defaultflag
+
+\end{itemize}
+
+\section{Hibernate}
+
+Um nicht von SQL-Befehlen abhängig zu sein, wird Hibernate als Object/Relation-Mapper benutzt.
+Es werden Java-Methoden zur Verfügung gestellt, die SQL Befehle ersetzen. Somit ist eine performantere Implentierung gewähleistet.

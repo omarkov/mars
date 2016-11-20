@@ -1,0 +1,137 @@
+%%% -*- Mode: LaTeX; indent-tabs-mode: nil -*-
+%%%
+%%% Copyright (c) 2004, Oliver Markovic <entrox@entrox.org> 
+%%%   All rights reserved. 
+%%%
+%%% Redistribution and use in source and binary forms, with or without
+%%% modification, are permitted provided that the following conditions are met:
+%%%
+%%%  o Redistributions of source code must retain the above copyright notice,
+%%%    this list of conditions and the following disclaimer. 
+%%%  o Redistributions in binary form must reproduce the above copyright
+%%%    notice, this list of conditions and the following disclaimer in the
+%%%    documentation and/or other materials provided with the distribution. 
+%%%  o Neither the name of the author nor the names of the contributors may be
+%%%    used to endorse or promote products derived from this software without
+%%%    specific prior written permission. 
+%%%
+%%% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+%%% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+%%% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+%%% ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+%%% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+%%% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+%%% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+%%% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+%%% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+%%% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+%%% POSSIBILITY OF SUCH DAMAGE.
+
+\chapter{Kommunikationsprotokoll}
+
+\section{Verbindungsaufbau / Service Discovery}
+Das Auffinden der verf"ugbaren Dienste erfolgt "uber den Internetstandard
+``ZeroConf''. Hierbei bietet die zentrale Komponente einen ``Mar-S-Master'',
+die externen Module einen  ``Mar-S-Slave'' - Dienst an. Nach dem erfolgreichen 
+Finden eines Masters bzw. Slaves erfolgt der Verbindungsaufbau. Die Verbindungen 
+bleiben bis zum abschalten einer Komponente offen (persistente Sockets). Der
+Auffindungsprozess kann jeder Zeit erfolgen. 
+\section{Allgemeiner Kommunikationsablauf}
+Die Kommunikation erfolgt "uber Nachrichten. Es gibt zwei Arten von Nachrichten:
+einzeilige und mehrzeilige Nachrichten. Eine einzeilige Nachricht wird durch ein Linefeet 
+terminiert. Eine mehrzeile Nachricht wird durch ein
+BEGIN <NACHRICHTEN-TAG> eingeleitet und durch ein END <NACHRICHTEN-TAG> abgeschlossen.
+Jede Nachricht wird entweder durch ein OK <Antwort> bei Erfolg, oder durch ein ERROR <Fehlermedung>
+quittiert. 
+\section{Registrierung}
+Nach erfolgreichem Verbindungsaufbau sendet der Slave seine Protokollversion,
+eine systemweit eindeutige Modulekennung und die Serienummer seiner Schnittstellenbeschreibung.
+
+\begin{center}
+\begin{tabular*}{350pt}{l}
+HELO <Protokollversion> <Modulkennung> <Seriennummer>\\
+\end{tabular*}
+\end{center}
+
+Fehler k"onnen durch etweder eine inkompatible Protokollversion oder durch eine nichteindeutige 
+Servicekennung eintreten. 
+
+Mit dem Befehl MODULELIST kann ein Liste aller registrierter Slaves abgefragt werden.
+
+\begin{center}
+\begin{tabular*}{350pt}{l}
+S: MODULELIST \\
+M: BEGIN MODULELIST \\
+M: MODULE <Modulkennung>\\
+M: ...\\
+M: END MODULELIST\\
+\end{tabular*}
+\end{center}
+
+Nach einem erfolgreichen ``Handshake'' fordert der Master bei nicht mehr "ubereinstimmender 
+Seriennummer die Schnittstellenbeschreibung beim Slave an. Ebenso kann ein Slave die Beschreibungsliste
+eines anderen Slaves beim Master anfordern.
+
+\begin{center}
+\begin{tabular*}{350pt}{l}
+DESCRIBE [<Modulkennung>]\\ 
+\end{tabular*}
+\end{center}
+
+Der Slave sendet danach asynchron sein Beschreibung. Die Beschreibungselemente k"onnen 
+in beliebiger Reihenfolge und Zusammensetzung verwendet werden.
+
+\begin{center}
+\begin{tabular*}{350pt}{l}
+BEGIN DESCRIPTION \\
+NAME <Name des Modules>\\
+BOOL <Name des Parameter> <Default> <Flags>\\
+NUMERIC <Name des Parameter> <Default> <Flags> <Min> <Max> <Step>\\
+STRING <Name des Parameter> <Default> <Flags>\\
+LIST <Name des Parameter> <DefaultIdx> <Flags>\\
+BEGIN COMMAND <Name des Commands> <ReturnType>\\
+PARAMETER <Type> <Name>\\
+END COMMAND\\
+END DESCRIPTION\\
+\end{tabular*}
+\end{center}
+
+\section{Parameter setzen/lesen}
+
+Nach abeschlossener Registrierung kann der Master exportierte Parameter setzen und auslesen.
+Bei unpassender Ausf"uhrung (z.B. schreiben auf RO-Wert) oder unbekkanntem Parameter wird 
+ein Fehler zur"uckgeliefert. 
+
+\begin{center}
+\begin{tabular*}{350pt}{l}
+M: GET [<Modulkennung>] <Name des Parameters>\\
+C: OK \\ 
+C: <Wert>\\
+bzw. \\
+C: BEGIN LIST\\
+C: LISTELEMENT <Value>\\
+...\\
+C: END LIST\\
+\\
+SET <Name des Parameters> <Wert>\\
+\end{tabular*}
+\end{center}
+
+\section{Kommando aufrufen}
+
+Kommandos k"onnen von beiden Komponenten gesendet werden. Bei ung"ultiger Paramterliste bzw. 
+unbekannten Kommando wird ein Fehler zur"uckgeliefert.
+
+\begin{center}
+\begin{tabular*}{350pt}{l}
+BEGIN CALL [<Modulkennung>] <Name des Kommandos>\\
+PARAMETER <Name> <value>\\
+END CALL\\
+\end{tabular*}
+\end{center}
+
+\section{Verbindungsabbau}
+
+Verbindungen k"onnen von beiden Komponenten entweder explizit mit BYE, bzw. implizit durch 
+schlie"sen der Socket beendet werden, wobei ein explizter Verbindungsaubau in jedem Fall
+vorzuziehen ist.

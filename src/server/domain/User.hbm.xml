@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="server.domain">
+  <class name="User" table="UserMars" lazy="false">
+    <id name="id" type="long" unsaved-value="null">
+      <generator class="increment"/>
+    </id>
+
+    <property name="userLoginID" unique="true"/>
+    <property name="password" />
+    <property name="firstName" />
+    <property name="lastName" />
+    <property name="email" />
+    <property name="comment" />
+    <property name="administrator"  type="boolean"/>
+    <property name="superDuperRepeat"  type="boolean"/>
+    <property name="quota" />
+    <property name="expirationDate" type="date"/>
+    <property name="expirationNotified" not-null="true"/>
+
+    <many-to-one name="defaultProfile"
+		 cascade="save-update"
+         lazy="proxy"
+		 class="SmartRoomProfile"
+		 column="DefaultProfile"/>
+
+    <many-to-one name="department"
+		 cascade="save-update"
+         lazy="proxy"
+		 class="Department"
+		 column="Department_Id"/>
+    
+    <set name="smartRoomProfiles" lazy="true" inverse="true" cascade="delete">
+      <key column="User_Id"/>
+      <one-to-many class="SmartRoomProfile"/>
+    </set>		
+
+    <set name="identifications" cascade="save-update,delete">
+      <key column="User_Id"/>
+      <one-to-many class="Identification"/>
+    </set>
+    
+    <set name="groups" lazy="true" table="user_group" inverse="true" >
+      <key column="User_Id" />
+      <many-to-many class="server.domain.GroupMars" column="Group_Id" />
+    </set>
+  </class>
+
+  <query name="get.all.users">
+    <![CDATA[from server.domain.User]]>
+  </query>
+  
+  <query name="get.user.by.id">
+    <![CDATA[from server.domain.User as user
+    		where user.id = ?]]>
+  </query>
+
+  <query name="get.user.by.userid">
+    <![CDATA[from server.domain.User as user
+    		where user.userLoginID = ?]]>
+  </query>
+
+  <query name="get.user.by.loginid.and.passwd">
+    <![CDATA[from server.domain.User as user
+    		where user.userLoginID = ?
+    		and user.password = ? ]]>
+  </query>
+  
+  <query name="get.users.by.deptid">
+    <![CDATA[from server.domain.User as user
+    		where user.department = ?]]>
+  </query>
+  
+  <query name="get.users.notin.deptid">
+    <![CDATA[from User as u
+    where u not in(
+    from server.domain.User as user
+    		where user.department = ?)]]>
+  </query>
+</hibernate-mapping>

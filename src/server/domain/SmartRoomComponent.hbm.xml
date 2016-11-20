@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="server.domain">
+  <class name="SmartRoomComponent" table="SmartRoomComponent" lazy="false">
+    <id name="id" type="long" unsaved-value="null" >
+      <generator class="increment"/>
+    </id>
+
+    <property name="name" unique="true"/>
+
+    <set name="componentAttributes" inverse="true" cascade="all">
+      <key column="SmartRoomComponent_Id"/>
+      <one-to-many class="server.domain.ComponentAttribute"/>
+    </set>
+
+  </class>
+  
+  <query name="get.component.by.name">
+    <![CDATA[from server.domain.SmartRoomComponent as srm
+    		where srm.name = ?]]>
+  </query>
+  
+  <query name="get.component.by.id">
+    <![CDATA[from server.domain.SmartRoomComponent as srm
+    		where srm.id = ?]]>
+  </query>
+
+  <query name="get.all.components">
+    <![CDATA[from server.domain.SmartRoomComponent]]>
+  </query>
+  
+</hibernate-mapping>
